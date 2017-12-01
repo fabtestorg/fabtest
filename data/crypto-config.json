@@ -1,0 +1,18 @@
+{
+  "domain_name": "finblockchain.cn",
+  "orgs":[
+    {"org_id":"1"},{"org_id":"2"}, {"org_id":"3"}, {"org_id":"4"}, {"org_id":"5"},
+    {"org_id":"6"},{"org_id":"7"}, {"org_id":"8"}, {"org_id":"9"}, {"org_id":"10"},
+    {"org_id":"11"},{"org_id":"12"}, {"org_id":"13"}, {"org_id":"14"}, {"org_id":"15"},
+    {"org_id":"16"},{"org_id":"17"}, {"org_id":"18"}, {"org_id":"19"}, {"org_id":"20"},
+    {"org_id":"21"},{"org_id":"22"}, {"org_id":"23"}, {"org_id":"24"}, {"org_id":"25"},
+    {"org_id":"26"},{"org_id":"27"}, {"org_id":"28"}, {"org_id":"29"}, {"org_id":"30"},
+    {"org_id":"31"},{"org_id":"32"}, {"org_id":"33"}, {"org_id":"34"}, {"org_id":"35"},
+    {"org_id":"36"},{"org_id":"37"}, {"org_id":"38"}, {"org_id":"39"}, {"org_id":"40"},
+    {"org_id":"41"},{"org_id":"42"}, {"org_id":"43"}, {"org_id":"44"}, {"org_id":"45"},
+    {"org_id":"46"},{"org_id":"47"}, {"org_id":"48"}, {"org_id":"49"}, {"org_id":"50"},
+    {"org_id":"51"},{"org_id":"52"}, {"org_id":"53"}, {"org_id":"54"}, {"org_id":"55"},
+    {"org_id":"56"},{"org_id":"57"}, {"org_id":"58"}, {"org_id":"59"}, {"org_id":"60"},
+    {"org_id":"61"},{"org_id":"62"}, {"org_id":"63"}, {"org_id":"64"}, {"org_id":"65"}
+  ]
+}
