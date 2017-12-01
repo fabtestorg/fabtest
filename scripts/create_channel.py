@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, lcd, put, run, cd
 import sys
 import os
 reload(sys)
@@ -87,3 +87,19 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
 
     command = env + bin + param
     local(command)
+
+def put_cryptoconfig(config_path, type):
+    run("mkdir -p ~/fabTestData")
+    if type == "orderer":
+        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
+        put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
+        put("%s/kafkaTLSclient.tar.gz"%config_path, "~/fabTestData/")
+        run("tar zxvfm %s/crypto-config.tar.gz"%"~/fabTestData/")
+        run("tar zxvfm %s/channel-artifacts.tar.gz"%"~/fabTestData/")
+        run("tar zxvfm %s/kafkaTLSclient.tar.gz"%"~/fabTestData/")
+    elif type == "kafka":
+        put("%s/kafkaTLSserver.tar.gz"%config_path, "~/fabTestData/")
+        run("tar zxvfm %s/kafkaTLSserver.tar.gz"%"~/fabTestData/")
+    elif type == "peer":
+        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
+        run("tar zxvfm %s/crypto-config.tar.gz"%"~/fabTestData/")

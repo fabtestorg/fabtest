@@ -21,7 +21,7 @@ func CreateYamlByJson(strType string) error {
 	} else if strType == "crypto-config" {
 		inputData := GetJsonMap("crypto-config.json")
 		return tpl.Handler(inputData, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
-	} else if strType == "node" || strType == "client"{
+	} else if strType == "node" || strType == "client" {
 		inputData := GetJsonMap("node.json")
 		peerdomain := inputData[PeerDomain].(string)
 		kfkdomain := inputData[KfkDomain].(string)
@@ -33,7 +33,7 @@ func CreateYamlByJson(strType string) error {
 			nodeType := value[NodeType].(string)
 			dir := ConfigDir()
 			var outfile, tplfile, yamlname string
-			if strType == "client"{
+			if strType == "client" {
 				if nodeType == TypePeer {
 					//生成api 和  event yaml文件
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
@@ -170,19 +170,38 @@ func RunChaincode(channelName, ccname string) error {
 			orgid := value[OrgId].(string)
 			peerid := value[PeerId].(string)
 			peer_address := "peer" + peerid + ".org" + orgid + "." + peerdomain + ":7051"
-			initparam := ""
-			policy := ""
+			initparam := `{"Args":["init","a","100","b","200"]}`
+			policy := "OR  ('Org1MSP.member','Org2MSP.member','Org3MSP.member','Org5MSP.member')"
 			if orgid == "1" && peerid == "0" {
 				err := obj.RunShow("instantiate_chaincode", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, initparam, policy)
 				if err != nil {
 					return err
 				}
 			} else {
-				txargs := ""
+				txargs := `{"Args":["query","a"]}`
 				err := obj.RunShow("test_query_tx", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, txargs)
 				if err != nil {
 					return err
 				}
+			}
+		}
+	}
+	return nil
+}
+
+func PutCryptoConfig() error {
+	inputData := GetJsonMap("node.json")
+	peerdomain := inputData[PeerDomain].(string)
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		value[PeerDomain] = peerdomain
+		nodeType := value[NodeType].(string)
+		if nodeType == TypePeer || nodeType == TypeOrder || nodeType == TypeKafka {
+			obj := NewFabCmd("create_channel.py", value[IP].(string))
+			err := obj.RunShow("put_cryptoconfig", SourceDir(), nodeType)
+			if err != nil {
+				return err
 			}
 		}
 	}

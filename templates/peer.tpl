@@ -36,8 +36,8 @@ services:
     command: peer node start
     volumes:
         - /var/run/:/host/var/run/
-        - ./peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/msp:/etc/hyperledger/fabric/msp
-        - ./peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls:/etc/hyperledger/fabric/tls
+        - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp:/etc/hyperledger/fabric/msp
+        - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls:/etc/hyperledger/fabric/tls
         - /etc/localtime:/etc/localtime
         - ./peer_data:/var/hyperledger/production
     logging:

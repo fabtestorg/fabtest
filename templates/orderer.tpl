@@ -27,10 +27,10 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./orderer{{.order_id}}.org{{.org_id}}.{{.peer_domain}}/msp:/var/hyperledger/orderer/msp
-      - ./orderer{{.order_id}}.org{{.org_id}}.{{.peer_domain}}/tls:/var/hyperledger/orderer/tls
-      - ./kafkaTLSclient:/var/hyperledger/orderer/kafka/tls
+      - ~/fabTestData/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/msp:/var/hyperledger/orderer/msp
+      - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/tls:/var/hyperledger/orderer/tls
+      - ~/fabTestData/kafkaTLSclient:/var/hyperledger/orderer/kafka/tls
       - /etc/localtime:/etc/localtime
       - ./orderer_data:/var/hyperledger/production
     logging:

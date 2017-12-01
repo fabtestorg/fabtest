@@ -18,6 +18,7 @@ var (
 	ccname      = flag.String("ccname", "", "chaincode name")
 	ccpath      = flag.String("ccpath", "", "chaincode path")
 	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode")
+	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
 )
 
 func main() {
@@ -78,6 +79,8 @@ func main() {
 		err = cmd.RunChaincode(*ccname, *ccpath)
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog()
+	} else if *put != "" {
+		err = cmd.PutCryptoConfig()
 	} else {
 		fmt.Println("Both data and file are nil.")
 		flag.Usage()
