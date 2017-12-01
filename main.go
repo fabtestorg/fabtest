@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	file        = flag.String("f", "", "configtx, crypto-config, node, client ' create yaml file '")
+	file        = flag.String("f", "", "configtx, crypto-config, node, client, jemter ' create yaml file '")
 	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api 'start node or api'")
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
@@ -22,7 +22,11 @@ func main() {
 	flag.Parse()
 	var err error
 	if *file != "" {
-		err = cmd.CreateYamlByJson(*file)
+		if *file == "jemter" {
+			err = cmd.CreateJmeterConfig()
+		} else {
+			err = cmd.CreateYamlByJson(*file)
+		}
 	} else if *start != "" {
 		err = cmd.StartNode(*start)
 	} else if *image != "" {
@@ -59,7 +63,7 @@ func main() {
 			os.Exit(1)
 		}
 		err = cmd.InstallChaincode(*ccname, *ccpath)
-		} else if *run == "runchaincode" {
+	} else if *run == "runchaincode" {
 		if *ccname == "" || *channelname == "" {
 			flag.Usage()
 			fmt.Println("ccname or channel name is nil")
