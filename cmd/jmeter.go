@@ -14,7 +14,7 @@ func CreateJmeterConfig() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			err := tpl.Handler(value["jemter"], TplJmeterConfig, dir+clientname+".jmx")
+			err := tpl.Handler(value["jmeter"], TplJmeterConfig, dir+clientname+".jmx")
 			if err != nil {
 				return err
 			}
