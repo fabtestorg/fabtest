@@ -135,7 +135,7 @@ func JoinChannel(channelName string) error {
 	return nil
 }
 
-func InstallChaincode(ccname, ccpath string) error {
+func InstallChaincode(ccname, ccoutpath string) error {
 	inputData := GetJsonMap("node.json")
 	peerdomain := inputData[PeerDomain].(string)
 	list := inputData[List].([]interface{})
@@ -148,7 +148,7 @@ func InstallChaincode(ccname, ccpath string) error {
 			orgid := value[OrgId].(string)
 			peerid := value[PeerId].(string)
 			peer_address := "peer" + peerid + ".org" + orgid + "." + peerdomain + ":7051"
-			err := obj.RunShow("install_chaincode", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, ccname, ccpath)
+			err := obj.RunShow("install_chaincode", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, ccname, ccoutpath)
 			if err != nil {
 				return err
 			}
