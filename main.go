@@ -74,14 +74,14 @@ func main() {
 			fmt.Println("ccname or ccoutpath is nil")
 			os.Exit(1)
 		}
-		err = cmd.InstallChaincode(*ccname, *ccoutpath)
+		err = cmd.InstallChaincode(*ccoutpath)
 	} else if *run == "runchaincode" {
 		if *ccname == "" || *channelname == "" {
 			flag.Usage()
 			fmt.Println("ccname or channel name is nil")
 			os.Exit(1)
 		}
-		err = cmd.RunChaincode(*ccname, *ccoutpath)
+		err = cmd.RunChaincode(*ccname, *channelname)
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog()
 	} else if *getlog == "event" {

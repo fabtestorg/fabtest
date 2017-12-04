@@ -8,7 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def install_chaincode(bin_path, yaml_path, peer_address, peer_id, org_id, domain_name, ccname, ccoutpath):
+def install_chaincode(bin_path, yaml_path, peer_address, peer_id, org_id, domain_name, ccoutpath):
     tls_root_file = yaml_path + "crypto-config/peerOrganizations/org%s.%s/peers/peer%s.org%s.%s/tls/ca.crt"%(org_id,domain_name,peer_id,org_id,domain_name)
     msp_path = yaml_path + "crypto-config/peerOrganizations/org%s.%s/users/Admin@org%s.%s/msp"%(org_id,domain_name,org_id,domain_name)
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
