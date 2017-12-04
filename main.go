@@ -16,7 +16,7 @@ var (
 	getlog      = flag.String("g", "", "get jmeter or event logs")
 	channelname = flag.String("n", "", "channelname")
 	ccname      = flag.String("ccname", "", "chaincode name")
-	ccoutpath   = flag.String("ccoutpath", "", "chaincode path")
+	ccoutpath   = flag.String("ccoutpath", "", "chaincode .out path")
 	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode")
 	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
 	delete      = flag.String("d", "", "delete peer or kafka or zookeeper or all")
@@ -69,7 +69,7 @@ func main() {
 		}
 		err = cmd.JoinChannel(*channelname)
 	} else if *run == "installchaincode" {
-		if *ccname == "" || *ccoutpath == "" {
+		if *ccoutpath == "" {
 			flag.Usage()
 			fmt.Println("ccname or ccoutpath is nil")
 			os.Exit(1)
