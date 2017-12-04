@@ -27,10 +27,10 @@ services:
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.org{{.org_id}}.{{.peer_domain}}:7050
       {{end}}
       # improve env
-      - CORE_PEER_ID= peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
-      - CORE_PEER_ADDRESS= peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
-      - CORE_PEER_CHAINCODELISTENADDRESS= peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT= peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
+      - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
+      - CORE_PEER_ADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
+      - CORE_PEER_CHAINCODELISTENADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
       - CORE_PEER_LOCALMSPID=Org{{.org_id}}MSP
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
