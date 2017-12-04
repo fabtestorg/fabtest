@@ -13,7 +13,7 @@ var (
 	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api, jmeter, zabbix 'start node or api'")
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
-	getlog      = flag.String("g", "", "get jmeter logs")
+	getlog      = flag.String("g", "", "get jmeter or event logs")
 	channelname = flag.String("n", "", "channelname")
 	ccname      = flag.String("ccname", "", "chaincode name")
 	ccoutpath   = flag.String("ccoutpath", "", "chaincode path")
@@ -83,6 +83,8 @@ func main() {
 		err = cmd.RunChaincode(*ccname, *ccoutpath)
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog()
+	} else if *getlog == "event" {
+		err = cmd.GetEventServerLog()
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
 	} else {
