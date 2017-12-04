@@ -10,7 +10,8 @@ sys.setdefaultencoding('utf8')
 
 def generate_genesis_block(bin_path, cfg_path ,out_path):
     if not os.path.exists(out_path + "crypto-config"):
-        local("tar -zxvf crypto-config.tar.gz")
+        with lcd(out_path):
+            local("tar -zxvf crypto-config.tar.gz")
     if not os.path.exists(cfg_path + "core.yaml"):
         local("cp %s/core.yaml %s"%(bin_path, cfg_path))
     tool = bin_path + "configtxgen"
