@@ -29,6 +29,8 @@ def create_channel(bin_path, yaml_path, out_path, channel_name, domain_name):
 
     command = env + bin + param + tls
     local(command)
+    channel_block = channel_name + '.block'
+    local('mv %s %s'%(channel_block, channel_dir))
 
 def create_channeltx(bin_path, yaml_path, out_path, channel_name):
     bin = bin_path + "configtxgen"
