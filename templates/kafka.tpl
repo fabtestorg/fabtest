@@ -41,5 +41,4 @@ services:
       zk3.{{.kfk_domain}}: {{.zk_ip3}}
       zk4.{{.kfk_domain}}: {{.zk_ip4}}
       zk5.{{.kfk_domain}}: {{.zk_ip5}}
-      broker.finblockchain.cn: {{.broker_ip}}
-      blockchain.hoperun.com: {{.broker_ip}}
+
