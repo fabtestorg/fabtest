@@ -8,7 +8,7 @@ import (
 
 const (
 	Domain_Name     = "finblockchain.cn"
-	SshUserName     = "peersafe"
+	SshUserName     = "root"
 	SshPwd          = "dev1@peersafe"
 	TplZookeeper    = "./templates/zookeeper.tpl"
 	TplKafka        = "./templates/kafka.tpl"
