@@ -83,7 +83,7 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
     env = env + ' CORE_PEER_TLS_ROOTCERT_FILE=%s'%tls_root_file
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s'%msp_path
     env = env + ' CORE_PEER_TLS_ENABLED=true'
-    env = env + ' CORE_PEER_ADDRESS=%s'%peer_address
+    env = env + ' CORE_PEER_ADDRESS=%s  '%peer_address
     bin = bin_path + "peer"
     param = ' channel join -b %s/%s'%(channel_dir, channel_block)
 
