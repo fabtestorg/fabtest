@@ -2,6 +2,7 @@
 
 from fabric.api import cd,put,lcd,local,run,settings
 import sys
+import os
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -43,26 +44,30 @@ def start_api(peer_id, org_id, config_dir):
     name = "peer" + peer_id + "org" + org_id
     apiyamlname = name + "apiclient"
     eventyamlname = name + "eventclient"
+    parent_path  = os.path.dirname(config_dir)
     #apiserver
     with lcd(config_dir):
-        local("tar -zcvf %s.tar.gz %s.yaml"%(apiyamlname,apiyamlname))
+        local("cp %s.yaml ../source/fft_apiserver/")%apiyamlname
+        local("cp %s.yaml ../source/fft_apiserver/client_sdk.yaml")%apiyamlname
+    with lcd(parent_path):
+        local("tar -zcvf fft_apiserver.tar.gz fft_apiserver")
         #remote yaml
-        run("mkdir -p ~/fabtest/%s"%apiyamlname)
-        put("%s.tar.gz"%apiyamlname,"~/fabtest/%s"%apiyamlname)
-        local("rm %s.tar.gz"%apiyamlname)
-    with cd("~/fabtest/%s"%apiyamlname):
-        run("tar zxvfm %s.tar.gz"%apiyamlname)
-        run("rm %s.tar.gz"%apiyamlname)
-        run("docker-compose -f %s.yaml up -d"%apiyamlname)
+        run("mkdir -p ~/fabtest/")
+        put("fft_apiserver.tar.gz","~/fabtest")
+        local("rm fft_apiserver.tar.gz")
+    with cd("~/fabtest"):
+        run("tar zxvfm fft_apiserver.tar.gz")
+        run("rm fft_apiserver.tar.gz")
+        run("docker-compose -f fft_apiserver/docker-compose.yaml up -d")
 
     #eventserver
     with lcd(config_dir):
-        local("tar -zcvf %s.tar.gz eventserver"%eventyamlname)
         #remote yaml
-        run("mkdir -p ~/fabtest/%s"%eventyamlname)
-        put("%s.tar.gz"%eventyamlname,"~/fabtest/%s"%eventyamlname)
+        local("tar -zcvf %s.tar.gz %s.yaml"%(eventyamlname,eventyamlname))
+        put("%s.tar.gz"%eventyamlname,"~/event_server")
         local("rm %s.tar.gz"%eventyamlname)
-    with cd("~/fabtest/%s"%eventyamlname):
+    with cd("~/event_server"):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
+        run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
-        run("nohup %s &"%eventyamlname)
+        run("nohup ./eventserver > eventserver.log 2>&1")

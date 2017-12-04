@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "items": {
+        "id": "/items",
+        "properties": {
+            "BusinessNo": {
+                "id": "/items/properties/BusinessNo",
+                "type": "string"
+            },
+            "CreateBy": {
+                "id": "/items/properties/CreateBy",
+                "type": "string"
+            },
+            "CreateTime": {
+                "id": "/items/properties/CreateTime",
+                "type": "integer"
+            },
+            "CryptoAlgorithm": {
+                "id": "/items/properties/CryptoAlgorithm",
+                "type": "string"
+            },
+            "CryptoFlag": {
+                "id": "/items/properties/CryptoFlag",
+                "type": "integer"
+            },
+            "DocType": {
+                "id": "/items/properties/DocType",
+                "type": "string"
+            },
+            "FabricTxId": {
+                "id": "/items/properties/FabricTxId",
+                "type": "string"
+            },
+            "LastUpdateBy": {
+                "id": "/items/properties/LastUpdateBy",
+                "type": "string"
+            },
+            "LastUpdateTime": {
+                "id": "/items/properties/LastUpdateTime",
+                "type": "integer"
+            },
+            "Receiver": {
+                "id": "/items/properties/Receiver",
+                "items": {
+                    "id": "/items/properties/Receiver/items",
+                    "type": "string"
+                },
+                "type": "array"
+            },
+            "Sender": {
+                "id": "/items/properties/Sender",
+                "type": "string"
+            },
+            "TxData": {
+                "id": "/items/properties/TxData",
+                "type": "string"
+            }
+        },
+        "type": "object"
+    },
+    "type": "array"
+}
