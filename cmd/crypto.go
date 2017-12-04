@@ -171,7 +171,7 @@ func RunChaincode(ccname, channelName string) error {
 			peerid := value[PeerId].(string)
 			peer_address := "peer" + peerid + ".org" + orgid + "." + peerdomain + ":7051"
 			initparam := `'{"Args":["init"\,"a"\,"100"\,"b"\,"200"]}'`
-			policy := "\"OR  ('Org1MSP.member','Org2MSP.member')\""
+			policy := "\"OR  ('Org1MSP.member'\\,'Org2MSP.member')\""
 			if orgid == "1" && peerid == "0" {
 				err := obj.RunShow("instantiate_chaincode", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, initparam, policy)
 				if err != nil {

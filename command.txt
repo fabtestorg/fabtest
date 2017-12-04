@@ -26,7 +26,7 @@
 ./fabtest -r joinchannel -n testchannel
 
 8. 安装chaincode
-./fabtest -r installchaincode -ccoutpath ./config/factor.out
+./fabtest -r installchaincode -ccoutpath $PWD/config/factor.out
 
 9. 实例化chaincode
 ./fabtest -r runchaincode -ccname factor -n testchannel
