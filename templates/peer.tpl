@@ -50,6 +50,6 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-        orderer0.org{{.org_id}}.finblockchain.cn: {{.order_address}}
-        orderer1.org{{.org_id}}.finblockchain.cn: {{.order_address}}
+        orderer0.org{{.org_id}}.finblockchain.cn: {{.order0_address}}
+        orderer1.org{{.org_id}}.finblockchain.cn: {{.order1_address}}
 

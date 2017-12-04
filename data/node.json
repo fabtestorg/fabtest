@@ -12,46 +12,26 @@
     {"ip":"192.168.0.34","node_type":"kafka","kfk_id":"2","zk_ip1":"192.168.0.14","zk_ip2":"192.168.0.14","zk_ip3":"192.168.0.34","zk_ip4":"192.168.0.34","zk_ip5":"192.168.0.35","adver_address":"192.168.0.34:8092","blockchain_address":"192.168.0.34:9092"},
     {"ip":"192.168.0.35","node_type":"kafka","kfk_id":"3","zk_ip1":"192.168.0.14","zk_ip2":"192.168.0.14","zk_ip3":"192.168.0.34","zk_ip4":"192.168.0.34","zk_ip5":"192.168.0.35","adver_address":"192.168.0.35:8092","blockchain_address":"192.168.0.35:9092"},
 
-    {"ip":"192.168.0.16","apiip":"192.168.0.15","node_type":"peer","peer_id":"0","org_id":"1","order_address":"10.10.255.64",
-      "jmeter":{
-        "ip":"192.168.0.16",
-        "port":3333,
-        "thread_count":100,
-        "loop_count":500,
-        "throughput":"60.0"
-      }
-    },
-    {"ip":"192.168.0.16","apiip":"192.168.0.15","node_type":"peer","peer_id":"1","org_id":"1","order_address":"10.10.255.64",
-      "jmeter":{
-        "ip":"192.168.0.16",
-        "port":3333,
-        "thread_count":100,
-        "loop_count":500,
-        "throughput":"60.0"
-      }
-    },
     {"ip":"192.168.0.43","node_type":"order","order_id":"0","org_id":"1","broker_address":"10.10.255.64"},
     {"ip":"192.168.0.42","node_type":"order","order_id":"1","org_id":"1","broker_address":"10.10.255.64"},
 
-    {"ip":"192.168.0.16","apiip":"192.168.0.15","node_type":"peer","peer_id":"0","org_id":"2","order_address":"10.10.255.64",
+    {"ip":"192.168.0.41","apiip":"192.168.0.39","node_type":"peer","peer_id":"0","org_id":"1","order0_address":"192.168.0.43","order1_address":"192.168.0.42",
       "jmeter":{
-        "ip":"192.168.0.16",
+        "ip":"192.168.0.37",
         "port":3333,
         "thread_count":100,
         "loop_count":500,
         "throughput":"60.0"
       }
     },
-    {"ip":"192.168.0.16","apiip":"192.168.0.15","node_type":"peer","peer_id":"1","org_id":"2","order_address":"10.10.255.64",
+    {"ip":"192.168.0.40","apiip":"192.168.0.38","node_type":"peer","peer_id":"1","org_id":"1","order0_address":"192.168.0.43","order1_address":"192.168.0.42",
       "jmeter":{
-        "ip":"192.168.0.16",
+        "ip":"192.168.0.36",
         "port":3333,
         "thread_count":100,
         "loop_count":500,
         "throughput":"60.0"
       }
-    },
-    {"ip":"192.168.0.16","node_type":"order","order_id":"0","org_id":"2","broker_address":"10.10.255.64"},
-    {"ip":"192.168.0.16","node_type":"order","order_id":"1","org_id":"2","broker_address":"10.10.255.64"}
+    }
   ]
 }
