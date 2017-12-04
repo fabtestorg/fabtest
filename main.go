@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	file        = flag.String("f", "", "configtx, crypto-config, node, client, jmeter ' create yaml file '")
-	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api, jmeter 'start node or api'")
+	file        = flag.String("f", "", "configtx, crypto-config, node, client, jmeter, zabbix ' create yaml file '")
+	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api, jmeter, zabbix 'start node or api'")
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
 	getlog      = flag.String("g", "", "get jmeter logs")
@@ -27,12 +27,16 @@ func main() {
 	if *file != "" {
 		if *file == "jmeter" {
 			err = cmd.CreateJmeterConfig()
+		} else if *file == "zabbix" {
+			err = cmd.CreateZabbixConfig()
 		} else {
 			err = cmd.CreateYamlByJson(*file)
 		}
 	} else if *start != "" {
 		if *start == "jmeter" {
 			err = cmd.StartJmeter()
+		} else if *start == "zabbix" {
+			err = cmd.StartZabbix()
 		} else {
 			err = cmd.StartNode(*start)
 		}
