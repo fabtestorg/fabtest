@@ -99,3 +99,30 @@ func LoadImage(stringType string) error {
 	}
 	return nil
 }
+
+
+
+func DeleteNode(stringType string) error {
+	inputData := GetJsonMap("node.json")
+	peerdomain := inputData[PeerDomain].(string)
+	kfkdomain := inputData[KfkDomain].(string)
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		value[PeerDomain] = peerdomain
+		value[KfkDomain] = kfkdomain
+		nodeType := value[NodeType].(string)
+		if nodeType != stringType && stringType != "all"{
+			continue
+		}
+
+		//启动节点
+		obj := NewFabCmd("removenode.py", value[IP].(string))
+		err := obj.RunShow("remove_node", stringType)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

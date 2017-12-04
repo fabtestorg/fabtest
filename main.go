@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/peersafe/fabtest/cmd"
+	"golang.org/x/net/html/atom"
 )
 
 var (
@@ -19,6 +20,7 @@ var (
 	ccoutpath   = flag.String("ccoutpath", "", "chaincode path")
 	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode")
 	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
+	delete      = flag.String("d", "", "delete peer or kafka or zookeeper or all")
 )
 
 func main() {
@@ -87,6 +89,8 @@ func main() {
 		err = cmd.GetEventServerLog()
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
+	} else if *delete != "" {
+		err = cmd.DeleteNode(*delete)
 	} else {
 		fmt.Println("Both data and file are nil.")
 		flag.Usage()
