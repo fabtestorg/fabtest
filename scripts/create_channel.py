@@ -56,7 +56,7 @@ def update_anchor(bin_path, yaml_path, out_path, channel_name, msp_id, domain_na
     msp_path = yaml_path + "crypto-config/peerOrganizations/org1.%s/users/Admin@org1.%s/msp"%(domain_name,domain_name)
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
     env = env + ' CORE_PEER_LOCALMSPID=Org1MSP'
-    env = env + ' CORE_PEER_MSPCONFIGPATH=%s'%msp_path
+    env = env + ' CORE_PEER_MSPCONFIGPATH=%s '%msp_path
     bin = bin_path + "peer"
     param = ' channel update -o %s -c %s -f %s/%sanchors.tx'%(order_address, channel_name, channel_dir, msp_id)
     tls = ' --tls --cafile %s'%order_tls_path
@@ -83,7 +83,7 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
     env = env + ' CORE_PEER_TLS_ROOTCERT_FILE=%s'%tls_root_file
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s'%msp_path
     env = env + ' CORE_PEER_TLS_ENABLED=true'
-    env = env + ' CORE_PEER_ADDRESS=%s  '%peer_address
+    env = env + ' CORE_PEER_ADDRESS=%s '%peer_address
     bin = bin_path + "peer"
     param = ' channel join -b %s/%s'%(channel_dir, channel_block)
 
