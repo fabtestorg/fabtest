@@ -90,7 +90,7 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
 
 def put_cryptoconfig(config_path, type):
     run("mkdir -p ~/fabTestData")
-    if type == "orderer":
+    if type == "order":
         put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
         put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
         put("%s/kafkaTLSclient.tar.gz"%config_path, "~/fabTestData/")
