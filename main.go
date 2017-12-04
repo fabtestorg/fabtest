@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/peersafe/fabtest/cmd"
-	"golang.org/x/net/html/atom"
 )
 
 var (
