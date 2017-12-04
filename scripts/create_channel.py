@@ -90,17 +90,19 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
 
 def put_cryptoconfig(config_path, type):
     run("mkdir -p ~/fabTestData")
-    with cd("~/fabTestData")
-        if type == "orderer":
-            put("%s/order-crypto-config.tar.gz"%config_path, "~/fabTestData/")
-            put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
-            put("%s/kafkaTLSclient.tar.gz"%config_path, "~/fabTestData/")
-            run("tar zxvfm %s/order-crypto-config.tar.gz"%"~/fabTestData/")
-            run("tar zxvfm %s/channel-artifacts.tar.gz"%"~/fabTestData/")
-            run("tar zxvfm %s/kafkaTLSclient.tar.gz"%"~/fabTestData/")
-        elif type == "kafka":
-            put("%s/kafkaTLSserver.tar.gz"%config_path, "~/fabTestData/")
-            run("tar zxvfm %s/kafkaTLSserver.tar.gz"%"~/fabTestData/")
-        elif type == "peer":
-            put("%s/peer-crypto-config.tar.gz"%config_path, "~/fabTestData/")
-            run("tar zxvfm %s/peer-crypto-config.tar.gz"%"~/fabTestData/")
+    if type == "orderer":
+        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
+        put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
+        put("%s/kafkaTLSclient.tar.gz"%config_path, "~/fabTestData/")
+        with cd("~/fabTestData"):
+            run("tar zxvfm crypto-config.tar.gz")
+            run("tar zxvfm channel-artifacts.tar.gz")
+            run("tar zxvfm kafkaTLSclient.tar.gz")
+    elif type == "kafka":
+        put("%s/kafkaTLSserver.tar.gz"%config_path, "~/fabTestData/")
+        with cd("~/fabTestData"):
+            run("tar zxvfm kafkaTLSserver.tar.gz")
+    elif type == "peer":
+        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
+        with cd("~/fabTestData"):
+            run("tar zxvfm crypto-config.tar.gz")

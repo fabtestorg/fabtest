@@ -199,7 +199,7 @@ func PutCryptoConfig() error {
 		nodeType := value[NodeType].(string)
 		if nodeType == TypePeer || nodeType == TypeOrder || nodeType == TypeKafka {
 			obj := NewFabCmd("create_channel.py", value[IP].(string))
-			err := obj.RunShow("put_cryptoconfig", SourceDir(), nodeType)
+			err := obj.RunShow("put_cryptoconfig", ConfigDir(), nodeType)
 			if err != nil {
 				return err
 			}

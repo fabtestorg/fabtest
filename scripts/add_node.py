@@ -47,8 +47,8 @@ def start_api(peer_id, org_id, config_dir):
     parent_path  = os.path.dirname(config_dir)
     #apiserver
     with lcd(config_dir):
-        local("cp %s.yaml ../source/fft_apiserver/")%apiyamlname
-        local("cp %s.yaml ../source/fft_apiserver/client_sdk.yaml")%apiyamlname
+        local("cp %s.yaml fft_apiserver/")%apiyamlname
+        local("cp %s.yaml fft_apiserver/client_sdk.yaml")%apiyamlname
     with lcd(parent_path):
         local("tar -zcvf fft_apiserver.tar.gz fft_apiserver")
         #remote yaml

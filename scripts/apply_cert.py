@@ -3,19 +3,23 @@
 
 import sys
 import os
-from fabric.api import local
+from fabric.api import local, lcd
 
 reload(sys)
 sys.setdefaultencoding('utf8')
 
 def generate_genesis_block(bin_path, cfg_path ,out_path):
+    if not os.path.exists(out_path + "crypto-config"):
+        local("tar -zxvf crypto-config.tar.gz")
     if not os.path.exists(cfg_path + "core.yaml"):
         local("cp %s/core.yaml %s"%(bin_path, cfg_path))
     tool = bin_path + "configtxgen"
-    out_path = out_path + "channel-artifacts"
-    local("mkdir -p %s"%out_path)
+    channel_path = out_path + "channel-artifacts"
+    local("mkdir -p %s"%channel_path)
     env = "FABRIC_CFG_PATH=%s"%cfg_path
-    local("%s %s -profile OrgsOrdererGenesis -outputBlock %s/genesis.block"%(env,tool,out_path))
+    local("%s %s -profile OrgsOrdererGenesis -outputBlock %s/genesis.block"%(env,tool,channel_path))
+    with lcd(out_path):
+        local("tar -zcvf channel-artifacts.tar.gz channel-artifacts")
 
 ## Generates orderer Org certs using cryptogen tool
 def generate_certs(bin_path, cfg_path ,out_path):

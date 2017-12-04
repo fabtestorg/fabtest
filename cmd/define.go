@@ -59,10 +59,6 @@ func ConfigDir() string{
 	return os.Getenv("PWD") +  "/config/"
 }
 
-func SourceDir() string{
-	return os.Getenv("PWD") +  "/source/"
-}
-
 func InputDir() string{
 	return os.Getenv("PWD") +  "/data/"
 }
