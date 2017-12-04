@@ -18,16 +18,16 @@
 ./fabtest -s peer
 
 5. 创建channel
-./fabtest -c channel -channelname testchannel
+./fabtest -c channel -n testchannel
 6. 更新锚节点
-./fabtest -r updateanchor -channelname testchannel
+./fabtest -r updateanchor -n testchannel
 
 7. peer 加入channel
-./fabtest -r joinchannel -channelname testchannel
+./fabtest -r joinchannel -n testchannel
 
 8. 安装chaincode
 ./fabtest -r installchaincode -ccoutpath ./config/factor.out
 
 9. 实例化chaincode
-./fabtest -r runchaincode -ccname factor -channelname testchannel
+./fabtest -r runchaincode -ccname factor -n testchannel
 
