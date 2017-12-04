@@ -1,6 +1,8 @@
 {
   "peer_domain":"finblockchain.cn",
   "kfk_domain":"hoperun.com",
+  "zabbix_server_ip":"192.168.0.31",
+  "zabbix_server_port":"10056",
   "list":[
     {"ip":"192.168.0.16","node_type":"zookeeper","zk_id":"1","zk_2_id":"2","ip3":"192.168.0.4","ip4":"192.168.0.4","ip5":"192.168.0.4"},
     {"ip":"192.168.0.16","node_type":"zookeeper","zk_id":"3","zk_2_id":"4","ip1":"192.168.0.4","ip2":"192.168.0.4","ip5":"192.168.0.4"},

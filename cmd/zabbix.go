@@ -5,14 +5,14 @@ import (
 )
 
 const (
-	zabbix_server_ip   = "192.168.0.31"
-	zabbix_server_port = "10056"
-	TplZabbixConfig    = "./templates/zabbix-agent.tpl"
+	TplZabbixConfig = "./templates/zabbix-agent.tpl"
 )
 
 func CreateZabbixConfig() error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
+	server_ip := inputData[ZabbixServerIp].(string)
+	server_port := inputData[ZabbixServerPort].(string)
 	dir := ConfigDir()
 	ipMap := make(map[string]struct{})
 	for _, param := range list {
@@ -22,8 +22,8 @@ func CreateZabbixConfig() error {
 			continue
 		}
 		err := tpl.Handler(map[string]string{
-			"server_ip":   zabbix_server_ip,
-			"server_port": zabbix_server_port,
+			"server_ip":   server_ip,
+			"server_port": server_port,
 			"agent_ip":    ip,
 			"agent_name":  ip,
 		}, TplZabbixConfig, dir+ip+".conf")
