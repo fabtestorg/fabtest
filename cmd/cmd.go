@@ -72,7 +72,10 @@ func (c *FabCmd) FileRun(fileName, function string, args ...string) ([]byte, err
 	} else if function == "" {
 		return nil, fmt.Errorf("function name is empty")
 	}
-	arg := function + ":" + strings.Join(args, ",")
+	arg := function
+	if len(args) != 0 {
+		arg += ":" + strings.Join(args, ",")
+	}
 	_args := append(c.args, fileName, arg)
 	cmd := exec.Command("fab", _args...)
 	cmd.Dir = c.dir
