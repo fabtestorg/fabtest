@@ -63,10 +63,6 @@ func (c *FabCmd) RunShow(function string, args ...string) error {
 }
 
 func (c *FabCmd) FileRun(fileName, function string, args ...string) ([]byte, error) {
-	fmt.Println("***************************************************************************")
-	fmt.Println("FileName:", fileName)
-	fmt.Println("Function:", function)
-	fmt.Println("Args:", args)
 	if fileName == "" {
 		return nil, fmt.Errorf("fileName is empty")
 	} else if function == "" {
@@ -77,6 +73,8 @@ func (c *FabCmd) FileRun(fileName, function string, args ...string) ([]byte, err
 		arg += ":" + strings.Join(args, ",")
 	}
 	_args := append(c.args, fileName, arg)
+	fmt.Println("***************************************************************************")
+	fmt.Println("fab:", _args)
 	cmd := exec.Command("fab", _args...)
 	cmd.Dir = c.dir
 	var stdout bytes.Buffer
