@@ -72,4 +72,4 @@ def start_api(peer_id, org_id, config_dir):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
         run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
-        run("./nohup.sh")
+        run("chmod +x nohup.sh && ./nohup.sh")
