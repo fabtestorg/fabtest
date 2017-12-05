@@ -14,8 +14,6 @@ logging:
 #
 ###############################################################################
 client:
-    tls:
-      enabled: true
     peers:
         # peer0
         - address: "{{.ip}}:7051"
@@ -25,18 +23,18 @@ client:
           localMspId: Org{{.org_id}}MSP
           tls:
               # Certificate location absolute path
-              certificate: "./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
+              certificate: "/root/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
               serverHostOverride: "peer{{.peer_id}}"
 
     orderer:
         {{if eq .peer_id "0"}}
-        - address: "{{.order0_address}}:7050"
+        address: "{{.order0_address}}:7050"
         {{else if eq .peer_id "1"}}
-        - address: "{{.order1_address}}:7050"
+        address: "{{.order1_address}}:7050"
         {{end}}
           tls:
             # Certificate location absolute path
-            certificate: "./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
+            certificate: "/root/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
             serverHostOverride: "orderer{{.peer_id}}"
 ###############################################################################
 #
@@ -62,6 +60,11 @@ peer:
     mspConfigPath: /root/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId: Org{{.org_id}}MSP
 
+chaincode:
+    id:
+        name: factor
+        version: "1.0"
+        chainID: testchannel
 user:
     alias: zhengfu998
 ###############################################################################
