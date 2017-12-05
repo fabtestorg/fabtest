@@ -15,20 +15,26 @@ func CreateZabbixConfig() error {
 	server_port := inputData[ZabbixServerPort].(string)
 	dir := ConfigDir()
 	ipMap := make(map[string]struct{})
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		ip := value[IP].(string)
+	generateConfig := func(ip string) error {
 		if _, ok := ipMap[ip]; ok {
-			continue
+			return nil
 		}
-		err := tpl.Handler(map[string]string{
+		ipMap[ip] = struct{}{}
+		return tpl.Handler(map[string]string{
 			"server_ip":   server_ip,
 			"server_port": server_port,
 			"agent_ip":    ip,
 			"agent_name":  ip,
 		}, TplZabbixConfig, dir+ip+".conf")
-		if err != nil {
+	}
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		if err := generateConfig(value[IP].(string)); err != nil {
 			return err
+		} else if ip, ok := value[APIIP].(string); ok {
+			if err := generateConfig(ip); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
@@ -39,20 +45,26 @@ func StartZabbix() error {
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
 	ipMap := make(map[string]struct{})
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		ip := value[IP].(string)
+	start := func(ip string) error {
 		if _, ok := ipMap[ip]; ok {
-			continue
+			return nil
 		}
+		ipMap[ip] = struct{}{}
 		obj := NewFabCmd("zabbix.py", ip)
 		err := obj.RunShow("cp_zabbix_config", ip, dir)
 		if err != nil {
 			return err
 		}
-		err = obj.RunShow("start_zabbix")
-		if err != nil {
+		return obj.RunShow("start_zabbix")
+	}
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		if err := start(value[IP].(string)); err != nil {
 			return err
+		} else if ip, ok := value[APIIP].(string); ok {
+			if err := start(ip); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
