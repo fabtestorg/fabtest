@@ -51,11 +51,7 @@ func StartZabbix() error {
 		}
 		ipMap[ip] = struct{}{}
 		obj := NewFabCmd("zabbix.py", ip)
-		err := obj.RunShow("cp_zabbix_config", ip, dir)
-		if err != nil {
-			return err
-		}
-		return obj.RunShow("start_zabbix")
+		return obj.RunShow("start_zabbix", ip, dir)
 	}
 	for _, param := range list {
 		value := param.(map[string]interface{})
