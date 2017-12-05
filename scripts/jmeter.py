@@ -23,7 +23,7 @@ def cp_jmeter_config(yaml_name, config_dir):
 def start_jmeter(yaml_name):
     dir_name = "jmeter_config"
     with cd("~/fabtest/%s"%dir_name):
-        run("jmeter -n -t %s.jmx -l %s.jtl"%(yaml_name,yaml_name))
+        run("~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl"%(yaml_name,yaml_name))
 
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir):
