@@ -17,7 +17,7 @@ func StartNode(stringType string) error {
 		value[KfkDomain] = kfkdomain
 		nodeType := value[NodeType].(string)
 		if nodeType != stringType {
-			if stringType == "api" && nodeType == TypePeer{
+			if stringType == "api" && nodeType == TypePeer {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
@@ -100,9 +100,7 @@ func LoadImage(stringType string) error {
 	return nil
 }
 
-
-
-func DeleteNode(stringType string) error {
+func DeleteObj(stringType string) error {
 	inputData := GetJsonMap("node.json")
 	peerdomain := inputData[PeerDomain].(string)
 	kfkdomain := inputData[KfkDomain].(string)
@@ -112,15 +110,21 @@ func DeleteNode(stringType string) error {
 		value[PeerDomain] = peerdomain
 		value[KfkDomain] = kfkdomain
 		nodeType := value[NodeType].(string)
-		if nodeType != stringType && stringType != "all"{
-			continue
-		}
-
-		//启动节点
-		obj := NewFabCmd("removenode.py", value[IP].(string))
-		err := obj.RunShow("remove_node", stringType)
-		if err != nil {
-			return err
+		if nodeType == stringType{
+			//删除节点
+			obj := NewFabCmd("removenode.py", value[IP].(string))
+			err := obj.RunShow("remove_node", stringType)
+			if err != nil {
+				return err
+			}
+		} else if stringType == TypeApi || stringType == "all"{
+			if nodeType == TypePeer {
+				obj := NewFabCmd("removenode.py", value[APIIP].(string))
+				err := obj.RunShow("remove_client")
+				if err != nil {
+					return err
+				}
+			}
 		}
 	}
 
