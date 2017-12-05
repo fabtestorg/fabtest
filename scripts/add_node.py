@@ -66,10 +66,10 @@ def start_api(peer_id, org_id, config_dir):
         local("tar -zcvf %s.tar.gz %s.yaml"%(eventyamlname,eventyamlname))
         put("%s.tar.gz"%eventyamlname,"~/event_server")
         put("current.info","~/event_server")
+        put("nohup.sh","~/event_server")
         local("rm %s.tar.gz"%eventyamlname)
     with cd("~/event_server"):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
         run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
-        aa = run("nohup ./eventserver > eventserver.log 2>&1 &")
-        sys.stdout.write(aa)
+        run("./nohup.sh")
