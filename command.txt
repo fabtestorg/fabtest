@@ -36,3 +36,16 @@
 
 10. 启动api, event
 ./fabtest -s api
+
+11. 修改node.json  jmeter相关配置
+#生成jmeter 配置文件
+./fabtest -f jmeter
+
+12. 运行jmeter
+./fabtest -s jmeter
+
+13. 获取eventlog  50线程 循环50次
+./fabtest -g event -gn 50_50
+
+13. 分析获取的eventlog  50线程 循环50次
+./fabtest -a event -gn 50_50
