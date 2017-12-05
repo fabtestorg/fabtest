@@ -30,4 +30,4 @@ def get_jmeter_log(yaml_name, config_dir):
 def get_eventserver_log(yaml_name, config_dir):
     with cd("~/event_server"):
         local("mkdir -p %s/event_logs"%config_dir)
-        get('eventserver.log', '%s/event_logs/%s_eventserver.log'%(config_dir,yaml_name))
+        get('eventserver.log','%s/event_logs/%s_eventserver.log'%(config_dir,yaml_name))
