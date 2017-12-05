@@ -49,3 +49,6 @@
 
 13. 分析获取的eventlog  50线程 循环50次
 ./fabtest -a event -gn 50_50
+
+14. 停止或启动节点
+./fabtest -op start/stop
