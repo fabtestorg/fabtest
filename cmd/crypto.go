@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/peersafe/fabtest/tpl"
+	"time"
 )
 
 func CreateCert() error {
@@ -177,6 +178,7 @@ func RunChaincode(ccname, channelName string) error {
 				if err != nil {
 					return err
 				}
+				time.Sleep(1*time.Second)
 			} else {
 				txargs := `'{"Args":["query"\,"a"]}'`
 				err := obj.RunShow("test_query_tx", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, txargs)
