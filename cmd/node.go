@@ -111,20 +111,56 @@ func DeleteObj(stringType string) error {
 		value[PeerDomain] = peerdomain
 		value[KfkDomain] = kfkdomain
 		nodeType := value[NodeType].(string)
-		if nodeType == stringType{
+		if nodeType == stringType {
 			//删除节点
 			obj := NewFabCmd("removenode.py", value[IP].(string))
 			err := obj.RunShow("remove_node", stringType)
 			if err != nil {
 				return err
 			}
-		} else if stringType == TypeApi || stringType == "all"{
+		} else if stringType == TypeApi || stringType == "all" {
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
 				if err != nil {
 					return err
 				}
+			}
+		}
+	}
+
+	return nil
+}
+
+func OperationNode(cmdstr string) error {
+	inputData := GetJsonMap("node.json")
+	peerdomain := inputData[PeerDomain].(string)
+	kfkdomain := inputData[KfkDomain].(string)
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		value[PeerDomain] = peerdomain
+		value[KfkDomain] = kfkdomain
+		nodeType := value[NodeType].(string)
+		if nodeType == TypePeer || nodeType == TypeOrder {
+			var nodeId, yamlname string
+			if nodeType == TypeOrder {
+				nodeId = value[OrderId].(string)
+				yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
+			}else if nodeType == TypePeer {
+				nodeId = value[PeerId].(string)
+				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
+			}
+			//删除节点
+			obj := NewFabCmd("add_node.py", value[IP].(string))
+			var err error
+			if cmdstr == "stop" {
+				err = obj.RunShow("stop_node", nodeType, nodeId, yamlname)
+			} else if cmdstr == "start" {
+				err = obj.RunShow("restart_node", nodeType, nodeId, yamlname)
+			}
+			if err != nil {
+				return err
 			}
 		}
 	}

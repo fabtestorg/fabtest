@@ -82,3 +82,16 @@ def kill_process(name):
         pid_list = pids.split('\r\n')
         for i in pid_list:
             run('kill -9 %s' % i)
+
+
+def stop_node(type, node_id, yaml_name):
+    dir_name = type + node_id
+    #start container
+    with cd("~/fabtest/%s"%dir_name):
+        run("docker-compose -f %s.yaml stop"%yaml_name)
+
+def restart_node(type, node_id, yaml_name):
+    dir_name = type + node_id
+    #start container
+    with cd("~/fabtest/%s"%dir_name):
+        run("docker-compose -f %s.yaml start"%yaml_name)

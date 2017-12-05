@@ -14,7 +14,7 @@ var (
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
 	getlog      = flag.String("g", "", "get jmeter or event logs")
-	logdir      = flag.String("gn","", "log dir name eg: 50_50  loop 50*50")
+	logdir      = flag.String("gn", "", "log dir name eg: 50_50  loop 50*50")
 	channelname = flag.String("n", "", "channelname")
 	ccname      = flag.String("ccname", "", "chaincode name")
 	ccoutpath   = flag.String("ccoutpath", "", "chaincode .out path")
@@ -22,6 +22,7 @@ var (
 	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
 	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
 	analyse     = flag.String("a", "", "event analyse")
+	operation    = flag.String("op", "", "operation node  eg: start or stop")
 )
 
 func main() {
@@ -87,7 +88,7 @@ func main() {
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog()
 	} else if *getlog == "event" {
-		if *logdir == ""{
+		if *logdir == "" {
 			flag.Usage()
 			fmt.Println("logdir is nil")
 			os.Exit(1)
@@ -98,12 +99,14 @@ func main() {
 	} else if *deleteobj != "" {
 		err = cmd.DeleteObj(*deleteobj)
 	} else if *analyse != "" {
-		if *logdir == ""{
+		if *logdir == "" {
 			flag.Usage()
 			fmt.Println("logdir is nil")
 			os.Exit(1)
 		}
 		err = cmd.EventAnalyse(*logdir)
+	} else if *operation != "" {
+		err = cmd.OperationNode(*operation)
 	} else {
 		fmt.Println("Both data and file are nil.")
 		flag.Usage()
