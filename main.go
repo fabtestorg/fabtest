@@ -19,7 +19,8 @@ var (
 	ccoutpath   = flag.String("ccoutpath", "", "chaincode .out path")
 	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode")
 	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
-	delete      = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
+	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
+	analyse     = flag.String("a", "", "event analyse")
 )
 
 func main() {
@@ -88,8 +89,10 @@ func main() {
 		err = cmd.GetEventServerLog()
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
-	} else if *delete != "" {
-		err = cmd.DeleteObj(*delete)
+	} else if *deleteobj != "" {
+		err = cmd.DeleteObj(*deleteobj)
+	} else if *analyse != "" {
+		err = cmd.EventAnalyse()
 	} else {
 		fmt.Println("Both data and file are nil.")
 		flag.Usage()
