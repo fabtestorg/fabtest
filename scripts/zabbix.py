@@ -12,10 +12,10 @@ def cp_zabbix_config(config_name, config_dir):
     with lcd(config_dir):
         local("tar -zcvf %s.tar.gz %s.conf" % (config_name, config_name))
         #remote yaml
-        run("mkdir -p ~/fabtest/%s"%dir_name)
+        # run("mkdir -p /etc/%s"%dir_name)/
         put("%s.tar.gz" %config_name, "/etc/%s/"%dir_name)
         local("rm %s.tar.gz" % config_name)
-    with cd("~/fabtest/%s"%dir_name):
+    with cd("/etc/%s"%dir_name):
         run("tar zxvfm %s.tar.gz" %config_name)
         run("rm %s.tar.gz" %config_name)
         run("mv %s.conf zabbix-agent.conf"%config_name)
