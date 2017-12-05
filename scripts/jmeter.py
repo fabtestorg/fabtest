@@ -28,6 +28,5 @@ def get_jmeter_log(yaml_name, config_dir):
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir):
-    with cd("~/event_server"):
-        local("mkdir -p %s/event_logs"%config_dir)
-        get('eventserver.log','%s/event_logs/%s_eventserver.log'%(config_dir,yaml_name))
+    local("mkdir -p %s/event_logs"%config_dir)
+    get('~/event_server/eventserver.log','%s/event_logs/%s_eventserver.log'%(config_dir,yaml_name))
