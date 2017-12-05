@@ -22,6 +22,4 @@ def cp_zabbix_config(config_name, config_dir):
 
 #start remote zabbix
 def start_zabbix():
-    dir_name = "zabbix"
-    with cd("~/fabtest/%s"%dir_name):
-        run("systemctl restart zabbix-agent")
+    run("systemctl restart zabbix-agent")
