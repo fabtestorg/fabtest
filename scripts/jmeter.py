@@ -7,18 +7,20 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 #cp jmeter config to remote
-def start_jmeter(yaml_name, config_dir):
+def start_jmeter(file_name, config_dir):
     dir_name = "jmeter_config"
     with lcd(config_dir):
-        local("tar -zcvf %s.tar.gz %s.jmx"%(yaml_name,yaml_name))
+        local("tar -zcvf %s.tar.gz %s.jmx" % (file_name, file_name))
         #remote yaml
         run("mkdir -p ~/fabtest/%s"%dir_name)
-        put("%s.tar.gz"%yaml_name,"~/fabtest/%s"%dir_name)
-        local("rm %s.tar.gz"%yaml_name)
+        put("%s.tar.gz" % file_name, "~/fabtest/%s" % dir_name)
+        local("rm %s.tar.gz" % file_name)
     with cd("~/fabtest/%s"%dir_name):
-        run("tar zxvfm %s.tar.gz"%yaml_name)
-        run("rm %s.tar.gz"%yaml_name)
-        run("~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl &"%(yaml_name,yaml_name))
+        run("tar zxvfm %s.tar.gz" % file_name)
+        run("rm %s.tar.gz" % file_name)
+        # run("~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl &"%(yaml_name,yaml_name))
+        cd("~/jmeter/apache-jmeter-3.2/bin/")
+        run("./jmeter -n -t ~/fabtest/%s/%s.jmx -l %s.jtl &" % (dir_name, file_name, file_name))
 
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir):
