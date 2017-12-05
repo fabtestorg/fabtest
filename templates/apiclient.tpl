@@ -78,4 +78,10 @@ user:
 
 apiserver:
     listenport: 5555
+    {{if eq .peer_id "0"}}
+    probe_order: "{{.order0_address}} 7050"
+    {{else if eq .peer_id "1"}}
+    probe_order: "{{.order0_address}} 7050"
+    {{end}}
+
 
