@@ -5,6 +5,9 @@
 #peer,order,zk,kfk yaml
 ./fabtest -f node
 
+#api , event client_sdk.yaml
+./fabtest -f client
+
 2. 生成 创世区块
 ./fabtest -c genesisblock
 
@@ -31,3 +34,5 @@
 9. 实例化chaincode
 ./fabtest -r runchaincode -ccname factor -n testchannel
 
+10. 启动api, event
+./fabtest -s api

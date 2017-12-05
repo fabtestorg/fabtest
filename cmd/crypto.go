@@ -206,6 +206,13 @@ func PutCryptoConfig() error {
 			if err != nil {
 				return err
 			}
+			if nodeType == TypePeer {
+				obj := NewFabCmd("create_channel.py", value[APIIP].(string))
+				err := obj.RunShow("put_cryptoconfig", ConfigDir(), TypeApi)
+				if err != nil {
+					return err
+				}
+			}
 		}
 	}
 	return nil

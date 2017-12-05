@@ -23,6 +23,7 @@ const (
 	TypeOrder     = "order"
 	TypeKafka     = "kafka"
 	TypeZookeeper = "zookeeper"
+	TypeApi = "api"
 
 	PeerDomain = "peer_domain"
 	KfkDomain = "kfk_domain"

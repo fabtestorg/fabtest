@@ -15,13 +15,13 @@ logging:
 #
 ###############################################################################
 peer:
-    listenAddress: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7053
+    listenAddress: {{.ip}}:7053
     gomaxprocs: -1
     workers: 2
     tls:
         enabled: true
         rootcert:
-            file: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
+            file: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
         serverhostoverride: peer{{.peer_id}}
     BCCSP:
         Default: SW
@@ -30,7 +30,7 @@ peer:
             Security: 256
             FileKeyStore:
                 KeyStore:
-    mspConfigPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
+    mspConfigPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId: Org{{.org_id}}MSP
 
 user:
@@ -42,7 +42,6 @@ user:
 ###############################################################################
 other:
     mq_address:
-      - "amqp://testpoc:123456@10.10.255.71:5672/"
-      - "amqp://testpoc:123456@10.10.255.72:5672/"
+      - "amqp://guest:guest@{{.apiip}}:5672/"
     queue_name: "fftQueue"
     system_queue_name: "sys_fftQueue"

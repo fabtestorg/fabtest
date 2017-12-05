@@ -108,3 +108,7 @@ def put_cryptoconfig(config_path, type):
         put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
         with cd("~/fabTestData"):
             run("tar zxvfm crypto-config.tar.gz")
+    elif type == "api":
+        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
+        with cd("~/fabTestData"):
+            run("tar zxvfm crypto-config.tar.gz")

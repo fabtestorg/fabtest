@@ -19,21 +19,21 @@ client:
       enabled: true
     peers:
         # peer0
-        - address: "peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051"
-          eventHost: "peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}"
+        - address: "{{.ip}}:7051"
+          eventHost: "{{.ip}}"
           eventPort: 7053
           primary: true
           localMspId: Org{{.org_id}}MSP
           tls:
               # Certificate location absolute path
-              certificate: "./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
+              certificate: "~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
               serverHostOverride: "peer{{.peer_id}}"
 
     orderer:
-        - address: "orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050"
+        - address: "{{.order{{.peer_id}}_address}}:7050"
           tls:
             # Certificate location absolute path
-            certificate: "./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
+            certificate: "~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
             serverHostOverride: "orderer{{.peer_id}}"
 ###############################################################################
 #
@@ -41,13 +41,13 @@ client:
 #
 ###############################################################################
 peer:
-    listenAddress: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7053
+    listenAddress: {{.ip}}:7053
     gomaxprocs: -1
     workers: 2
     tls:
         enabled: true
         rootcert:
-            file: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
+            file: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
         serverhostoverride: peer{{.peer_id}}
     BCCSP:
         Default: SW
@@ -56,7 +56,7 @@ peer:
             Security: 256
             FileKeyStore:
                 KeyStore:
-    mspConfigPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
+    mspConfigPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId: Org{{.org_id}}MSP
 ###############################################################################
 #
@@ -65,12 +65,12 @@ peer:
 ###############################################################################
 chaincode:
     id:
-        name: ccname
+        name: factor
         version: "1.0"
-        chainID: channelname
+        chainID: testchannel
 
 user:
     alias: zhengfu998
 
 apiserver:
-    listenport: {{.apiport}}
+    listenport: 5555
