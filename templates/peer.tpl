@@ -22,9 +22,9 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCD=100
       {{if eq .peer_id "0"}}
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.org{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       {{else if eq .peer_id "1"}}
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.org{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
       {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
@@ -50,6 +50,6 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-        orderer0.org{{.org_id}}.finblockchain.cn: {{.order0_address}}
-        orderer1.org{{.org_id}}.finblockchain.cn: {{.order1_address}}
+        orderer0.ord{{.org_id}}.finblockchain.cn: {{.order0_address}}
+        orderer1.ord{{.org_id}}.finblockchain.cn: {{.order1_address}}
 
