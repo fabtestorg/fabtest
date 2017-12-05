@@ -19,8 +19,8 @@
       "jmeter":{
         "ip":"192.168.0.37",
         "port":3333,
-        "thread_count":100,
-        "loop_count":500,
+        "thread_count":1,
+        "loop_count":1,
         "throughput":"60.0"
       }
     },
@@ -28,8 +28,8 @@
       "jmeter":{
         "ip":"192.168.0.36",
         "port":3333,
-        "thread_count":100,
-        "loop_count":500,
+        "thread_count":1,
+        "loop_count":1,
         "throughput":"60.0"
       }
     }
