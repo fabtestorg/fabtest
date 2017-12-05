@@ -26,6 +26,7 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
+				continue
 			} else if stringType != "all" {
 				continue
 			}
