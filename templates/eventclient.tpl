@@ -45,4 +45,4 @@ other:
       - "amqp://guest:guest@{{.apiip}}:5672/"
     queue_name: "fftQueue"
     system_queue_name: "sys_fftQueue"
-    
+
