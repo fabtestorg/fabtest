@@ -1,6 +1,7 @@
 #!/bin/python
 
 import sys
+import os
 from fabric.api import cd, put, lcd, local, run, get
 
 reload(sys)
@@ -28,7 +29,10 @@ def get_jmeter_log(yaml_name, config_dir):
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
-    local("mkdir -p %s/event_logs/%s"%(config_dir,log_dir))
+    dir = "%sevent_logs/%s"%(config_dir,log_dir)
+    if os.path.exists(dir):
+        local("rm -rf %s"%dir)
+    local("mkdir -p %sevent_logs/%s"%(config_dir,log_dir))
     get('~/event_server/eventserver.log','%s/event_logs/%s/%s_eventserver.log'%(config_dir,log_dir,yaml_name))
     #echo  empty log
     run("cat /dev/null > ~/event_server/eventserver.log")
