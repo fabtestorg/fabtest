@@ -18,9 +18,7 @@ def start_jmeter(file_name, config_dir):
     with cd("~/fabtest/%s"%dir_name):
         run("tar zxvfm %s.tar.gz" % file_name)
         run("rm %s.tar.gz" % file_name)
-        # run("~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl &"%(yaml_name,yaml_name))
-        cd("~/jmeter/apache-jmeter-3.2/bin/")
-        run("./jmeter -n -t ~/fabtest/%s/%s.jmx -l %s.jtl &" % (dir_name, file_name, file_name))
+        run("screen -d -m ~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl &>%s.log"%(file_name,file_name,file_name))
 
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir):
