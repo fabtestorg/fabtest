@@ -69,9 +69,8 @@ func GetEventServerLog() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			ip := value["jmeter"].(map[string]interface{})["ip"].(string)
-			obj := NewFabCmd("jmeter.py", ip)
-			err := obj.RunShow("get_event_log", clientname, dir)
+			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
+			err := obj.RunShow("get_eventserver_log", clientname, dir)
 			if err != nil {
 				return err
 			}
