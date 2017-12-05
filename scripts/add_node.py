@@ -65,6 +65,7 @@ def start_api(peer_id, org_id, config_dir):
         #remote yaml
         local("tar -zcvf %s.tar.gz %s.yaml"%(eventyamlname,eventyamlname))
         put("%s.tar.gz"%eventyamlname,"~/event_server")
+        put("current.info","~/event_server")
         local("rm %s.tar.gz"%eventyamlname)
     with cd("~/event_server"):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
