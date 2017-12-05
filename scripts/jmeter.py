@@ -27,8 +27,8 @@ def get_jmeter_log(yaml_name, config_dir):
         get('%s.jtl'%yaml_name, '%s/jmeter_logs/%s.jtl'%(config_dir,yaml_name))
 
 #get eventserver log from remote
-def get_eventserver_log(yaml_name, config_dir):
-    local("mkdir -p %s/event_logs"%config_dir)
-    get('~/event_server/eventserver.log','%s/event_logs/%s_eventserver.log'%(config_dir,yaml_name))
+def get_eventserver_log(yaml_name, config_dir, log_dir):
+    local("mkdir -p %s/event_logs/%s"%(config_dir,log_dir))
+    get('~/event_server/eventserver.log','%s/event_logs/%s/%s_eventserver.log'%(config_dir,log_dir,yaml_name))
     #echo  empty log
     run("cat /dev/null > ~/event_server/eventserver.log")

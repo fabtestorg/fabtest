@@ -61,7 +61,7 @@ func GetJmeterLog() error {
 	return nil
 }
 
-func GetEventServerLog() error {
+func GetEventServerLog(logdir string) error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
@@ -70,7 +70,7 @@ func GetEventServerLog() error {
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
 			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
-			err := obj.RunShow("get_eventserver_log", clientname, dir)
+			err := obj.RunShow("get_eventserver_log", clientname, dir, logdir)
 			if err != nil {
 				return err
 			}

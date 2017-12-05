@@ -14,6 +14,7 @@ var (
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
 	getlog      = flag.String("g", "", "get jmeter or event logs")
+	logdir      = flag.String("gn","", "log dir name eg: 50_50  loop 50*50")
 	channelname = flag.String("n", "", "channelname")
 	ccname      = flag.String("ccname", "", "chaincode name")
 	ccoutpath   = flag.String("ccoutpath", "", "chaincode .out path")
@@ -86,13 +87,23 @@ func main() {
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog()
 	} else if *getlog == "event" {
-		err = cmd.GetEventServerLog()
+		if *logdir == ""{
+			flag.Usage()
+			fmt.Println("logdir is nil")
+			os.Exit(1)
+		}
+		err = cmd.GetEventServerLog(*logdir)
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
 	} else if *deleteobj != "" {
 		err = cmd.DeleteObj(*deleteobj)
 	} else if *analyse != "" {
-		err = cmd.EventAnalyse()
+		if *logdir == ""{
+			flag.Usage()
+			fmt.Println("logdir is nil")
+			os.Exit(1)
+		}
+		err = cmd.EventAnalyse(*logdir)
 	} else {
 		fmt.Println("Both data and file are nil.")
 		flag.Usage()

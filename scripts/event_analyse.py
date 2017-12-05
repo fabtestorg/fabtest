@@ -54,8 +54,8 @@ def scan_files(directory, prefix=None, postfix=None):
 				files_list.append(os.path.join(root, special_file))
 	return files_list
 
-def analyse(config_dir):
-	directory = "%sevent_logs"%config_dir
+def analyse(config_dir, log_dir):
+	directory = "%s%s/event_logs"%(config_dir,log_dir)
 	postfix = ".log"
 	print "扫描目录为:", directory
 	print "后缀名为:", postfix

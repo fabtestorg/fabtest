@@ -1,6 +1,6 @@
 package cmd
 
-func EventAnalyse() error {
+func EventAnalyse(logdir string) error {
 	obj := NewLocalFabCmd("event_analyse.py")
-	return obj.RunShow("analyse", ConfigDir())
+	return obj.RunShow("analyse", ConfigDir(),logdir)
 }
