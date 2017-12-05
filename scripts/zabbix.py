@@ -13,9 +13,9 @@ def start_zabbix(config_name, config_dir):
         #remote yaml
         # run("mkdir -p /etc/%s"%dir_name)/
         put("%s.tar.gz"%config_name, "/etc/zabbix/")
-        # local("rm %s.tar.gz" % config_name)
+        local("rm %s.tar.gz" % config_name)
     with cd("/etc/zabbix/"):
         run("tar zxvfm %s.tar.gz" %config_name)
-        # run("rm %s.tar.gz" %config_name)
-        run("cp %s.conf zabbix-agent.conf"%config_name)
+        run("rm %s.tar.gz" %config_name)
+        run("mv %s.conf zabbix_agentd.conf"%config_name)
         run("systemctl restart zabbix-agent")
