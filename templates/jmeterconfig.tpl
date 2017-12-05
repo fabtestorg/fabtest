@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">{{.loop_count}}</stringProp>
+          <stringProp name="LoopController.loops">{{.jmeter.loop_count}}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">{{.thread_count}}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">{{.jmeter.thread_count}}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1507613430000</longProp>
         <longProp name="ThreadGroup.end_time">1507613430000</longProp>
@@ -56,8 +56,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">{{.ip}}</stringProp>
-          <stringProp name="HTTPSampler.port">{{.port}}</stringProp>
+          <stringProp name="HTTPSampler.domain">{{.apiip}}</stringProp>
+          <stringProp name="HTTPSampler.port">{{.jmeter.port}}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/factor/saveData</stringProp>
@@ -255,7 +255,7 @@
           <intProp name="calcMode">0</intProp>
           <doubleProp>
             <name>throughput</name>
-            <value>{{.throughput}}</value>
+            <value>{{.jmeter.throughput}}</value>
             <savedValue>0.0</savedValue>
           </doubleProp>
         </ConstantThroughputTimer>
