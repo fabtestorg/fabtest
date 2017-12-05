@@ -180,7 +180,8 @@ func RunChaincode(ccname, channelName string) error {
 				}
 				time.Sleep(1*time.Second)
 			} else {
-				txargs := `'{"Args":["query"\,"a"]}'`
+				//txargs := `'{"Args":["query"\,"a"]}'`
+				txargs := `'{"Args":["DslQuery"\,"trackid"\,"{\"dslSyntax\":\"{\\\"selector\\\":{\\\"sender\\\":\\\"zhengfu0\\\"}}\"}"]}'`
 				err := obj.RunShow("test_query_tx", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, txargs)
 				if err != nil {
 					return err
