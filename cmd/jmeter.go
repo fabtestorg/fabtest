@@ -14,7 +14,7 @@ func CreateJmeterConfig() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			err := tpl.Handler(value["jmeter"], TplJmeterConfig, dir+clientname+".jmx")
+			err := tpl.Handler(param, TplJmeterConfig, dir+clientname+".jmx")
 			if err != nil {
 				return err
 			}
@@ -33,11 +33,7 @@ func StartJmeter() error {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
 			ip := value["jmeter"].(map[string]interface{})["ip"].(string)
 			obj := NewFabCmd("jmeter.py", ip)
-			err := obj.RunShow("cp_jmeter_config", clientname, dir)
-			if err != nil {
-				return err
-			}
-			err = obj.RunShow("start_jmeter", clientname)
+			err := obj.RunShow("start_jmeter", clientname, dir)
 			if err != nil {
 				return err
 			}
