@@ -67,8 +67,18 @@ def start_api(peer_id, org_id, config_dir):
         put("%s.tar.gz"%eventyamlname,"~/event_server")
         put("current.info","~/event_server")
         local("rm %s.tar.gz"%eventyamlname)
+        kill_process("eventserver")
     with cd("~/event_server"):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
         run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
         run("$(nohup ./eventserver > eventserver.log 2>&1 &) && sleep 1")
+
+
+def kill_process(name):
+    # kill the jmeter processes for unified order project
+    with cd('/tmp/'):
+        pids = run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'}"%name)
+        pid_list = pids.split('\r\n')
+        for i in pid_list:
+            run('kill -9 %s' % i)
