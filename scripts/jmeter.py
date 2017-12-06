@@ -13,6 +13,7 @@ def start_jmeter(file_name, config_dir):
     with lcd(config_dir):
         local("tar -zcvf %s.tar.gz %s.jmx" % (file_name, file_name))
         #remote yaml
+        run("rm -rf ~/fabtest/%s"%dir_name)
         run("mkdir -p ~/fabtest/%s"%dir_name)
         put("%s.tar.gz" % file_name, "~/fabtest/%s" % dir_name)
         local("rm %s.tar.gz" % file_name)
@@ -25,7 +26,10 @@ def start_jmeter(file_name, config_dir):
 def get_jmeter_log(yaml_name, config_dir):
     dir_name = "jmeter_config"
     with cd("~/fabtest/%s"%dir_name):
+        local("rm -rf  %s/jmeter_logs/%s.jtl"%(config_dir,yaml_name))
+        local("rm -rf  %s/jmeter_logs/%s.log"%(config_dir,yaml_name))
         get('%s.jtl'%yaml_name, '%s/jmeter_logs/%s.jtl'%(config_dir,yaml_name))
+        get('jmeter.log', '%s/jmeter_logs/%s.log'%(config_dir,yaml_name))
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
