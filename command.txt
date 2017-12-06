@@ -35,7 +35,8 @@
 ./fabtest -r runchaincode -ccname factor -n testchannel
 
 10. 启动api, event
-./fabtest -s api/event
+./fabtest -s api
+./fabtest -s event
 
 12. 运行jmeter,内部会包含创建配置文件（修改完node.json 后直接启动）
 ./fabtest -s jmeter
