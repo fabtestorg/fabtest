@@ -38,6 +38,11 @@ func main() {
 		}
 	} else if *start != "" {
 		if *start == "jmeter" {
+			err = cmd.CreateJmeterConfig()
+			if err != nil{
+				fmt.Println("err CreateJmeterConfig")
+				os.Exit(1)
+			}
 			err = cmd.StartJmeter()
 		} else if *start == "zabbix" {
 			err = cmd.StartZabbix()
