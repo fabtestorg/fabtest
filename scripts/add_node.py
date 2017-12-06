@@ -43,7 +43,6 @@ def start_node(type, node_id, yaml_name, config_dir):
 def start_api(peer_id, org_id, config_dir):
     name = "peer" + peer_id + "org" + org_id
     apiyamlname = name + "apiclient"
-    eventyamlname = name + "eventclient"
     parent_path  = os.path.dirname(config_dir)
     #apiserver
     with lcd(config_dir):
@@ -60,6 +59,9 @@ def start_api(peer_id, org_id, config_dir):
         run("rm fft_apiserver.tar.gz")
         run("docker-compose -f fft_apiserver/docker-compose.yaml up -d")
 
+def start_event(peer_id, org_id, config_dir):
+    name = "peer" + peer_id + "org" + org_id
+    eventyamlname = name + "eventclient"
     #eventserver
     with lcd(config_dir):
         #remote yaml
@@ -73,7 +75,6 @@ def start_api(peer_id, org_id, config_dir):
         run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
         run("$(nohup ./eventserver > eventserver.log 2>&1 &) && sleep 1")
-
 
 def kill_process(name):
     # kill the jmeter processes for unified order project

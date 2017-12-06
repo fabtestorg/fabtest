@@ -27,6 +27,16 @@ func StartNode(stringType string) error {
 					return err
 				}
 				continue
+			}else if stringType == "event" && nodeType == TypePeer {
+				//启动api
+				peerid := value[PeerId].(string)
+				orgid := value[OrgId].(string)
+				obj := NewFabCmd("add_node.py", value[APIIP].(string))
+				err := obj.RunShow("start_event", peerid, orgid, ConfigDir())
+				if err != nil {
+					return err
+				}
+				continue
 			} else if stringType != "all" {
 				continue
 			}
