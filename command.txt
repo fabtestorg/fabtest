@@ -47,8 +47,25 @@
 13. 获取eventlog  50线程 循环50次
 ./fabtest -g event -gn 50_50
 
-13. 分析获取的eventlog  50线程 循环50次
+14. 分析获取的eventlog  50线程 循环50次
 ./fabtest -a event -gn 50_50
 
-14. 停止或启动节点
+15. 停止或启动节点
 ./fabtest -op start/stop
+
+16. 生成 zabbix agent配置文件 Ip.conf
+./fabtest -f zabbix
+
+17. 启动zabbix agent
+./fabtest -s zabbix
+
+18. 手动启动 zabbix   44主机
+systemctl status zabbix-agent
+systemctl start zabbix-agent
+
+systemctl status zabbix-server
+systemctl start zabbix-server
+
+19. 删除节点
+./fabtest -d all/peer/order/api
+

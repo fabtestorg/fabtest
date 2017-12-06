@@ -118,7 +118,21 @@ func DeleteObj(stringType string) error {
 			if err != nil {
 				return err
 			}
-		} else if stringType == TypeApi || stringType == "all" {
+		} else if stringType == TypeApi{
+			if nodeType == TypePeer {
+				obj := NewFabCmd("removenode.py", value[APIIP].(string))
+				err := obj.RunShow("remove_client")
+				if err != nil {
+					return err
+				}
+			}
+		} else if  stringType == "all" {
+			//删除节点
+			obj := NewFabCmd("removenode.py", value[IP].(string))
+			err := obj.RunShow("remove_node", stringType)
+			if err != nil {
+				return err
+			}
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
