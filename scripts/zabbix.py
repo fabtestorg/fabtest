@@ -19,3 +19,5 @@ def start_zabbix(config_name, config_dir):
         run("rm %s.tar.gz" %config_name)
         run("mv %s.conf zabbix_agentd.conf"%config_name)
         run("systemctl restart zabbix-agent")
+        run("systemctl enable zabbix-agent")
+
