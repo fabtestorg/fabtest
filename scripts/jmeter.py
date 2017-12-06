@@ -28,8 +28,8 @@ def get_jmeter_log(yaml_name, config_dir):
     with lcd(dir):
         local("rm -rf  %s.jtl"%yaml_name)
         local("rm -rf  %s.log"%yaml_name)
-    get('~/fabtest/%s.jtl'%yaml_name, '%s/%s.jtl'%(dir,yaml_name))
-    get('~/fabtest/jmeter.log', '%s/%s.log'%(dir,yaml_name))
+    get('~/fabtest/jmeter_config/%s.jtl'%yaml_name, '%s/%s.jtl'%(dir,yaml_name))
+    get('~/fabtest/jmeter_config/jmeter.log', '%s/%s.log'%(dir,yaml_name))
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
