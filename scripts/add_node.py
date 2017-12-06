@@ -77,12 +77,7 @@ def start_api(peer_id, org_id, config_dir):
 
 def kill_process(name):
     # kill the jmeter processes for unified order project
-    with cd('/tmp/'):
-        pids = run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'}"%name)
-        pid_list = pids.split('\r\n')
-        for i in pid_list:
-            run('kill -9 %s' % i)
-
+    run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'} | xargs kill -9"%name)
 
 def stop_node(type, node_id, yaml_name):
     dir_name = type + node_id
