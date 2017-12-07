@@ -37,6 +37,12 @@ func CreateZabbixConfig() error {
 				return err
 			}
 		}
+		//if value[NodeType].(string) == TypePeer {
+		//	ip := value[APIIP].(string)
+		//	if err := generateConfig(ip); err != nil {
+		//		return err
+		//	}
+		//}
 	}
 	return nil
 }
@@ -64,6 +70,12 @@ func StartZabbix() error {
 				return err
 			}
 		}
+		//if value[NodeType].(string) == TypePeer {
+		//	ip := value["jmeter"].(map[string]interface{})["ip"].(string)
+		//	if err := start(ip); err != nil {
+		//		return err
+		//	}
+		//}
 	}
 	return nil
 }
