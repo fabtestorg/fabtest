@@ -1,6 +1,10 @@
-1. 生成yaml文件
+1. 生成yaml文件  如果改变组织数(修改 config.json)
 #configtx.yaml
 ./fabtest -f configtx
+
+启动 zabbix-agent
+./fabtest -f zabbix
+./fabtest -s zabbix
 
 #peer,order,zk,kfk yaml
 ./fabtest -f node
@@ -20,8 +24,11 @@
 ./fabtest -s order
 ./fabtest -s peer
 
+44 机器添加 /etc/hosts    对 peer order
+
 5. 创建channel
 ./fabtest -c channel -n testchannel
+
 6. 更新锚节点
 ./fabtest -r updateanchor -n testchannel
 
@@ -37,15 +44,18 @@
 10. 启动api, event
 ./fabtest -s api
 ./fabtest -s event
+./fabtest -a event -gn 50_1000
 
-12. 运行jmeter,内部会包含创建配置文件（修改完node.json 后直接启动）
+
+
+12. 运行jmeter
 ./fabtest -s jmeter
 
 13. 获取eventlog  50线程 循环50次
-./fabtest -g event -gn 50_50
+./fabtest -g event -gn 80_1000
 
 14. 分析获取的eventlog  50线程 循环50次
-./fabtest -a event -gn 50_50
+./fabtest -a event -gn 50_1000
 
 15. 停止或启动节点
 ./fabtest -op start/stop

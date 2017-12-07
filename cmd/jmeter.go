@@ -31,8 +31,7 @@ func StartJmeter() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			ip := value["jmeter"].(map[string]interface{})["ip"].(string)
-			obj := NewFabCmd("jmeter.py", ip)
+			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
 			err := obj.RunShow("start_jmeter", clientname, dir)
 			if err != nil {
 				return err
