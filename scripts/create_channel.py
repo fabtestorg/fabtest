@@ -67,7 +67,7 @@ def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, domain_na
 def create_anchor_tx(bin_path, yaml_path, out_path, channel_name, org_id):
     channel_dir = out_path + channel_name
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
-    param = ' -profile OrgsChannel -outputAnchorPeersUpdate %s/Org%sMSPanchors.tx -channelID %s -asOrg %s'%(channel_dir, org_id, channel_name, org_id)
+    param = ' -profile OrgsChannel -outputAnchorPeersUpdate %s/Org%sMSPanchors.tx -channelID %s -asOrg Org%sMSP'%(channel_dir, org_id, channel_name, org_id)
 
     bin = bin_path + "configtxgen"
     command = env + bin + param
