@@ -50,7 +50,7 @@ def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, domain_na
 
     channel_dir = out_path + channel_name
 
-    order_tls_path = yaml_path +  "crypto-config/ordererOrganizations/ord1.%s/orderers/orderer0.ord1.%s/msp/tlscacerts/tlsca.ord1.%s-cert.pem"%(domain_name,domain_name,domain_name)
+    order_tls_path = yaml_path +  "crypto-config/ordererOrganizations/ord%s.%s/orderers/orderer0.ord%s.%s/msp/tlscacerts/tlsca.ord%s.%s-cert.pem"%(org_id, domain_name,org_id,domain_name,org_id,domain_name)
     order_address = "orderer0.ord%s.%s:7050"%(org_id,domain_name)
 
     msp_path = yaml_path + "crypto-config/peerOrganizations/org%s.%s/users/Admin@org%s.%s/msp"%(org_id,domain_name,org_id,domain_name)
