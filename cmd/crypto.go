@@ -104,7 +104,7 @@ func UpdateAnchor(channelName string) error {
 		nodeType := value[NodeType].(string)
 		if nodeType == TypePeer && value[PeerId].(string) == "0" {
 			obj := NewFabCmd("create_channel.py", "")
-			mspid := "Org" + value[OrgId].(string) + "MSP"
+			mspid := value[OrgId].(string)
 			err := obj.RunShow("update_anchor", BinPath(), ConfigDir(), ChannelPath(), channelName, mspid, peerdomain)
 			if err != nil {
 				return err

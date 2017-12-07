@@ -44,30 +44,30 @@ def create_channeltx(bin_path, yaml_path, out_path, channel_name):
     command = env + bin + param
     return local(command)
 
-def update_anchor(bin_path, yaml_path, out_path, channel_name, msp_id, domain_name):
+def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, domain_name):
 
-    create_anchor_tx(bin_path, yaml_path, out_path, channel_name, msp_id)
+    create_anchor_tx(bin_path, yaml_path, out_path, channel_name, org_id)
 
     channel_dir = out_path + channel_name
 
     order_tls_path = yaml_path +  "crypto-config/ordererOrganizations/ord1.%s/orderers/orderer0.ord1.%s/msp/tlscacerts/tlsca.ord1.%s-cert.pem"%(domain_name,domain_name,domain_name)
-    order_address = "orderer0.ord1.%s:7050"%domain_name
+    order_address = "orderer0.ord%s.%s:7050"%(org_id,domain_name)
 
-    msp_path = yaml_path + "crypto-config/peerOrganizations/org1.%s/users/Admin@org1.%s/msp"%(domain_name,domain_name)
+    msp_path = yaml_path + "crypto-config/peerOrganizations/org%s.%s/users/Admin@org%s.%s/msp"%(org_id,domain_name,org_id,domain_name)
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
-    env = env + ' CORE_PEER_LOCALMSPID=Org1MSP'
+    env = env + ' CORE_PEER_LOCALMSPID=Org%sMSP'%org_id
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s '%msp_path
     bin = bin_path + "peer"
-    param = ' channel update -o %s -c %s -f %s/%sanchors.tx'%(order_address, channel_name, channel_dir, msp_id)
+    param = ' channel update -o %s -c %s -f %s/Org%sMSPanchors.tx'%(order_address, channel_name, channel_dir, org_id)
     tls = ' --tls --cafile %s'%order_tls_path
 
     command = env + bin + param + tls
     return local(command)
 
-def create_anchor_tx(bin_path, yaml_path, out_path, channel_name, msp_id):
+def create_anchor_tx(bin_path, yaml_path, out_path, channel_name, org_id):
     channel_dir = out_path + channel_name
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
-    param = ' -profile OrgsChannel -outputAnchorPeersUpdate %s/%sanchors.tx -channelID %s -asOrg %s'%(channel_dir, msp_id, channel_name, msp_id)
+    param = ' -profile OrgsChannel -outputAnchorPeersUpdate %s/Org%sMSPanchors.tx -channelID %s -asOrg %s'%(channel_dir, org_id, channel_name, org_id)
 
     bin = bin_path + "configtxgen"
     command = env + bin + param
