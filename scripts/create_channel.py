@@ -4,7 +4,7 @@
 from fabric.api import local, lcd, put, run, cd
 import sys
 import os
-import utils.py
+import utils
 reload(sys)
 sys.setdefaultencoding('utf8')
 

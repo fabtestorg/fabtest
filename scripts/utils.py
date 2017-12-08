@@ -1,6 +1,6 @@
-from fabric.api import cd,put,lcd,local,run,settings
 import sys
-import os
+from fabric.api import run
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 

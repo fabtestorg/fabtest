@@ -1,6 +1,6 @@
 import sys
 from fabric.api import run, settings,cd
-import utils.py
+import utils
 reload(sys)
 sys.setdefaultencoding('utf8')
 
