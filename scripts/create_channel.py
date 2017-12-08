@@ -4,6 +4,7 @@
 from fabric.api import local, lcd, put, run, cd
 import sys
 import os
+import utils.py
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -93,22 +94,23 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
 def put_cryptoconfig(config_path, type):
     run("mkdir -p ~/fabTestData")
     if type == "order":
-        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
         put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
-        put("%s/kafkaTLSclient.tar.gz"%config_path, "~/fabTestData/")
         with cd("~/fabTestData"):
-            run("tar zxvfm crypto-config.tar.gz")
             run("tar zxvfm channel-artifacts.tar.gz")
-            run("tar zxvfm kafkaTLSclient.tar.gz")
+        copy_file(config_path,"crypto-config.tar.gz")
+        copy_file(config_path,"kafkaTLSclient.tar.gz")
     elif type == "kafka":
-        put("%s/kafkaTLSserver.tar.gz"%config_path, "~/fabTestData/")
-        with cd("~/fabTestData"):
-            run("tar zxvfm kafkaTLSserver.tar.gz")
+        copy_file(config_path,"kafkaTLSserver.tar.gz")
     elif type == "peer":
-        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
-        with cd("~/fabTestData"):
-            run("tar zxvfm crypto-config.tar.gz")
+        copy_file(config_path,"crypto-config.tar.gz")
     elif type == "api":
-        put("%s/crypto-config.tar.gz"%config_path, "~/fabTestData/")
-        with cd("~/fabTestData"):
-            run("tar zxvfm crypto-config.tar.gz")
+        copy_file(config_path,"crypto-config.tar.gz")
+
+def copy_file(config_path, file_name):
+    remote_file = "~/fabTestData/%s"%file_name
+    if utils.check_remote_file_exist(remote_file) == "false":
+        put("%s/%s"%(config_path,file_name), "~/fabTestData/")
+    with cd("~/fabTestData"):
+        run("tar zxvfm %s"%file_name)
+
+

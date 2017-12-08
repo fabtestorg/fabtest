@@ -1,6 +1,6 @@
 import sys
 from fabric.api import run, settings,cd
-
+import utils.py
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -15,17 +15,12 @@ def remove_node(type):
                 run("docker images |grep 'dev\-peer'|awk '{print $3}'|xargs docker rmi -f")
 
         run("rm -rf ~/fabtest")
-        run("rm -rf ~/fabTestData")
 
 def remove_client():
     with settings(warn_only=True):
         run("docker rm -f $(docker ps -aq)")
-        run("rm -rf ~/fabTestData")
         run("rm -rf ~/fabtest")
-        kill_process("eventserver")
-
-def kill_process(name):
-    run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'} | xargs kill -9"%name)
+        utils.kill_process("eventserver")
 
 
 
