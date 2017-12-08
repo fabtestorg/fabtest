@@ -3,7 +3,7 @@
 import sys
 import os
 from fabric.api import cd, put, lcd, local, run, get
-
+import utils
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -20,6 +20,7 @@ def start_jmeter(file_name, config_dir):
     with cd("~/fabtest/%s"%dir_name):
         run("tar zxvfm %s.tar.gz" % file_name)
         run("rm %s.tar.gz" % file_name)
+        utils.kill_process("jmeter")
         run("screen -d -m ~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %s.jmx -l %s.jtl"%(file_name,file_name), pty=False)
 
 #get jmeter log from remote

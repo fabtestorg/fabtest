@@ -21,6 +21,7 @@ def remove_client():
         run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
         run("docker network prune -f")
         run("rm -rf ~/fabtest")
+        utils.kill_process("jmeter")
         utils.kill_process("eventserver")
 
 
