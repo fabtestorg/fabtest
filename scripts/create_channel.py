@@ -94,7 +94,7 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
 def put_cryptoconfig(config_path, type):
     run("mkdir -p ~/fabTestData")
     if type == "order":
-        put("%s/channel-artifacts.tar.gz"%config_path, "~/fabTestData/")
+        put("%schannel-artifacts.tar.gz"%config_path, "~/fabTestData/")
         with cd("~/fabTestData"):
             run("tar zxvfm channel-artifacts.tar.gz")
         copy_file(config_path,"crypto-config.tar.gz")
@@ -109,7 +109,7 @@ def put_cryptoconfig(config_path, type):
 def copy_file(config_path, file_name):
     remote_file = "~/fabTestData/%s"%file_name
     if utils.check_remote_file_exist(remote_file) == "false":
-        put("%s/%s"%(config_path,file_name), "~/fabTestData/")
+        put("%s%s"%(config_path,file_name), "~/fabTestData/")
         with cd("~/fabTestData"):
             run("tar zxvfm %s"%file_name)
 
