@@ -110,7 +110,7 @@ def copy_file(config_path, file_name):
     remote_file = "~/fabTestData/%s"%file_name
     if utils.check_remote_file_exist(remote_file) == "false":
         put("%s/%s"%(config_path,file_name), "~/fabTestData/")
-    with cd("~/fabTestData"):
-        run("tar zxvfm %s"%file_name)
+        with cd("~/fabTestData"):
+            run("tar zxvfm %s"%file_name)
 
 
