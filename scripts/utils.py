@@ -1,5 +1,5 @@
 import sys
-from fabric.api import run, settings
+from fabric.api import run, settings,local
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -26,3 +26,6 @@ def get_domain_name(network_name,node_full_name,domain_name):
     get_cmd = "cat /etc/hosts | grep -E %s | awk '{print \\\$1}'"%domain_name
     yaml_file = "~/networklist/%s/%s/%s.yaml"%(network_name,node_full_name,node_full_name)
     out = run('docker-compose -f %s exec %s bash -c "%s"'%(yaml_file,node_full_name,get_cmd))
+
+def rm_local(path):
+    local("rm -rf %s"%path)

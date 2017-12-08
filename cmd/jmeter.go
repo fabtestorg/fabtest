@@ -64,6 +64,11 @@ func GetEventServerLog(logdir string) error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
+	obj := NewFabCmd("utils.py", "")
+	err := obj.RunShow("rm_local", dir + logdir)
+	if err != nil {
+		return err
+	}
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
