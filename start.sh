@@ -45,3 +45,4 @@
 #10. 启动api, event
 ./fabtest -s api
 ./fabtest -s event
+./fabtest -g event -gn templog
