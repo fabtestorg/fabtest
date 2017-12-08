@@ -1,5 +1,5 @@
 import sys
-from fabric.api import run
+from fabric.api import run, settings
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -9,13 +9,13 @@ def kill_process(name):
     run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'} | xargs kill -9"%name)
 
 def check_remote_file_exist(file):
-    result = run("ls %s"%file)
-    print result
-    if result.find("No such file or directory") == -1:
-        exist = "false"
-    else:
-        exist = "true"
-    return exist
+    with settings(warn_only=True):
+        result = run("ls %s"%file)
+        if result.find("No such file or directory") == -1:
+            exist = "false"
+        else:
+            exist = "true"
+        return exist
 
 def set_domain_name(network_name,node_full_name,domain_ip,domain_name):
     set_cmd = "echo %s %s >> /etc/hosts"%(domain_ip,domain_name)
