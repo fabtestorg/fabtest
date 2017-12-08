@@ -9,9 +9,9 @@ def kill_process(name):
     run("ps -ef | grep %s | grep -v 'grep' | awk '{print $2'} | xargs kill -9"%name)
 
 def check_remote_file_exist(file):
-    result = run("ls %s | wc -l"%file)
+    result = run("ls %s"%file)
     print result
-    if result == "0":
+    if result.find("No such file or directory") == -1:
         exist = "false"
     else:
         exist = "true"
