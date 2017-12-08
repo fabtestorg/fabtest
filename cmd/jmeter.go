@@ -65,7 +65,7 @@ func GetEventServerLog(logdir string) error {
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
 	obj := NewFabCmd("utils.py", "")
-	err := obj.RunShow("rm_local", dir + logdir)
+	err := obj.RunShow("rm_local", dir + "event_logs/" + logdir)
 	if err != nil {
 		return err
 	}
