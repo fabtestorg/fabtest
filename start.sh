@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #1. 生成yaml文件  如果改变组织数(修改 config.json)
-#./fabtest -f configtx
+./fabtest -f configtx
 
 #启动 zabbix-agent
 ./fabtest -f zabbix
