@@ -1,9 +1,13 @@
 package cmd
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"os"
+	"strings"
 )
 
 func StartNode(stringType string) error {
@@ -27,7 +31,7 @@ func StartNode(stringType string) error {
 					return err
 				}
 				continue
-			}else if stringType == "event" && nodeType == TypePeer {
+			} else if stringType == "event" && nodeType == TypePeer {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
@@ -42,6 +46,7 @@ func StartNode(stringType string) error {
 			}
 		}
 		var nodeId, yamlname string
+		var ip = value[IP].(string)
 		switch nodeType {
 		case TypeZookeeper:
 			nodeId = value[ZkId].(string) + value[Zk2Id].(string)
@@ -52,12 +57,14 @@ func StartNode(stringType string) error {
 		case TypeOrder:
 			nodeId = value[OrderId].(string)
 			yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
+			LocalHostsSet(ip, yamlname)
 		case TypePeer:
 			nodeId = value[PeerId].(string)
 			yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
+			LocalHostsSet(ip, yamlname)
 		}
 		//启动节点
-		obj := NewFabCmd("add_node.py", value[IP].(string))
+		obj := NewFabCmd("add_node.py", ip)
 		err := obj.RunShow("start_node", nodeType, nodeId, yamlname, ConfigDir())
 		if err != nil {
 			return err
@@ -128,7 +135,7 @@ func DeleteObj(stringType string) error {
 			if err != nil {
 				return err
 			}
-		} else if stringType == TypeApi{
+		} else if stringType == TypeApi {
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
@@ -136,7 +143,7 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
-		} else if  stringType == "all" {
+		} else if stringType == "all" {
 			//删除节点
 			obj := NewFabCmd("removenode.py", value[IP].(string))
 			err := obj.RunShow("remove_node", stringType)
@@ -171,7 +178,7 @@ func OperationNode(cmdstr string) error {
 			if nodeType == TypeOrder {
 				nodeId = value[OrderId].(string)
 				yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
-			}else if nodeType == TypePeer {
+			} else if nodeType == TypePeer {
 				nodeId = value[PeerId].(string)
 				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
 			}
@@ -190,4 +197,42 @@ func OperationNode(cmdstr string) error {
 	}
 
 	return nil
+}
+
+func LocalHostsSet(ip, domain string) error {
+	if ip == domain {
+		return nil
+	}
+	file, err := os.Open("/etc/hosts")
+	if err != nil {
+		return err
+	}
+	reader := bufio.NewReader(file)
+	for {
+		line, err := reader.ReadString('\n')
+		line = strings.TrimSpace(line)
+		if strings.HasSuffix(line, " "+domain) {
+			if strings.HasPrefix(line, ip+" ") {
+				return nil
+			}
+			return fmt.Errorf("The domain has been maped <%s>", line)
+		}
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return err
+		}
+	}
+
+	file, err = os.OpenFile("/etc/hosts", os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	buf := []byte(fmt.Sprintf("%s       %s\n", ip, domain))
+	_, err = file.Write(buf)
+	if err != nil {
+		return err
+	}
+	return file.Close()
 }
