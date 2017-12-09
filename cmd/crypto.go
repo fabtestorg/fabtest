@@ -36,6 +36,9 @@ func CreateYamlByJson(strType string) error {
 			var outfile, tplfile, yamlname string
 			if strType == "client" {
 				if nodeType == TypePeer {
+					curorgid := value[OrgId].(string)
+					value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
+					value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
 					//生成api 和  event yaml文件
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
 					err := tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
@@ -251,5 +254,5 @@ func findMapValue(findType, findid, findorgid string) string {
 			}
 		}
 	}
-	return ""
+	return "139.0.0.1"
 }
