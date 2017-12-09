@@ -4,6 +4,7 @@
   "zabbix_server_ip":"192.168.0.44",
   "zabbix_server_port":"10056",
   "jmeter":{"port":5555, "thread_count":2, "loop_count":1000, "throughput":"60.0"},
+  "org_counts": 20,
   "list":[
     {"ip":"192.168.0.66","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
     {"ip":"192.168.0.67","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},

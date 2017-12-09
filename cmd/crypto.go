@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/peersafe/fabtest/tpl"
 	"time"
+	"strconv"
 )
 
 func CreateCert() error {
@@ -17,10 +18,26 @@ func CreateCert() error {
 
 func CreateYamlByJson(strType string) error {
 	if strType == "configtx" {
-		inputData := GetJsonMap("configtx.json")
+		inputData := GetJsonMap("node.json")
+		orgcounts := inputData[OrgCounts].(float64)
+		var orgslist,kafkalist []string
+		for i := 1; i <= int(orgcounts); i++ {
+			orgslist = append(orgslist,strconv.Itoa(i))
+		}
+		kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
+		kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
+		kafkalist = append(kafkalist,findMapValue(TypeKafka,"3",""))
+		inputData["orgs"] = orgslist
+		inputData["kafkas"] = kafkalist
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
-		inputData := GetJsonMap("crypto-config.json")
+		inputData := GetJsonMap("node.json")
+		orgcounts := inputData[OrgCounts].(float64)
+		var orgslist []string
+		for i := 1; i <= int(orgcounts); i++ {
+			orgslist = append(orgslist,strconv.Itoa(i))
+		}
+		inputData["orgs"] = orgslist
 		return tpl.Handler(inputData, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
 	} else if strType == "node" || strType == "client" {
 		inputData := GetJsonMap("node.json")
@@ -275,6 +292,11 @@ func findMapValue(findType, findid, findorgid string) string {
 			case TypeZookeeper:
 				zkid := value[ZkId].(string)
 				if zkid == findid{
+					return value[IP].(string)
+				}
+			case TypeKafka:
+				kfkid := value[KfkId].(string)
+				if kfkid == findid{
 					return value[IP].(string)
 				}
 			case TypeOrder:

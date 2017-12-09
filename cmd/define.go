@@ -25,6 +25,7 @@ const (
 	TypeZookeeper = "zookeeper"
 	TypeApi = "api"
 	PeerDomain = "peer_domain"
+	OrgCounts = "org_counts"
 	KfkDomain = "kfk_domain"
 	ZabbixServerIp   = "zabbix_server_ip"
 	ZabbixServerPort = "zabbix_server_port"
