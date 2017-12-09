@@ -46,3 +46,5 @@
 ./fabtest -s api
 ./fabtest -s event
 ./fabtest -g event -gn templog
+
+#./fabtest -s jmeter
