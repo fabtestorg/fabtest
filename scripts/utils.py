@@ -26,6 +26,14 @@ def check_remote_dir_exist(dir):
             exist = "true"
         return exist
 
+def check_container_exist(name):
+    containers = run('docker ps |grep "%s" | wc -l' %name)
+    if containers != "0":
+        result = "true"
+    else:
+        result = "false"
+    return result
+
 def set_domain_name(network_name,node_full_name,domain_ip,domain_name):
     set_cmd = "echo %s %s >> /etc/hosts"%(domain_ip,domain_name)
     yaml_file = "~/networklist/%s/%s/%s.yaml"%(network_name,node_full_name,node_full_name)
