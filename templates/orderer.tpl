@@ -42,5 +42,3 @@ services:
       - 7001:7050
       - 7002:7050
       - 7050:7050
-    extra_hosts:
-      broker.finblockchain.cn: {{.broker_address}}

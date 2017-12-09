@@ -24,7 +24,6 @@ const (
 	TypeKafka     = "kafka"
 	TypeZookeeper = "zookeeper"
 	TypeApi = "api"
-
 	PeerDomain = "peer_domain"
 	KfkDomain = "kfk_domain"
 	ZabbixServerIp   = "zabbix_server_ip"
@@ -54,6 +53,11 @@ const (
 	BrokerIp = "broker_ip"
 	AdverAddress = "adver_address"
 	BlockChainAddress = "blockchain_address"
+
+	Order0_Address = "order0_address"
+	Order1_Address = "order1_address"
+	Other_PeerAddress = "other_peeraddress"
+
 )
 
 func ConfigDir() string{

@@ -17,6 +17,15 @@ def check_remote_file_exist(file):
             exist = "true"
         return exist
 
+def check_remote_dir_exist(dir):
+    with settings(warn_only=True):
+        result = run("du -sh %s"%dir)
+        if "cannot" in result:
+            exist = "false"
+        else:
+            exist = "true"
+        return exist
+
 def set_domain_name(network_name,node_full_name,domain_ip,domain_name):
     set_cmd = "echo %s %s >> /etc/hosts"%(domain_ip,domain_name)
     yaml_file = "~/networklist/%s/%s/%s.yaml"%(network_name,node_full_name,node_full_name)

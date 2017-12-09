@@ -60,7 +60,16 @@ func CreateYamlByJson(strType string) error {
 				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
 				tplfile = TplOrderer
 			case TypePeer:
-				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
+				curid := value[PeerId].(string)
+				curorgid := value[OrgId].(string)
+				value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
+				value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
+				if curid == "0" {
+					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid)
+				} else if curid == "1" {
+					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid)
+				}
+				yamlname = nodeType + curid + "org" + curorgid
 				tplfile = TplPeer
 			}
 			//生成yaml文件
@@ -178,7 +187,7 @@ func RunChaincode(ccname, channelName string) error {
 				if err != nil {
 					return err
 				}
-				time.Sleep(1*time.Second)
+				time.Sleep(1 * time.Second)
 			} else {
 				//txargs := `'{"Args":["query"\,"a"]}'`
 				txargs := `'{"Args":["DslQuery"\,"trackid"\,"{\"dslSyntax\":\"{\\\"selector\\\":{\\\"sender\\\":\\\"zhengfu0\\\"}}\"}"]}'`
@@ -216,4 +225,31 @@ func PutCryptoConfig() error {
 		}
 	}
 	return nil
+}
+
+func findMapValue(findType, findid, findorgid string) string {
+	inputData := GetJsonMap("node.json")
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		nodeType := value[NodeType].(string)
+
+		if nodeType == findType {
+			switch findType {
+			case TypeOrder:
+				orderid := value[OrderId].(string)
+				orgid := value[OrgId].(string)
+				if orderid == findid && orgid == findorgid {
+					return value[IP].(string)
+				}
+			case TypePeer:
+				peerid := value[PeerId].(string)
+				orgid := value[OrgId].(string)
+				if peerid == findid && orgid == findorgid {
+					return value[IP].(string)
+				}
+			}
+		}
+	}
+	return ""
 }
