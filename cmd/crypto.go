@@ -54,9 +54,29 @@ func CreateYamlByJson(strType string) error {
 			}
 			switch nodeType {
 			case TypeZookeeper:
-				yamlname = nodeType + value[ZkId].(string) + value[Zk2Id].(string)
+				curzkid := value[ZkId].(string)
+				if curzkid == "1"{
+					value[IP3] = findMapValue(TypeZookeeper, "3", "")
+					value[IP4] = value[IP3]
+					value[IP5] = findMapValue(TypeZookeeper, "5", "")
+				}else if curzkid == "3"{
+					value[IP1] = findMapValue(TypeZookeeper, "1", "")
+					value[IP2] = value[IP1]
+					value[IP5] = findMapValue(TypeZookeeper, "5", "")
+				}else if curzkid == "5" {
+					value[IP1] = findMapValue(TypeZookeeper, "1", "")
+					value[IP2] = value[IP1]
+					value[IP3] = findMapValue(TypeZookeeper, "3", "")
+					value[IP4] = value[IP3]
+				}
+				yamlname = nodeType + curzkid + value[Zk2Id].(string)
 				tplfile = TplZookeeper
 			case TypeKafka:
+				value[Zk_IP1] = findMapValue(TypeZookeeper, "1", "")
+				value[Zk_IP2] = value[Zk_IP1]
+				value[Zk_IP3] = findMapValue(TypeZookeeper, "3", "")
+				value[Zk_IP4] = value[Zk_IP3]
+				value[Zk_IP5] = findMapValue(TypeZookeeper, "5", "")
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
@@ -252,6 +272,11 @@ func findMapValue(findType, findid, findorgid string) string {
 
 		if nodeType == findType {
 			switch findType {
+			case TypeZookeeper:
+				zkid := value[ZkId].(string)
+				if zkid == findid{
+					return value[IP].(string)
+				}
 			case TypeOrder:
 				orderid := value[OrderId].(string)
 				orgid := value[OrgId].(string)
