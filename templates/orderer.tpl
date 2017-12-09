@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  orderer{{.order_id}}.org{{.org_id}}.{{.peer_domain}}:
-    container_name: orderer{{.order_id}}.org{{.org_id}}.{{.peer_domain}}
+  orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}:
+    container_name: orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}
     image: hyperledger/fabric-orderer
     restart: always
     environment:

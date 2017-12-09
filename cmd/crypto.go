@@ -57,7 +57,7 @@ func CreateYamlByJson(strType string) error {
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
-				yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
+				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
 				tplfile = TplOrderer
 			case TypePeer:
 				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)

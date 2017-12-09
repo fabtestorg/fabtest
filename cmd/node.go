@@ -56,12 +56,14 @@ func StartNode(stringType string) error {
 			yamlname = nodeType + value[KfkId].(string)
 		case TypeOrder:
 			nodeId = value[OrderId].(string)
-			yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
-			LocalHostsSet(ip, yamlname)
+			ordId := value[OrgId].(string)
+			yamlname = nodeType + value[OrderId].(string) + "ord" + ordId
+			LocalHostsSet(ip, fmt.Sprintf("orderer%s.ord%s.%s", nodeId, ordId, peerdomain))
 		case TypePeer:
 			nodeId = value[PeerId].(string)
-			yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
-			LocalHostsSet(ip, yamlname)
+			orgId := value[OrgId].(string)
+			yamlname = nodeType + nodeId + "org" + orgId
+			LocalHostsSet(ip, "peer"+nodeId+".org"+orgId+"."+peerdomain)
 		}
 		//启动节点
 		obj := NewFabCmd("add_node.py", ip)
@@ -177,7 +179,7 @@ func OperationNode(cmdstr string) error {
 			var nodeId, yamlname string
 			if nodeType == TypeOrder {
 				nodeId = value[OrderId].(string)
-				yamlname = nodeType + value[OrderId].(string) + "org" + value[OrgId].(string)
+				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
 			} else if nodeType == TypePeer {
 				nodeId = value[PeerId].(string)
 				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
