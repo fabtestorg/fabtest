@@ -184,7 +184,20 @@ func RunChaincode(ccname, channelName string) error {
 			peerid := value[PeerId].(string)
 			peer_address := "peer" + peerid + ".org" + orgid + "." + peerdomain + ":7051"
 			initparam := `'{"Args":["init"\,"a"\,"100"\,"b"\,"200"]}'`
-			policy := "\"OR  ('Org1MSP.member'\\,'Org2MSP.member')\""
+			policy := "\"OR  ('Org1MSP.member'\\,'Org2MSP.member'\\,'Org3MSP.member'\\,'Org4MSP.member'\\,'Org5MSP.member'" +
+				"\\,'Org6MSP.member'\\,'Org7MSP.member'\\,'Org8MSP.member'\\,'Org9MSP.member'\\,'Org10MSP.member'" +
+				"\\,'Org11MSP.member'\\,'Org12MSP.member'\\,'Org13MSP.member'\\,'Org14MSP.member'\\,'Org15MSP.member'" +
+				"\\,'Org16MSP.member'\\,'Org17MSP.member'\\,'Org18MSP.member'\\,'Org19MSP.member'\\,'Org20MSP.member'" +
+				"\\,'Org21MSP.member'\\,'Org22MSP.member'\\,'Org23MSP.member'\\,'Org24MSP.member'\\,'Org25MSP.member'" +
+				"\\,'Org26MSP.member'\\,'Org27MSP.member'\\,'Org28MSP.member'\\,'Org29MSP.member'\\,'Org30MSP.member'" +
+				"\\,'Org31MSP.member'\\,'Org32MSP.member'\\,'Org33MSP.member'\\,'Org34MSP.member'\\,'Org35MSP.member'" +
+				"\\,'Org36MSP.member'\\,'Org37MSP.member'\\,'Org38MSP.member'\\,'Org39MSP.member'\\,'Org40MSP.member'" +
+				"\\,'Org41MSP.member'\\,'Org42MSP.member'\\,'Org43MSP.member'\\,'Org44MSP.member'\\,'Org45MSP.member'" +
+				"\\,'Org46MSP.member'\\,'Org47MSP.member'\\,'Org48MSP.member'\\,'Org49MSP.member'\\,'Org50MSP.member'" +
+				"\\,'Org51MSP.member'\\,'Org52MSP.member'\\,'Org53MSP.member'\\,'Org54MSP.member'\\,'Org55MSP.member'" +
+				"\\,'Org56MSP.member'\\,'Org57MSP.member'\\,'Org58MSP.member'\\,'Org59MSP.member'\\,'Org60MSP.member'" +
+				"\\,'Org61MSP.member'\\,'Org62MSP.member'\\,'Org63MSP.member'\\,'Org64MSP.member'\\,'Org65MSP.member'" +
+					")\""
 			if orgid == "1" && peerid == "0" {
 				err := obj.RunShow("instantiate_chaincode", BinPath(), ConfigDir(), peer_address, peerid, orgid, peerdomain, channelName, ccname, initparam, policy)
 				if err != nil {
