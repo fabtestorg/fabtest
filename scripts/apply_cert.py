@@ -16,6 +16,7 @@ def generate_genesis_block(bin_path, cfg_path ,out_path):
         local("cp %s/core.yaml %s"%(bin_path, cfg_path))
     tool = bin_path + "configtxgen"
     channel_path = out_path + "channel-artifacts"
+    local("rm -rf %s"%channel_path)
     local("mkdir -p %s"%channel_path)
     env = "FABRIC_CFG_PATH=%s"%cfg_path
     local("%s %s -profile OrgsOrdererGenesis -outputBlock %s/genesis.block"%(env,tool,channel_path))
