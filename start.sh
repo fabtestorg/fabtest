@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
+verifyResult () {
+	if [ $1 -ne 0 ] ; then
+        echo "================== ERROR !!! FAILED =============="
+		echo
+   		exit 1
+	fi
+}
 #1. 生成yaml文件  如果改变组织数(修改 config.json)
 ./fabtest -f configtx
 
 #启动 zabbix-agent
-./fabtest -f zabbix
-./fabtest -s zabbix
+#./fabtest -f zabbix
+#./fabtest -s zabbix
 
 #peer,order,zk,kfk yaml
 ./fabtest -f node
@@ -22,7 +29,9 @@
 #4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper
 ./fabtest -s kafka
+
 ./fabtest -s order
+
 ./fabtest -s peer
 
 #44 机器添加 /etc/hosts    对 peer order
@@ -45,6 +54,7 @@
 #10. 启动api, event
 ./fabtest -s api
 ./fabtest -s event
+
 ./fabtest -g event -gn templog
 
 #./fabtest -s jmeter

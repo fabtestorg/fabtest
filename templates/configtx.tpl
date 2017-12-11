@@ -32,9 +32,9 @@ Orderer: &OrdererDefaults
     Addresses:{{range $index,$value:= .orgs}}
         - orderer0.ord{{$value}}.finblockchain.cn:7050
         - orderer1.ord{{$value}}.finblockchain.cn:7050{{end}}
-    BatchTimeout: 1s
+    BatchTimeout: {{.batchTime}}
     BatchSize:
-        MaxMessageCount: 100
+        MaxMessageCount: {{.batchSize}}
         AbsoluteMaxBytes: 98 MB
         PreferredMaxBytes: 512 KB
     Kafka:
