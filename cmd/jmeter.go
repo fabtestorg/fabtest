@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"github.com/peersafe/fabtest/tpl"
+	"fmt"
+	"sync"
 )
 
 const TplJmeterConfig = "./templates/jmeterconfig.tpl"
@@ -28,17 +30,23 @@ func StartJmeter() error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
+	var wg sync.WaitGroup
 	for _, param := range list {
-		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
-			err := obj.RunShow("start_jmeter", clientname, dir)
-			if err != nil {
-				return err
+		wg.Add(1)
+		go func(param interface{}) {
+			value := param.(map[string]interface{})
+			if value[NodeType].(string) == TypePeer {
+				clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
+				obj := NewFabCmd("jmeter.py", value[APIIP].(string))
+				err := obj.RunShow("start_jmeter", clientname, dir)
+				if err != nil {
+					fmt.Println("******star_jmeter error******",clientname)
+				}
 			}
-		}
+			wg.Done()
+		}(param)
 	}
+	wg.Wait()
 	return nil
 }
 
