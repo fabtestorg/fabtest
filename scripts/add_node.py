@@ -55,10 +55,13 @@ def start_api(peer_id, org_id, config_dir):
         run("mkdir -p ~/fabtest/")
         put("fft_apiserver.tar.gz","~/fabtest")
         local("rm fft_apiserver.tar.gz")
+        utils.kill_process("apiserver")
     with cd("~/fabtest"):
         run("tar zxvfm fft_apiserver.tar.gz")
         run("rm fft_apiserver.tar.gz")
     with cd("~/fabtest/fft_apiserver"):
+        run("chmod +x apiserver")
+        run("rm -rf apiserver.log")
         run("$(nohup ./apiserver >> apiserver.log 2>&1 &) && sleep 1")
         #run("docker-compose -f docker-compose.yaml up -d")
 
