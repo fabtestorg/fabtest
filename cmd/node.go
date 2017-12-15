@@ -145,8 +145,8 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
-		} else if stringType == "all" || nodeType == TypeKafka || nodeType == TypeZookeeper ||
-			nodeType == TypePeer || nodeType == TypeOrder {
+		} else if stringType == "all" && ( nodeType == TypeKafka || nodeType == TypeZookeeper ||
+			nodeType == TypePeer || nodeType == TypeOrder ){
 			//删除节点
 			obj := NewFabCmd("removenode.py", value[IP].(string))
 			err := obj.RunShow("remove_node", stringType)
