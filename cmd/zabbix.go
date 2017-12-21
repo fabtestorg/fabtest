@@ -29,12 +29,15 @@ func CreateZabbixConfig() error {
 	}
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		if err := generateConfig(value[IP].(string)); err != nil {
-			return err
-		}
-		if ip, ok := value[APIIP].(string); ok {
-			if err := generateConfig(ip); err != nil {
+		typeStr := value[NodeType].(string)
+		if typeStr == TypePeer || typeStr == TypeOrder || typeStr == TypeZookeeper || typeStr == TypeKafka {
+			if err := generateConfig(value[IP].(string)); err != nil {
 				return err
+			}
+			if ip, ok := value[APIIP].(string); ok {
+				if err := generateConfig(ip); err != nil {
+					return err
+				}
 			}
 		}
 		//if value[NodeType].(string) == TypePeer {
@@ -62,12 +65,15 @@ func StartZabbix() error {
 	}
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		if err := start(value[IP].(string)); err != nil {
-			return err
-		}
-		if ip, ok := value[APIIP].(string); ok {
-			if err := start(ip); err != nil {
+		typeStr := value[NodeType].(string)
+		if typeStr == TypePeer || typeStr == TypeOrder || typeStr == TypeZookeeper || typeStr == TypeKafka {
+			if err := start(value[IP].(string)); err != nil {
 				return err
+			}
+			if ip, ok := value[APIIP].(string); ok {
+				if err := start(ip); err != nil {
+					return err
+				}
 			}
 		}
 		//if value[NodeType].(string) == TypePeer {
