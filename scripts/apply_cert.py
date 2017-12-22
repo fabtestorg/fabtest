@@ -27,7 +27,9 @@ def generate_genesis_block(bin_path, cfg_path ,out_path):
 def generate_certs(bin_path, cfg_path ,out_path):
     cryptotool = bin_path + "cryptogen"
     yamlfile =  cfg_path + "crypto-config.yaml"
-    outpath = out_path + "crypto-config"
+    mm_path = out_path + "crypto-config"
 
-    local("%s generate --config=%s --output='%s'"%(cryptotool,yamlfile,outpath))
+    local("%s generate --config=%s --output='%s'"%(cryptotool,yamlfile,mm_path))
+    with lcd(out_path):
+        local("tar -zcvf crypto-config.tar.gz crypto-config")
 
