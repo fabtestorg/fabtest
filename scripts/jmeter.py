@@ -26,6 +26,7 @@ def start_jmeter(file_name, config_dir):
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir):
     dir = "%sjmeter_logs"%config_dir
+    local("mkdir -p %s"%dir)
     with lcd(dir):
         local("rm -rf  %s.jtl"%yaml_name)
         local("rm -rf  %s.log"%yaml_name)
