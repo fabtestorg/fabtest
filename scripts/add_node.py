@@ -60,11 +60,11 @@ def start_api(peer_id, org_id, config_dir):
         run("tar zxvfm fft_apiserver.tar.gz")
         run("rm fft_apiserver.tar.gz")
     with cd("~/fabtest/fft_apiserver"):
-        run("chmod +x apiserver")
-        run("rm -rf apiserver.log")
-        run("$(nohup ./apiserver >> apiserver.log 2>&1 &) && sleep 1")
-        run("cat /dev/null > apiserver.log")
-        #run("docker-compose -f docker-compose.yaml up -d")
+        # run("chmod +x apiserver")
+        # run("rm -rf apiserver.log")
+        # run("$(nohup ./apiserver >> apiserver.log 2>&1 &) && sleep 1")
+        # run("cat /dev/null > apiserver.log")
+        run("docker-compose -f docker-compose.yaml up -d")
 
 def start_event(peer_id, org_id, config_dir):
     name = "peer" + peer_id + "org" + org_id
