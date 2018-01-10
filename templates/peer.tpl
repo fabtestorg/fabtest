@@ -33,6 +33,10 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7052
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
       - CORE_PEER_LOCALMSPID=Org{{.org_id}}MSP
+      {{if eq .usecouchdb "true"}}
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
+      {{end}}
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     volumes:
@@ -58,4 +62,18 @@ services:
       {{end}}
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
        orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
+  {{if eq .usecouchdb "true"}}
+    depends_on:
+      - couchdb
+  couchdb:
+    container_name: couchdb
+    image: hyperledger/fabric-couchdb
+    ports:
+       - "5984:5984"
+    volumes:
+       - ./couchdb:/opt/couchdb/data
+   {{end}}
+
+
+
 

@@ -58,6 +58,7 @@ const (
 	Order0_Address = "order0_address"
 	Order1_Address = "order1_address"
 	Other_PeerAddress = "other_peeraddress"
+	USECOUCHDB = "usecouchdb"
 
 )
 
