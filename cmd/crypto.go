@@ -104,7 +104,7 @@ func CreateYamlByJson(strType string) error {
 				curorgid := value[OrgId].(string)
 				value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
 				value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
-				value[USECOUCHDB] = value[USECOUCHDB].(string)
+				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
 				if curid == "0" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid)
 				} else if curid == "1" {
