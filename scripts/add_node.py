@@ -74,13 +74,13 @@ def start_event(peer_id, org_id, config_dir):
         #remote yaml
         local("tar -zcvf %s.tar.gz %s.yaml"%(eventyamlname,eventyamlname))
         put("%s.tar.gz"%eventyamlname,"~/event_server")
-        put("eventserver.tar.gz","~/event_server")
+        # put("eventserver.tar.gz","~/event_server")
         put("current.info","~/event_server")
         local("rm %s.tar.gz"%eventyamlname)
         utils.kill_process("eventserver")
     with cd("~/event_server"):
         run("tar zxvfm %s.tar.gz"%eventyamlname)
-        run("tar zxvfm eventserver.tar.gz")
+        # run("tar zxvfm eventserver.tar.gz")
         run("cp  %s.yaml client_sdk.yaml"%eventyamlname)
         run("rm %s.tar.gz"%eventyamlname)
         run("$(nohup ./eventserver >> eventserver.log 2>&1 &) && sleep 1")
