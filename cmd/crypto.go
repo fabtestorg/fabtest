@@ -43,11 +43,13 @@ func CreateYamlByJson(strType string) error {
 		inputData := GetJsonMap("node.json")
 		peerdomain := inputData[PeerDomain].(string)
 		kfkdomain := inputData[KfkDomain].(string)
+		kfkversion := inputData[KfkVersion].(string)
 		list := inputData[List].([]interface{})
 		for _, param := range list {
 			value := param.(map[string]interface{})
 			value[PeerDomain] = peerdomain
 			value[KfkDomain] = kfkdomain
+			value[KfkVersion] = kfkversion
 			nodeType := value[NodeType].(string)
 			dir := ConfigDir()
 			var outfile, tplfile, yamlname string

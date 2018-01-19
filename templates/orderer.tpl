@@ -20,6 +20,7 @@ services:
       # enabled kafka client TLS
       - ORDERER_KAFKA_SERVER=kafkaserver
       - ORDERER_KAFKA_VERBOSE=true
+      - ORDERER_KAFKA_VERSION={{.kfk_version}}
       - ORDERER_KAFKA_TLS_ENABLED=true
       - ORDERER_KAFKA_TLS_PRIVATEKEY=/var/hyperledger/orderer/kafka/tls/client.key
       - ORDERER_KAFKA_TLS_CERTIFICATE=/var/hyperledger/orderer/kafka/tls/client.crt

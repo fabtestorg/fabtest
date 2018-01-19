@@ -27,6 +27,7 @@ const (
 	PeerDomain = "peer_domain"
 	OrgCounts = "org_counts"
 	KfkDomain = "kfk_domain"
+	KfkVersion = "kfk_version"
 	ZabbixServerIp   = "zabbix_server_ip"
 	ZabbixServerPort = "zabbix_server_port"
 	List = "list"
