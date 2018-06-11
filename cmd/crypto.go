@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/peersafe/fabtest/tpl"
+	"github.com/fabtestorg/fabtest/tpl"
 	"time"
 	"strconv"
 )
@@ -110,6 +110,8 @@ func CreateYamlByJson(strType string) error {
 				if curid == "0" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid)
 				} else if curid == "1" {
+					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid)
+				} else if curid == "2" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid)
 				}
 				yamlname = nodeType + curid + "org" + curorgid

@@ -1,10 +1,18 @@
+#基于 python fabric 1.13.1 版本
+# pip install fabric==1.13.1    //root 执行
+
+# 生产 yaml
+#./fabtest -f crypto-config
+# 生产证书文件
+#./fabtest -c crypto
+
 1. 生成yaml文件  如果改变组织数(修改 config.json)
 #configtx.yaml
 ./fabtest -f configtx
 
 启动 zabbix-agent
-./fabtest -f zabbix
-./fabtest -s zabbix
+#./fabtest -f zabbix
+#./fabtest -s zabbix
 
 #peer,order,zk,kfk yaml
 ./fabtest -f node
@@ -18,13 +26,14 @@
 3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
 ./fabtest -p all
 
+3.1 启动节点之前还原机器/etc/hosts，因为启动order，peer时会修改
+sudo cp ./hosts /etc/hosts
+
 4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper
 ./fabtest -s kafka
 ./fabtest -s order
 ./fabtest -s peer
-
-44 机器添加 /etc/hosts    对 peer order
 
 5. 创建channel
 ./fabtest -c channel -n testchannel

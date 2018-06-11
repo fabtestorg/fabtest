@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/peersafe/fabtest/cmd"
+	"github.com/fabtestorg/fabtest/cmd"
 )
 
 var (

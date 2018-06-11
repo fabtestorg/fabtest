@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/peersafe/fabtest/tpl"
+	"github.com/fabtestorg/fabtest/tpl"
 	"fmt"
 	"sync"
 )

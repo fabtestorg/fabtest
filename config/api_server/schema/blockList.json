@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "$schema": {
+            "id": "/properties/$schema",
+            "type": "string"
+        },
+        "payload": {
+            "id": "/properties/payload",
+            "items": {
+                "id": "/properties/payload/items",
+                "properties": {
+                    "bid": {
+                        "id": "/properties/payload/items/properties/bid",
+                        "type": "string"
+                    },
+                    "bidbond": {
+                        "id": "/properties/payload/items/properties/bidbond",
+                        "type": "string"
+                    },
+                    "blockData": {
+                        "id": "/properties/payload/items/properties/blockData",
+                        "type": "string"
+                    },
+                    "blockHash": {
+                        "id": "/properties/payload/items/properties/blockHash",
+                        "type": "string"
+                    },
+                    "blockHeight": {
+                        "id": "/properties/payload/items/properties/blockHeight",
+                        "type": "integer"
+                    },
+                    "createBy": {
+                        "id": "/properties/payload/items/properties/createBy",
+                        "type": "string"
+                    },
+                    "createTime": {
+                        "id": "/properties/payload/items/properties/createTime",
+                        "type": "integer"
+                    },
+                    "lastUpdateBy": {
+                        "id": "/properties/payload/items/properties/lastUpdateBy",
+                        "type": "string"
+                    },
+                    "lastUpdateTime": {
+                        "id": "/properties/payload/items/properties/lastUpdateTime",
+                        "type": "integer"
+                    },
+                    "progress": {
+                        "id": "/properties/payload/items/properties/progress",
+                        "type": "string"
+                    },
+                    "receiver": {
+                        "id": "/properties/payload/items/properties/receiver",
+                        "type": "null"
+                    },
+                    "remark": {
+                        "id": "/properties/payload/items/properties/remark",
+                        "type": "string"
+                    },
+                    "sender": {
+                        "id": "/properties/payload/items/properties/sender",
+                        "type": "string"
+                    },
+                    "status": {
+                        "id": "/properties/payload/items/properties/status",
+                        "properties": {
+                            "changeEvent": {
+                                "id": "/properties/payload/items/properties/status/properties/changeEvent",
+                                "type": "string"
+                            },
+                            "currState": {
+                                "id": "/properties/payload/items/properties/status/properties/currState",
+                                "type": "string"
+                            },
+                            "preState": {
+                                "id": "/properties/payload/items/properties/status/properties/preState",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "txHash": {
+                        "id": "/properties/payload/items/properties/txHash",
+                        "type": "string"
+                    },
+                    "txId": {
+                        "id": "/properties/payload/items/properties/txId",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "type": "object"
+}

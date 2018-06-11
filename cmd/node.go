@@ -26,7 +26,7 @@ func StartNode(stringType string) error {
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
 				obj := NewFabCmd("add_node.py", value[APIIP].(string))
-				err := obj.RunShow("start_api", peerid, orgid, ConfigDir())
+				err := obj.RunShow("start_api_event", peerid, orgid, ConfigDir(), "api")
 				if err != nil {
 					return err
 				}
@@ -36,7 +36,7 @@ func StartNode(stringType string) error {
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
 				obj := NewFabCmd("add_node.py", value[APIIP].(string))
-				err := obj.RunShow("start_event", peerid, orgid, ConfigDir())
+				err := obj.RunShow("start_api_event", peerid, orgid, ConfigDir(), "event")
 				if err != nil {
 					return err
 				}
