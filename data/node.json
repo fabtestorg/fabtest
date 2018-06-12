@@ -22,6 +22,6 @@
     {"ip":"192.168.0.80","node_type":"order","order_id":"0","org_id":"1"},
     {"ip":"192.168.0.76","node_type":"order","order_id":"1","org_id":"1"},
 
-   {"ip":"192.168.0.41","apiip":"192.168.0.39","node_type":"peer","peer_id":"0","org_id":"1","order0_address":"192.168.0.43","order1_address":"192.168.0.42","other_peeraddress":"192.168.0.40"}
+    {"ip":"192.168.0.41","apiip":"192.168.0.39","node_type":"peer","peer_id":"0","org_id":"1"}
   ]
 }
