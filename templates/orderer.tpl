@@ -17,14 +17,14 @@ services:
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
       - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
-      # enabled kafka client TLS
-      - ORDERER_KAFKA_SERVER=kafkaserver
+      - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
+      - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
       - ORDERER_KAFKA_VERBOSE=true
-      #- ORDERER_KAFKA_VERSION={{.kfk_version}}
-      - ORDERER_KAFKA_TLS_ENABLED=true
-      - ORDERER_KAFKA_TLS_PRIVATEKEY=/var/hyperledger/orderer/kafka/tls/client.key
-      - ORDERER_KAFKA_TLS_CERTIFICATE=/var/hyperledger/orderer/kafka/tls/client.crt
-      - ORDERER_KAFKA_TLS_ROOTCAS=[/var/hyperledger/orderer/kafka/tls/ca.crt]
+      # enabled kafka client TLS
+#      - ORDERER_KAFKA_TLS_ENABLED=true
+#     - ORDERER_KAFKA_TLS_PRIVATEKEY=/var/hyperledger/orderer/kafka/tls/client.key
+#      - ORDERER_KAFKA_TLS_CERTIFICATE=/var/hyperledger/orderer/kafka/tls/client.crt
+#      - ORDERER_KAFKA_TLS_ROOTCAS=[/var/hyperledger/orderer/kafka/tls/ca.crt]
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
