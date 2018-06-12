@@ -11,7 +11,7 @@ def load_images(type,images_path):
     filter = type
     if type == "ca":
         filter = "fabric-ca"
-    result = run('docker images | grep -e "%s" | wc -l'%filter)
+    result = run('unset GREP_OPTIONS && docker images | grep -e "%s" | wc -l'%filter)
     if result == "0":
         with settings(warn_only=True):
             run("mkdir -p ~/images")
