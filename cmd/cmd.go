@@ -22,7 +22,7 @@ func NewFabCmd(fileName, host string) *FabCmd {
 	}
 	checkAdd("-H", host)
 	checkAdd("-u", SshUserName)
-	//checkAdd("-p", SshPwd)
+	checkAdd("-p", SshPwd)
 	return &FabCmd{args: append(args, "-f"), dir: ScriptPath(), fileName: fileName}
 }
 
