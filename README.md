@@ -29,10 +29,9 @@
 3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
 ./fabtest -p all
 
-3.1 启动节点之前还原机器/etc/hosts，因为启动order，peer时会修改
-cp /etc/hosts .
+3.1 启动节点之后要把hosts 追加到系统映射列表
 
-sudo cp ./hosts /etc/hosts
+sudo cat ./hosts >> /etc/hosts
 
 4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper

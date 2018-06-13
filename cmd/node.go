@@ -206,7 +206,7 @@ func LocalHostsSet(ip, domain string) error {
 	if ip == domain {
 		return nil
 	}
-	file, err := os.Open("/etc/hosts")
+	file, err := os.Open("./hosts")
 	if err != nil {
 		return err
 	}
@@ -228,7 +228,7 @@ func LocalHostsSet(ip, domain string) error {
 		}
 	}
 
-	file, err = os.OpenFile("/etc/hosts", os.O_WRONLY|os.O_APPEND, 0644)
+	file, err = os.OpenFile("./hosts", os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
