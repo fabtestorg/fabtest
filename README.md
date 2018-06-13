@@ -3,6 +3,7 @@
 #基于 python fabric 1.13.1 版本
 # pip install fabric==1.13.1    //root 执行
 
+#chmod +x ./bin/*
 # 生产 yaml
 #./fabtest -f crypto-config
 # 生产证书文件
@@ -29,6 +30,8 @@
 ./fabtest -p all
 
 3.1 启动节点之前还原机器/etc/hosts，因为启动order，peer时会修改
+cp /etc/hosts .
+
 sudo cp ./hosts /etc/hosts
 
 4. 启动节点zk, kfk, order, peer

@@ -6,6 +6,8 @@ Profiles:
             <<: *OrdererDefaults
             Organizations:{{range $index,$value:= .orgs}}
                 - *OrdererOrg{{$value}}{{end}}
+            Capabilities:
+                <<: *OrdererCapabilities
         Consortiums:
             SampleConsortium:
                 Organizations:{{range $index,$value:= .orgs}}
