@@ -10,21 +10,21 @@ orderers:
     host: {{.order1_address}}:7050
     {{end}}
     useTLS: true
-    tlsPath: ./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath: /home/ubuntu/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
 peers:
   peer:
     host: {{.ip}}:7051
     orgname: org{{.org_id}}
     useTLS: true
-    tlsPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 eventPeers:
   peer:
     host: {{.ip}}:7051
     orgname: org{{.org_id}}
-    useTLS: ture
-    tlsPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    useTLS: true
+    tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 other:
-    mspConfigPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
+    mspConfigPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
     channelId:           mychannel
     chaincodeName:       testfabric
@@ -37,13 +37,5 @@ mq:
       - "amqp://guest:guest@localhost:5672/"
     queue_name: "assetQueue"
 user:
-    #The alias should not be changed manually, unless you know what it means.
-    #And the file can not have another alias in other fileds.
     alias: zhengfu1
-    listenport: 5555
-    {{if eq .peer_id "0"}}
-    probe_order: "{{.order0_address}} 7050"
-    {{else if eq .peer_id "1"}}
-    probe_order: "{{.order1_address}} 7050"
-    {{end}}
 
