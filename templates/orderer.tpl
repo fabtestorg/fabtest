@@ -44,8 +44,8 @@ services:
       - 7002:7050
       - 7050:7050
     extra_hosts:
-       kfk.kafka.kfk1: {{.kfk1_address}}
-       kfk.kafka.kfk2: {{.kfk2_address}}
-       kfk.kafka.kfk3: {{.kfk3_address}}
+       kafka1: {{.kfk1_address}}
+       kafka2: {{.kfk2_address}}
+       kafka3: {{.kfk3_address}}
 
        

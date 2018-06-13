@@ -11,17 +11,17 @@
   "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
-    {"ip":"192.168.0.66","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
-    {"ip":"192.168.0.67","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},
-    {"ip":"192.168.0.68","node_type":"zookeeper","zk_id":"5","zk_2_id":"6"},
+    {"ip":"10.9.108.164","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
+    {"ip":"10.9.137.151","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},
+    {"ip":"10.9.26.26","node_type":"zookeeper","zk_id":"5","zk_2_id":"6"},
 
-    {"ip":"192.168.0.66","node_type":"kafka","kfk_id":"1"},
-    {"ip":"192.168.0.67","node_type":"kafka","kfk_id":"2"},
-    {"ip":"192.168.0.68","node_type":"kafka","kfk_id":"3"},
+    {"ip":"10.9.108.164","node_type":"kafka","kfk_id":"1"},
+    {"ip":"10.9.137.151","node_type":"kafka","kfk_id":"2"},
+    {"ip":"10.9.26.26","node_type":"kafka","kfk_id":"3"},
 
-    {"ip":"192.168.0.80","node_type":"order","order_id":"0","org_id":"1"},
-    {"ip":"192.168.0.76","node_type":"order","order_id":"1","org_id":"1"},
+    {"ip":"10.9.27.92","node_type":"order","order_id":"0","org_id":"1"},
+    {"ip":"10.9.53.209","node_type":"order","order_id":"1","org_id":"1"},
 
-    {"ip":"192.168.0.41","apiip":"192.168.0.39","node_type":"peer","peer_id":"0","org_id":"1"}
+    {"ip":"10.9.76.135","apiip":"10.9.89.126","node_type":"peer","peer_id":"0","org_id":"1"}
   ]
 }

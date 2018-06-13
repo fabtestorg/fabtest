@@ -27,9 +27,9 @@ func CreateYamlByJson(strType string) error {
 		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
 		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
 		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"3",""))
-		kafkalist = append(kafkalist,"kfk.kafka.kfk1")
-		kafkalist = append(kafkalist,"kfk.kafka.kfk2")
-		kafkalist = append(kafkalist,"kfk.kafka.kfk3")
+		kafkalist = append(kafkalist,"kafka1")
+		kafkalist = append(kafkalist,"kafka2")
+		kafkalist = append(kafkalist,"kafka3")
 		inputData["orgs"] = orgslist
 		inputData["kafkas"] = kafkalist
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
