@@ -36,6 +36,8 @@ sudo cat ./hosts >> /etc/hosts
 4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper
 ./fabtest -s kafka
+
+rm -f ./hosts
 ./fabtest -s order
 ./fabtest -s peer
 

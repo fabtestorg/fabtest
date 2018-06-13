@@ -1,13 +1,10 @@
 package cmd
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
 	"os"
-	"strings"
+	"io/ioutil"
 )
 
 func StartNode(stringType string) error {
@@ -206,29 +203,8 @@ func LocalHostsSet(ip, domain string) error {
 	if ip == domain {
 		return nil
 	}
-	file, err := os.Open("./hosts")
-	if err != nil {
-		return err
-	}
-	reader := bufio.NewReader(file)
-	for {
-		line, err := reader.ReadString('\n')
-		line = strings.TrimSpace(line)
-		if strings.HasSuffix(line, " "+domain) {
-			if strings.HasPrefix(line, ip+" ") {
-				return nil
-			}
-			return fmt.Errorf("The domain has been maped <%s>", line)
-		}
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			return err
-		}
-	}
 
-	file, err = os.OpenFile("./hosts", os.O_WRONLY, 0644)
+	file, err := os.OpenFile("./hosts", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
