@@ -26,16 +26,13 @@ eventPeers:
 other:
     mspConfigPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
-    channelId:           mychannel
+    channelId:           testchannel
     chaincodeName:       testfabric
     chaincodeVersion:    1.0
 policy:
     orgs: org{{.org_id}}
     rule: or
-mq:
-    mq_address:
-      - "amqp://guest:guest@localhost:5672/"
-    queue_name: "assetQueue"
+
 apiserver:
     #The alias should not be changed manually, unless you know what it means.
     #And the file can not have another alias in other fileds.
