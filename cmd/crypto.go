@@ -24,9 +24,12 @@ func CreateYamlByJson(strType string) error {
 		for i := 1; i <= int(orgcounts); i++ {
 			orgslist = append(orgslist,strconv.Itoa(i))
 		}
-		kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
-		kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
-		kafkalist = append(kafkalist,findMapValue(TypeKafka,"3",""))
+		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
+		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
+		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"3",""))
+		kafkalist = append(kafkalist,"kfk.kafka.kfk1")
+		kafkalist = append(kafkalist,"kfk.kafka.kfk2")
+		kafkalist = append(kafkalist,"kfk.kafka.kfk3")
 		inputData["orgs"] = orgslist
 		inputData["kafkas"] = kafkalist
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
@@ -106,6 +109,9 @@ func CreateYamlByJson(strType string) error {
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
+				value[KFK1_ADDRESS] = findMapValue(TypeKafka,"1","")
+				value[KFK2_ADDRESS] = findMapValue(TypeKafka,"2","")
+				value[KFK3_ADDRESS] = findMapValue(TypeKafka,"3","")
 				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
 				tplfile = TplOrderer
 			case TypePeer:

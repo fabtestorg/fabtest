@@ -21,10 +21,10 @@ services:
       - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
       - ORDERER_KAFKA_VERBOSE=true
       # enabled kafka client TLS
-#      - ORDERER_KAFKA_TLS_ENABLED=true
-#     - ORDERER_KAFKA_TLS_PRIVATEKEY=/var/hyperledger/orderer/kafka/tls/client.key
-#      - ORDERER_KAFKA_TLS_CERTIFICATE=/var/hyperledger/orderer/kafka/tls/client.crt
-#      - ORDERER_KAFKA_TLS_ROOTCAS=[/var/hyperledger/orderer/kafka/tls/ca.crt]
+      - ORDERER_KAFKA_TLS_ENABLED=true
+      - ORDERER_KAFKA_TLS_PRIVATEKEY_FILE=/var/hyperledger/orderer/kafka/tls/client.key
+      - ORDERER_KAFKA_TLS_CERTIFICATE_FILE=/var/hyperledger/orderer/kafka/tls/client.crt
+      - ORDERER_KAFKA_TLS_ROOTCAS_FILE=/var/hyperledger/orderer/kafka/tls/ca.crt
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
@@ -43,3 +43,9 @@ services:
       - 7001:7050
       - 7002:7050
       - 7050:7050
+    extra_hosts:
+       kfk.kafka.kfk1: {{.kfk1_address}}
+       kfk.kafka.kfk2: {{.kfk2_address}}
+       kfk.kafka.kfk3: {{.kfk3_address}}
+
+       
