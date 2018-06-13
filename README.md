@@ -31,8 +31,8 @@
 
 3.1 启动节点之后要把hosts 追加到系统映射列表
 
-sudo cat ./hosts >> /etc/hosts
-
+ sudo sh -c 'cat hosts >> /etc/hosts'
+ 
 4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper
 ./fabtest -s kafka
