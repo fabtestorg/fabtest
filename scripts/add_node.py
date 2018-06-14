@@ -49,7 +49,7 @@ def start_api_event(peer_id, org_id, config_dir, clitype):
     with lcd(config_dir):
         local("cp %s.yaml %s_server/client_sdk.yaml"%(yamlname,clitype))
     with lcd(parent_path):
-        run("cp /etc/hosts /etc/hosts)
+        put("/etc/hosts","/etc/hosts")
         local("tar -zcvf %s_server.tar.gz %s_server"%(clitype,clitype))
         #remote yaml
         run("mkdir -p ~/fabtest/")
