@@ -4,6 +4,7 @@
 # pip install fabric==1.13.1    //root 执行
 
 #chmod +x ./bin/*
+#sudo chown ubuntu:ubuntu /etc/hosts
 # 生产 yaml
 #./fabtest -f crypto-config
 # 生产证书文件
@@ -28,16 +29,11 @@
 
 3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
 ./fabtest -p all
-
-3.1 启动节点之后要把hosts 追加到系统映射列表
-
- sudo sh -c 'cat hosts >> /etc/hosts'
  
 4. 启动节点zk, kfk, order, peer
 ./fabtest -s zookeeper
 ./fabtest -s kafka
 
-rm -f ./hosts
 ./fabtest -s order
 ./fabtest -s peer
 
@@ -51,26 +47,27 @@ rm -f ./hosts
 ./fabtest -r joinchannel -n testchannel
 
 8. 安装chaincode
-./fabtest -r installchaincode -ccoutpath $PWD/config/factor.out
+./fabtest -r installchaincode -ccoutpath $PWD/config/testfabric.out
 
 9. 实例化chaincode
-./fabtest -r runchaincode -ccname factor -n testchannel
+./fabtest -r runchaincode -ccname testfabric -n testchannel
 
 10. 启动api, event
 ./fabtest -s api
 ./fabtest -s event
-./fabtest -a event -gn 50_1000
 
+11. 获取eventlog  50线程 循环50次
+./fabtest -g event -gn 50_1000
 
 
 12. 运行jmeter
 ./fabtest -s jmeter
 
-13. 获取eventlog  50线程 循环50次
-./fabtest -g event -gn 80_1000
-
-14. 分析获取的eventlog  50线程 循环50次
+13. 分析获取的eventlog  50线程 循环50次
 ./fabtest -a event -gn 50_1000
+
+14. 删除节点
+./fabtest -d all/peer/order/api
 
 15. 停止或启动节点
 ./fabtest -op start/stop

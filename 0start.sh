@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+
+#chmod +x ./bin/*
+#sudo chown ubuntu:ubuntu /etc/hosts
+# 重新生成证书
+#./fabtest -f crypto-config
+#./fabtest -c crypto
 #1. 生成yaml文件  如果改变组织数(修改 config.json)
 ./fabtest -f configtx
-
-#启动 zabbix-agent
-#./fabtest -f zabbix
-#./fabtest -s zabbix
 
 #peer,order,zk,kfk yaml
 ./fabtest -f node
@@ -23,31 +25,4 @@
 ./fabtest -s kafka
 
 ./fabtest -s order
-exit
 ./fabtest -s peer
-
-#44 机器添加 /etc/hosts    对 peer order
-exit
-#5. 创建channel
-#  sudo sh -c 'cat hosts >> /etc/hosts'
-./fabtest -c channel -n testchannel
-
-#6. 更新锚节点
-./fabtest -r updateanchor -n testchannel
-
-#7. peer 加入channel
-./fabtest -r joinchannel -n testchannel
-
-#8. 安装chaincode
-./fabtest -r installchaincode -ccoutpath $PWD/config/testfabric.out
-
-#9. 实例化chaincode
-./fabtest -r runchaincode -ccname testfabric -n testchannel
-
-#10. 启动api, event
-./fabtest -s api
-./fabtest -s event
-
-./fabtest -g event -gn templog
-
-#./fabtest -s jmeter

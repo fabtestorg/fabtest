@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"io/ioutil"
 )
 
@@ -55,12 +54,18 @@ func StartNode(stringType string) error {
 			nodeId = value[OrderId].(string)
 			ordId := value[OrgId].(string)
 			yamlname = nodeType + value[OrderId].(string) + "ord" + ordId
-			LocalHostsSet(ip, fmt.Sprintf("orderer%s.ord%s.%s", nodeId, ordId, peerdomain))
+			err := LocalHostsSet(ip, fmt.Sprintf("orderer%s.ord%s.%s", nodeId, ordId, peerdomain))
+			if err != nil {
+				return err
+			}
 		case TypePeer:
 			nodeId = value[PeerId].(string)
 			orgId := value[OrgId].(string)
 			yamlname = nodeType + nodeId + "org" + orgId
-			LocalHostsSet(ip, "peer"+nodeId+".org"+orgId+"."+peerdomain)
+			err := LocalHostsSet(ip, "peer"+nodeId+".org"+orgId+"."+peerdomain)
+			if err != nil {
+				return err
+			}
 		}
 		//启动节点
 		obj := NewFabCmd("add_node.py", ip)
@@ -203,15 +208,9 @@ func LocalHostsSet(ip, domain string) error {
 	if ip == domain {
 		return nil
 	}
-
-	file, err := os.OpenFile("./hosts", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
+	if err := ModifyHosts("/etc/hosts",ip,domain); err != nil {
+		fmt.Errorf(err.Error())
 		return err
 	}
-	buf := []byte(fmt.Sprintf("%s       %s\n", ip, domain))
-	_, err = file.Write(buf)
-	if err != nil {
-		return err
-	}
-	return file.Close()
+	return nil
 }
