@@ -19,7 +19,9 @@ services:
       - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
       - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
+      - ORDERER_KAFKA_SERVER=kafkaserver
       - ORDERER_KAFKA_VERBOSE=true
+    # - ORDERER_KAFKA_VERSION={{.kfk_version}}
       # enabled kafka client TLS
       - ORDERER_KAFKA_TLS_ENABLED=true
       - ORDERER_KAFKA_TLS_PRIVATEKEY_FILE=/var/hyperledger/orderer/kafka/tls/client.key
