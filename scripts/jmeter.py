@@ -35,11 +35,11 @@ def get_jmeter_log(yaml_name, config_dir):
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
-    dir = "%sevent_logs/%s"%(config_dir,log_dir)
+    dir = "%s/event_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
     file = '%s/%s_eventserver.log'%(dir,yaml_name)
     if os.path.exists(file):
         local("rm -rf %s"%file)
-    get('~/event_server/eventserver.log','%s'%file)
+    get('~/fabtest/event_server/eventserver.log','%s'%file)
     #echo  empty log
-    run("cat /dev/null > ~/event_server/eventserver.log")
+    run("cat /dev/null > ~/fabtest/event_server/eventserver.log")

@@ -29,6 +29,7 @@ exit
 #44 机器添加 /etc/hosts    对 peer order
 exit
 #5. 创建channel
+#  sudo sh -c 'cat hosts >> /etc/hosts'
 ./fabtest -c channel -n testchannel
 
 #6. 更新锚节点

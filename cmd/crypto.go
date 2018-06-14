@@ -61,9 +61,9 @@ func CreateYamlByJson(strType string) error {
 					curorgid := value[OrgId].(string)
 					tlstrue := true
 					if tlstrue { //tls
-						value[Order0_Address] = "orderer0.ord" + value[OrgId].(string) + "." + value[PeerDomain].(string)
-						value[Order1_Address] = "orderer1.ord" + value[OrgId].(string) + "." + value[PeerDomain].(string)
-						value[IP] = "peer" + curorgid + ".org" + value[OrgId].(string) + "." + value[PeerDomain].(string)
+						value[Order0_Address] = "orderer0.ord" + curorgid + "." + value[PeerDomain].(string)
+						value[Order1_Address] = "orderer1.ord" + curorgid + "." + value[PeerDomain].(string)
+						value[IP] = "peer" + value[PeerId].(string) + ".org" + curorgid + "." + value[PeerDomain].(string)
 					}else{
 						value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
 						value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
