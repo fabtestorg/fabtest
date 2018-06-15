@@ -84,7 +84,7 @@ func StartHaproxy() error {
 					obj := NewFabCmd("jmeter.py", ip)
 					err := obj.RunShow("start_haproxy", filename, dir)
 					if err != nil {
-						fmt.Println("******star_jmeter error******", filename)
+						fmt.Println("******start_haproxy error******", filename)
 					}
 				}(orgname, jmeterip)
 			}

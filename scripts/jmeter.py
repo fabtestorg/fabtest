@@ -48,6 +48,7 @@ def get_eventserver_log(yaml_name, config_dir, log_dir):
 def start_haproxy(file_name, config_dir):
     dir_name = "haproxy_config"
     with lcd(config_dir):
+        local("rm -rf haproxy_config/haproxy.cfg")
         local("cp %shaproxy.cfg haproxy_config/haproxy.cfg"%file_name)
         local("tar -zcvf %shaproxyconfig.tar.gz haproxy_config" %file_name)
         #remote yaml
