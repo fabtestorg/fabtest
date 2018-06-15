@@ -40,6 +40,7 @@ const (
 	Zk2Id = "zk_2_id"
 	IP = "ip"
 	APIIP = "apiip"
+	JMETERIP = "jmeterip"
 	IP1 = "ip1"
 	IP2 = "ip2"
 	IP3 = "ip3"

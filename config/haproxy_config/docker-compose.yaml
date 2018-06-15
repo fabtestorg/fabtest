@@ -1,0 +1,8 @@
+version: '2'
+services:
+  haproxy:
+    image: haproxy:alpine
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "2222:2222"

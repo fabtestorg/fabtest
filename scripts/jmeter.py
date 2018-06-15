@@ -11,7 +11,7 @@ sys.setdefaultencoding('utf8')
 def start_jmeter(file_name, config_dir):
     dir_name = "jmeter_config"
     with lcd(config_dir):
-        local("tar -zcvf %s.tar.gz %s.jmx" % (file_name, file_name))
+        local("tar -zcvf %s.tar.gz %sjmeter.jmx" % (file_name, file_name))
         #remote yaml
         run("rm -rf ~/fabtest/%s"%dir_name)
         run("mkdir -p ~/fabtest/%s"%dir_name)
@@ -43,3 +43,20 @@ def get_eventserver_log(yaml_name, config_dir, log_dir):
     get('~/fabtest/event_server/eventserver.log','%s'%file)
     #echo  empty log
     run("cat /dev/null > ~/fabtest/event_server/eventserver.log")
+
+# remote
+def start_haproxy(file_name, config_dir):
+    dir_name = "haproxy_config"
+    with lcd(config_dir):
+        local("cp %shaproxy.cfg haproxy_config/haproxy.cfg"%file_name)
+        local("tar -zcvf %shaproxyconfig.tar.gz haproxy_config" %file_name)
+        #remote yaml
+        run("rm -rf ~/fabtest/%s"%dir_name)
+        run("mkdir -p ~/fabtest/")
+        put("%shaproxyconfig.tar.gz" %file_name, "~/fabtest/")
+        local("rm %sshaproxyconfig.tar.gz" %file_name)
+    with cd("~/fabtest"):
+        run("tar zxvfm %sshaproxyconfig.tar.gz" % file_name)
+        run("rm %sshaproxyconfig.tar.gz" % file_name)
+    with cd("~/fabtest/haproxy_config"):
+        run("docker-compose -f docker-compose.yaml up -d")

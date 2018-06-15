@@ -59,8 +59,8 @@ func CreateYamlByJson(strType string) error {
 			if strType == "client" {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
-					value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
-					value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
+					value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid,IP)
+					value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid,IP)
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
 					//生成api docker-compose.yaml
 					err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
@@ -83,47 +83,47 @@ func CreateYamlByJson(strType string) error {
 			case TypeZookeeper:
 				curzkid := value[ZkId].(string)
 				if curzkid == "1"{
-					value[IP3] = findMapValue(TypeZookeeper, "3", "")
+					value[IP3] = findMapValue(TypeZookeeper, "3", "",IP)
 					value[IP4] = value[IP3]
-					value[IP5] = findMapValue(TypeZookeeper, "5", "")
+					value[IP5] = findMapValue(TypeZookeeper, "5", "",IP)
 				}else if curzkid == "3"{
-					value[IP1] = findMapValue(TypeZookeeper, "1", "")
+					value[IP1] = findMapValue(TypeZookeeper, "1", "",IP)
 					value[IP2] = value[IP1]
-					value[IP5] = findMapValue(TypeZookeeper, "5", "")
+					value[IP5] = findMapValue(TypeZookeeper, "5", "",IP)
 				}else if curzkid == "5" {
-					value[IP1] = findMapValue(TypeZookeeper, "1", "")
+					value[IP1] = findMapValue(TypeZookeeper, "1", "",IP)
 					value[IP2] = value[IP1]
-					value[IP3] = findMapValue(TypeZookeeper, "3", "")
+					value[IP3] = findMapValue(TypeZookeeper, "3", "",IP)
 					value[IP4] = value[IP3]
 				}
 				yamlname = nodeType + curzkid + value[Zk2Id].(string)
 				tplfile = TplZookeeper
 			case TypeKafka:
-				value[Zk_IP1] = findMapValue(TypeZookeeper, "1", "")
+				value[Zk_IP1] = findMapValue(TypeZookeeper, "1", "",IP)
 				value[Zk_IP2] = value[Zk_IP1]
-				value[Zk_IP3] = findMapValue(TypeZookeeper, "3", "")
+				value[Zk_IP3] = findMapValue(TypeZookeeper, "3", "",IP)
 				value[Zk_IP4] = value[Zk_IP3]
-				value[Zk_IP5] = findMapValue(TypeZookeeper, "5", "")
+				value[Zk_IP5] = findMapValue(TypeZookeeper, "5", "",IP)
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
-				value[KFK1_ADDRESS] = findMapValue(TypeKafka,"1","")
-				value[KFK2_ADDRESS] = findMapValue(TypeKafka,"2","")
-				value[KFK3_ADDRESS] = findMapValue(TypeKafka,"3","")
+				value[KFK1_ADDRESS] = findMapValue(TypeKafka,"1","",IP)
+				value[KFK2_ADDRESS] = findMapValue(TypeKafka,"2","",IP)
+				value[KFK3_ADDRESS] = findMapValue(TypeKafka,"3","",IP)
 				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
 				tplfile = TplOrderer
 			case TypePeer:
 				curid := value[PeerId].(string)
 				curorgid := value[OrgId].(string)
-				value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
-				value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
+				value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid,IP)
+				value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid,IP)
 				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
 				if curid == "0" {
-					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid)
+					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid,IP)
 				} else if curid == "1" {
-					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid)
+					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid,IP)
 				} else if curid == "2" {
-					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid)
+					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid,IP)
 				}
 				yamlname = nodeType + curid + "org" + curorgid
 				tplfile = TplPeer
@@ -296,13 +296,12 @@ func PutCryptoConfig() error {
 	return nil
 }
 
-func findMapValue(findType, findid, findorgid string) string {
+func findMapValue(findType, findid, findorgid, key string) string {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
-
 		if nodeType == findType {
 			switch findType {
 			case TypeZookeeper:
@@ -325,7 +324,7 @@ func findMapValue(findType, findid, findorgid string) string {
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
 				if peerid == findid && orgid == findorgid {
-					return value[IP].(string)
+					return value[key].(string)
 				}
 			}
 		}

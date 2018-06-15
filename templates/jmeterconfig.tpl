@@ -56,8 +56,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">{{.apiip}}</stringProp>
-          <stringProp name="HTTPSampler.port">{{.jmeter.port}}</stringProp>
+          <stringProp name="HTTPSampler.domain">{{.jmeter.haproxyip}}</stringProp>
+          <stringProp name="HTTPSampler.port">{{.jmeter.haproxyport}}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/factor/saveData</stringProp>
