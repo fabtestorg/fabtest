@@ -55,7 +55,7 @@ def start_haproxy(file_name, config_dir):
         run("rm -rf ~/fabtest/%s"%dir_name)
         run("mkdir -p ~/fabtest/")
         put("%shaproxyconfig.tar.gz" %file_name, "~/fabtest/")
-        local("rm %sshaproxyconfig.tar.gz" %file_name)
+        local("rm %shaproxyconfig.tar.gz" %file_name)
     with cd("~/fabtest"):
         run("tar zxvfm %sshaproxyconfig.tar.gz" % file_name)
         run("rm %sshaproxyconfig.tar.gz" % file_name)
