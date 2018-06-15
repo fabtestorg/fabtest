@@ -59,15 +59,8 @@ func CreateYamlByJson(strType string) error {
 			if strType == "client" {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
-					tlstrue := true
-					if tlstrue { //tls
-						value[Order0_Address] = "orderer0.ord" + curorgid + "." + value[PeerDomain].(string)
-						value[Order1_Address] = "orderer1.ord" + curorgid + "." + value[PeerDomain].(string)
-						value[IP] = "peer" + value[PeerId].(string) + ".org" + curorgid + "." + value[PeerDomain].(string)
-					}else{
-						value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
-						value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
-					}
+					value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
+					value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
 					//生成api docker-compose.yaml
 					err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
@@ -75,7 +68,7 @@ func CreateYamlByJson(strType string) error {
 						return err
 					}
 					//生成api 和  event client_sdk.yaml文件
-					err := tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
+					err = tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
 					if err != nil {
 						return err
 					}

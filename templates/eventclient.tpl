@@ -4,22 +4,18 @@ crypto:
   hash: SHA2-256
 orderers:
   orderer:
-    {{if eq .peer_id "0"}}
-    host: {{.order0_address}}:7050
-    {{else if eq .peer_id "1"}}
-    host: {{.order1_address}}:7050
-    {{end}}
+    host: orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050
     useTLS: true
     tlsPath: /home/ubuntu/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
 peers:
   peer:
-    host: {{.ip}}:7051
+    host: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
     orgname: org{{.org_id}}
     useTLS: true
     tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 eventPeers:
   peer:
-    host: {{.ip}}:7051
+    host: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
     orgname: org{{.org_id}}
     useTLS: true
     tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
