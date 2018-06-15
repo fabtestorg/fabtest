@@ -68,8 +68,13 @@ func CreateYamlByJson(strType string) error {
 						value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid)
 						value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid)
 					}
-					//生成api 和  event yaml文件
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
+					//生成api docker-compose.yaml
+					err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
+					if err != nil {
+						return err
+					}
+					//生成api 和  event client_sdk.yaml文件
 					err := tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
 					if err != nil {
 						return err

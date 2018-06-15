@@ -10,21 +10,21 @@ orderers:
     host: {{.order1_address}}:7050
     {{end}}
     useTLS: true
-    tlsPath: /home/ubuntu/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath:./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
 peers:
   peer:
     host: {{.ip}}:7051
     orgname: org{{.org_id}}
     useTLS: true
-    tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath:./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 eventPeers:
   peer:
     host: {{.ip}}:7051
     orgname: org{{.org_id}}
     useTLS: true
-    tlsPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath:./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 other:
-    mspConfigPath: /home/ubuntu/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
+    mspConfigPath:./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
     channelId:           testchannel
     chaincodeName:       testfabric

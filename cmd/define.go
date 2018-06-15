@@ -17,6 +17,7 @@ const (
 	TplCryptoConfig = "./templates/crypto-config.tpl"
 	TplConfigtx     = "./templates/configtx.tpl"
 	TplApiClient     = "./templates/apiclient.tpl"
+	TplApiDocker     = "./templates/apidocker.tpl"
 	TplEventClient     = "./templates/eventclient.tpl"
 
 	TypePeer      = "peer"

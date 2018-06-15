@@ -41,6 +41,28 @@ def start_node(type, node_id, yaml_name, config_dir):
         run("rm %s.tar.gz"%yaml_name)
         run("docker-compose -f %s.yaml up -d"%yaml_name)
 
+
+def start_api(peer_id, org_id, config_dir):
+    name = "peer" + peer_id + "org" + org_id
+    apiclientname = name + "apiclient"
+    apidockername = name + "apidocker"
+    parent_path  = os.path.dirname(config_dir)
+    #apiserver
+    with lcd(config_dir):
+        local("cp %s.yaml api_server/client_sdk.yaml"%apiclientname)
+        local("cp %s.yaml %s_server/docker-compose.yaml"%(apidockername))
+    with lcd(parent_path):
+        local("tar -zcvf api_server.tar.gz api_server")
+        #remote yaml
+        run("mkdir -p ~/fabtest/")
+        put("api_server.tar.gz","~/fabtest")
+        local("rm api_server.tar.gz")
+    with cd("~/fabtest"):
+        run("tar zxvfm api_server.tar.gz")
+        run("rm api_server.tar.gz")
+    with cd("~/fabtest/api_server"):
+        run("docker-compose -f docker-compose.yaml up -d")
+
 def start_api_event(peer_id, org_id, config_dir, clitype):
     name = "peer" + peer_id + "org" + org_id
     yamlname = name + "%sclient"%clitype
