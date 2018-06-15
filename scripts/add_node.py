@@ -50,7 +50,7 @@ def start_api(peer_id, org_id, config_dir):
     #apiserver
     with lcd(config_dir):
         local("cp %s.yaml api_server/client_sdk.yaml"%apiclientname)
-        local("cp %s.yaml %s_server/docker-compose.yaml"%(apidockername))
+        local("cp %s.yaml api_server/docker-compose.yaml"%apidockername)
     with lcd(parent_path):
         local("tar -zcvf api_server.tar.gz api_server")
         #remote yaml
