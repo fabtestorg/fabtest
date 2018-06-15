@@ -80,13 +80,11 @@ func StartHaproxy() error {
 			if _, ok := tempMap[orgname]; !ok {
 				tempMap[orgname] = "already"
 				jmeterip := value[JMETERIP].(string)
-				go func(filename, ip string) {
-					obj := NewFabCmd("jmeter.py", ip)
-					err := obj.RunShow("start_haproxy", filename, dir)
-					if err != nil {
-						fmt.Println("******start_haproxy error******", filename)
-					}
-				}(orgname, jmeterip)
+				obj := NewFabCmd("jmeter.py", jmeterip)
+				err := obj.RunShow("start_haproxy", orgname, dir)
+				if err != nil {
+					fmt.Println("******start_haproxy error******", orgname)
+				}
 			}
 		}
 	}
