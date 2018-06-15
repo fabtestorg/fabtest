@@ -57,7 +57,7 @@ def start_haproxy(file_name, config_dir):
         put("%shaproxyconfig.tar.gz" %file_name, "~/fabtest/")
         local("rm %shaproxyconfig.tar.gz" %file_name)
     with cd("~/fabtest"):
-        run("tar zxvfm %sshaproxyconfig.tar.gz" % file_name)
-        run("rm %sshaproxyconfig.tar.gz" % file_name)
+        run("tar zxvfm %shaproxyconfig.tar.gz" %file_name)
+        run("rm %shaproxyconfig.tar.gz" % file_name)
     with cd("~/fabtest/haproxy_config"):
         run("docker-compose -f docker-compose.yaml up -d")
