@@ -61,6 +61,8 @@
 
 
 12. 运行jmeter
+./fabtest -s haproxy
+
 ./fabtest -s jmeter
 
 13. 分析获取的eventlog  50线程 循环50次

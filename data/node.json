@@ -23,6 +23,6 @@
     {"ip":"10.9.53.209","node_type":"order","order_id":"1","org_id":"1"},
 
     {"ip":"10.9.76.135","apiip":"10.9.89.126","jmeterip":"10.9.89.128","node_type":"peer","peer_id":"0","org_id":"1"},
-    {"ip":"10.9.76.135","apiip":"10.9.89.126","jmeterip":"10.9.89.128","node_type":"peer","peer_id":"1","org_id":"1"}
+    {"ip":"10.9.76.135","apiip":"10.9.89.122","jmeterip":"10.9.89.128","node_type":"peer","peer_id":"1","org_id":"1"}
   ]
 }

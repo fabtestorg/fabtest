@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"github.com/fabtestorg/fabtest/tpl"
 	"fmt"
+	"github.com/fabtestorg/fabtest/tpl"
 	"sync"
 )
 
@@ -17,10 +17,10 @@ func CreateJmeterConfig() error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value["jmeter"] = inputData["jmeter"]
-		orgname := "org" + value[OrgId].(string)
-		if _, ok := tempMap[orgname]; !ok {
-			tempMap[orgname] = "already"
-			if value[NodeType].(string) == TypePeer {
+		if value[NodeType].(string) == TypePeer {
+			orgname := "org" + value[OrgId].(string)
+			if _, ok := tempMap[orgname]; !ok {
+				tempMap[orgname] = "already"
 				//creat jmeter jmx request file
 				err := tpl.Handler(param, TplJmeterConfig, dir+orgname+"jmeter.jmx")
 				if err != nil {
@@ -28,7 +28,7 @@ func CreateJmeterConfig() error {
 				}
 				//creat haproxy cfg
 				value["apiip1"] = value[APIIP].(string)
-				value["apiip2"] = findMapValue(TypePeer,"1",value[OrgId].(string),APIIP)
+				value["apiip2"] = findMapValue(TypePeer, "1", value[OrgId].(string), APIIP)
 				err = tpl.Handler(param, TplHaproxyConfig, dir+orgname+"haproxy.cfg")
 				if err != nil {
 					return err
@@ -47,10 +47,10 @@ func StartJmeter() error {
 	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		orgname := "org" + value[OrgId].(string)
-		if _, ok := tempMap[orgname]; !ok {
-			tempMap[orgname] = "already"
-			if value[NodeType].(string) == TypePeer {
+		if value[NodeType].(string) == TypePeer {
+			orgname := "org" + value[OrgId].(string)
+			if _, ok := tempMap[orgname]; !ok {
+				tempMap[orgname] = "already"
 				jmeterip := value[JMETERIP].(string)
 				wg.Add(1)
 				go func(filename, ip string) {
@@ -75,10 +75,10 @@ func StartHaproxy() error {
 	tempMap := make(map[string]string)
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		orgname := "org" + value[OrgId].(string)
-		if _, ok := tempMap[orgname]; !ok {
-			tempMap[orgname] = "already"
-			if value[NodeType].(string) == TypePeer {
+		if value[NodeType].(string) == TypePeer {
+			orgname := "org" + value[OrgId].(string)
+			if _, ok := tempMap[orgname]; !ok {
+				tempMap[orgname] = "already"
 				jmeterip := value[JMETERIP].(string)
 				go func(filename, ip string) {
 					obj := NewFabCmd("jmeter.py", ip)
@@ -116,7 +116,7 @@ func GetEventServerLog(logdir string) error {
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
 	obj := NewFabCmd("utils.py", "")
-	err := obj.RunShow("rm_local", dir + "event_logs/" + logdir)
+	err := obj.RunShow("rm_local", dir+"event_logs/"+logdir)
 	if err != nil {
 		return err
 	}
