@@ -10,7 +10,7 @@ const (
 	Domain_Name     = "finblockchain.cn"
 	SshUserName     = "ubuntu"
 	SshPwd          = "dev@peersafe"
-	SudoPwd          = "Peersafe@2018"
+	SudoPwd          = "dev@peersafe"
 	TplZookeeper    = "./templates/zookeeper.tpl"
 	TplKafka        = "./templates/kafka.tpl"
 	TplOrderer      = "./templates/orderer.tpl"
