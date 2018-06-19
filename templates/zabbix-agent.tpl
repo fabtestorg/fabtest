@@ -395,7 +395,7 @@ LoadModule=zabbix_module_docker.so
 # TLSPSKIdentity=
 
 ### Option: TLSPSKFile
-#	Full pathname of a file containing the pre-shared key.
+#	Full pathnhgame of a file containing the pre-shared key.
 #
 # Mandatory: no
 # Default:

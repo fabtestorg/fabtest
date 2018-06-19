@@ -56,11 +56,11 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-      {{if eq .peer_id "0"}}
-       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{else if eq .peer_id "1"}}
-       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{end}}
+#      {{if eq .peer_id "0"}}
+#       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+#      {{else if eq .peer_id "1"}}
+#       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+#      {{end}}
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
        orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}

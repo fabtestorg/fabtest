@@ -39,6 +39,31 @@ func CreateJmeterConfig() error {
 	return nil
 }
 
+func CreateHaproxyConfig() error {
+	inputData := GetJsonMap("node.json")
+	list := inputData[List].([]interface{})
+	dir := ConfigDir()
+	tempMap := make(map[string]string)
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		value["jmeter"] = inputData["jmeter"]
+		if value[NodeType].(string) == TypePeer {
+			orgname := "org" + value[OrgId].(string)
+			if _, ok := tempMap[orgname]; !ok {
+				tempMap[orgname] = "already"
+				//creat haproxy cfg
+				value["apiip1"] = value[APIIP].(string)
+				value["apiip2"] = findMapValue(TypePeer, "1", value[OrgId].(string), APIIP)
+				err := tpl.Handler(param, TplHaproxyConfig, dir+orgname+"haproxy.cfg")
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func StartJmeter() error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})

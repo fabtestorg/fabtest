@@ -61,6 +61,8 @@
 
 
 12. 运行jmeter
+
+./fabtest -f haproxy
 ./fabtest -s haproxy
 
 ./fabtest -s jmeter

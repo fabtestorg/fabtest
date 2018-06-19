@@ -31,6 +31,8 @@ func main() {
 	if *file != "" {
 		if *file == "jmeter" {
 			err = cmd.CreateJmeterConfig()
+		} else if *file == "haproxy" {
+			err = cmd.CreateHaproxyConfig()
 		} else if *file == "zabbix" {
 			err = cmd.CreateZabbixConfig()
 		} else {
