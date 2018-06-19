@@ -23,6 +23,7 @@ func CreateZabbixConfig() error {
 		return tpl.Handler(map[string]string{
 			ZabbixServerIp:   server_ip,
 			ZabbixServerPort: server_port,
+			ZabbixAgentIp: ip,
 		}, TplZabbixConfig, dir+ip+".conf")
 	}
 	for _, param := range list {

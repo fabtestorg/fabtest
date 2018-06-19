@@ -35,6 +35,7 @@ const (
 	KfkVersion = "kfk_version"
 	ZabbixServerIp   = "zabbix_server_ip"
 	ZabbixServerPort = "zabbix_server_port"
+	ZabbixAgentIp = "zabbix_agent_ip"
 	List = "list"
 	NodeType = "node_type"
 	ZkId = "zk_id"
