@@ -1,6 +1,6 @@
 #!/bin/python
 
-from fabric.api import cd,put,lcd,local,run,settings
+from fabric.api import cd,put,lcd,local,run,settings,sudo
 import sys
 import os
 import utils
@@ -71,7 +71,7 @@ def start_api_event(peer_id, org_id, config_dir, clitype):
     with lcd(config_dir):
         local("cp %s.yaml %s_server/client_sdk.yaml"%(yamlname,clitype))
     with lcd(parent_path):
-        put("/etc/hosts","/etc/hosts")
+        put("/etc/hosts","~")
         local("tar -zcvf %s_server.tar.gz %s_server"%(clitype,clitype))
         #remote yaml
         run("mkdir -p ~/fabtest/")
@@ -82,6 +82,7 @@ def start_api_event(peer_id, org_id, config_dir, clitype):
         run("tar zxvfm %s_server.tar.gz"%clitype)
         run("rm %s_server.tar.gz"%clitype)
     with cd("~/fabtest/%s_server"%clitype):
+        sudo("cp ~/hosts /etc/hosts")
         run("tar zxvfm %sserver.tar.gz"%clitype)
         run("chmod +x %sserver"%clitype)
         run("rm -rf %sserver.log"%clitype)

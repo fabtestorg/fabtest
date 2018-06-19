@@ -21,10 +21,8 @@ func CreateZabbixConfig() error {
 		}
 		ipMap[ip] = struct{}{}
 		return tpl.Handler(map[string]string{
-			"server_ip":   server_ip,
-			"server_port": server_port,
-			"agent_ip":    ip,
-			"agent_name":  ip,
+			ZabbixServerIp:   server_ip,
+			ZabbixServerPort: server_port,
 		}, TplZabbixConfig, dir+ip+".conf")
 	}
 	for _, param := range list {

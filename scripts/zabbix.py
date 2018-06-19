@@ -1,7 +1,7 @@
 #!/bin/python
 
 import sys
-from fabric.api import cd, put, lcd, local, run
+from fabric.api import cd, put, lcd, local, run, sudo
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -10,14 +10,12 @@ sys.setdefaultencoding('utf8')
 def start_zabbix(config_name, config_dir):
     with lcd(config_dir):
         local("tar -zcvf %s.tar.gz %s.conf" % (config_name, config_name))
-        #remote yaml
-        # run("mkdir -p /etc/%s"%dir_name)/
-        put("%s.tar.gz"%config_name, "/etc/zabbix/")
-        local("rm %s.tar.gz" % config_name)
-    with cd("/etc/zabbix/"):
+        put("%s.tar.gz"%config_name, "~")
+        local("rm %s.tar.gz" %config_name)
+    with cd("~"):
         run("tar zxvfm %s.tar.gz" %config_name)
         run("rm %s.tar.gz" %config_name)
-        run("mv %s.conf zabbix_agentd.conf"%config_name)
-        run("systemctl restart zabbix-agent")
-        run("systemctl enable zabbix-agent")
+        sudo("mv %s.conf /etc/zabbix/zabbix_agentd.conf"%config_name)
+        sudo("systemctl restart zabbix-agent")
+        sudo("systemctl enable zabbix-agent")
 
