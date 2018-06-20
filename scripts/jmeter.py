@@ -33,6 +33,7 @@ def get_jmeter_log(yaml_name, config_dir, log_dir):
     get('~/fabtest/jmeter_config/%sjmeter.jtl'%yaml_name,'%s'%file)
     with lcd(dir):
         local("~/jmeter/apache-jmeter-3.2/bin/jmeter -g %s -e -o ./jmeterReport"%file)
+        local("rm -rf jmeter.log")
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
