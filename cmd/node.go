@@ -147,6 +147,14 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
+		} else if stringType == "jmeter" {
+				if nodeType == TypePeer {
+					obj := NewFabCmd("removenode.py", value[JMETERIP].(string))
+					err := obj.RunShow("remove_jmeter")
+					if err != nil {
+						return err
+					}
+				}
 		} else if stringType == "all" && ( nodeType == TypeKafka || nodeType == TypeZookeeper ||
 			nodeType == TypePeer || nodeType == TypeOrder ){
 			//删除节点

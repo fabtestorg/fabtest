@@ -19,14 +19,15 @@ def remove_node(type):
 
 def remove_client():
     with settings(warn_only=True):
-       # run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
-       # run("docker network prune -f")
+       run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
+       run("docker network prune -f")
        # sudo("rm -rf ~/fabtest")
-       # sudo("rm -rf ~/fabTestData")
-        utils.kill_process("jmeter")
-        utils.kill_process("apiserver")
-        utils.kill_process("eventserver")
+       sudo("rm -rf ~/fabTestData")
+       utils.kill_process("eventserver")
 
+def remove_jmeter():
+    with settings(warn_only=True):
+        utils.kill_process("jmeter")
 
 
 

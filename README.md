@@ -70,7 +70,7 @@
 ./fabtest -a event -gn 50_1000
 
 14. 删除节点
-./fabtest -d all/peer/order/api
+./fabtest -d all/peer/order/api/jmeter
 
 15. 停止或启动节点
 ./fabtest -op start/stop
