@@ -44,7 +44,7 @@ def get_eventserver_log(yaml_name, config_dir, log_dir):
     get('~/fabtest/event_server/eventserver.log','%s'%file)
     #echo  empty log
     run("cat /dev/null > ~/fabtest/event_server/eventserver.log")
-    local("../fabtest -a event -gn %s > %s/analysis.txt"%(log_dir,dir))
+    local("./fabtest -a event -gn %s > %s/analysis.txt"%(log_dir,dir))
     local("cat %s/analysis.txt"%dir)
 
 # remote
