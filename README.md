@@ -54,11 +54,10 @@
 
 10. 启动api, event
 ./fabtest -s api
-./fabtest -s event
+./fabtest -s event    //替换event重启也用这个命令
 
-11. 获取eventlog  50线程 循环50次
+11. 获取eventlog 和jmeter.jtl 50线程 循环50次
 ./fabtest -g event -gn 50_1000
-
 
 12. 运行jmeter
 

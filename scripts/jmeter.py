@@ -25,13 +25,14 @@ def start_jmeter(file_name, config_dir):
 
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir):
-    dir = "%sjmeter_logs"%config_dir
+    dir = "%s/event_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
+    file = '%s/%sjmeter.jtl'%(dir,yaml_name)
+    if os.path.exists(file):
+        local("rm -rf %s"%file)
+    get('~/fabtest/jmeter_config/%sjmeter.jtl'%yaml_name,'%s'%file)
     with lcd(dir):
-        local("rm -rf  %s.jtl"%yaml_name)
-        local("rm -rf  %s.log"%yaml_name)
-    get('~/fabtest/jmeter_config/%s.jtl'%yaml_name, '%s/%s.jtl'%(dir,yaml_name))
-    get('~/fabtest/jmeter_config/jmeter.log', '%s/%s.log'%(dir,yaml_name))
+        local("~/jmeter/apache-jmeter-3.2/bin/jmeter -g %s -e -o ./jmeterReport"%file)
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):

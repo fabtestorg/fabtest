@@ -116,18 +116,23 @@ func StartHaproxy() error {
 	return nil
 }
 
-func GetJmeterLog() error {
+func GetJmeterLog(logdir string) error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
+	jmeterMap := make(map[string]string)
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
-			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
-			err := obj.RunShow("get_jmeter_log", clientname, dir)
-			if err != nil {
-				return err
+			jmeterIp := value[JMETERIP].(string)
+			clientname := "org" + value[OrgId].(string)
+			if _, ok := jmeterMap[jmeterIp]; !ok {
+				jmeterMap[jmeterIp] = "already"
+				obj := NewFabCmd("jmeter.py", jmeterIp)
+				err := obj.RunShow("get_jmeter_log", clientname, dir, logdir)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}

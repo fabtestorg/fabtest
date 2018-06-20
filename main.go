@@ -95,7 +95,7 @@ func main() {
 		}
 		err = cmd.RunChaincode(*ccname, *channelname)
 	} else if *getlog == "jmeter" {
-		err = cmd.GetJmeterLog()
+		err = cmd.GetJmeterLog(*logdir)
 	} else if *getlog == "event" {
 		if *logdir == "" {
 			flag.Usage()
@@ -103,6 +103,7 @@ func main() {
 			os.Exit(1)
 		}
 		err = cmd.GetEventServerLog(*logdir)
+		err = cmd.GetJmeterLog(*logdir)
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
 	} else if *deleteobj != "" {
