@@ -25,7 +25,7 @@ def start_jmeter(file_name, config_dir):
 
 #get jmeter log from remote
 def get_jmeter_log(yaml_name, config_dir, log_dir):
-    dir = "%s/event_logs/%s"%(config_dir,log_dir)
+    dir = "%sevent_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
     file = '%s/%sjmeter.jtl'%(dir,yaml_name)
     if os.path.exists(file):
@@ -36,7 +36,7 @@ def get_jmeter_log(yaml_name, config_dir, log_dir):
 
 #get eventserver log from remote
 def get_eventserver_log(yaml_name, config_dir, log_dir):
-    dir = "%s/event_logs/%s"%(config_dir,log_dir)
+    dir = "%sevent_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
     file = '%s/%s_eventserver.log'%(dir,yaml_name)
     if os.path.exists(file):
