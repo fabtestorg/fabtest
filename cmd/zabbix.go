@@ -65,7 +65,7 @@ func StartZabbix() error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		typeStr := value[NodeType].(string)
-		if typeStr == TypePeer || typeStr == TypeOrder || typeStr == TypeZookeeper || typeStr == TypeKafka {
+		if typeStr == TypePeer || typeStr == TypeOrder || typeStr == TypeKafka {
 			if err := start(value[IP].(string)); err != nil {
 				return err
 			}
@@ -75,12 +75,6 @@ func StartZabbix() error {
 				}
 			}
 		}
-		//if value[NodeType].(string) == TypePeer {
-		//	ip := value["jmeter"].(map[string]interface{})["ip"].(string)
-		//	if err := start(ip); err != nil {
-		//		return err
-		//	}
-		//}
 	}
 	return nil
 }
