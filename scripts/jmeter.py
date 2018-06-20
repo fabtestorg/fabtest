@@ -24,7 +24,7 @@ def start_jmeter(file_name, config_dir):
         run("screen -d -m ~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t %sjmeter.jmx -l %sjmeter.jtl"%(file_name,file_name), pty=False)
 
 #get jmeter log from remote
-def get_jmeter_log(yaml_name, config_dir):
+def get_jmeter_log(yaml_name, config_dir, log_dir):
     dir = "%s/event_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
     file = '%s/%sjmeter.jtl'%(dir,yaml_name)
