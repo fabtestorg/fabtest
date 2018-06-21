@@ -4,25 +4,25 @@
   "kfk_version": "0.9.0.1",
   "zabbix_server_ip":"10.9.43.204",
   "zabbix_server_port":"10056",
-  "jmeter":{"ip":"10.9.11.22", "haproxyip":"127.0.0.1","haproxyport":2222, "thread_count":1, "loop_count":1, "throughput":"60.0"},
+  "jmeter":{"ip":"10.9.152.112", "haproxyip":"127.0.0.1","haproxyport":2222, "thread_count":1, "loop_count":1, "throughput":"60.0"},
   "org_counts": 1,
   "batchTime": "1s",
   "batchSize": 100,
-  "batchPreferred": "2048 KB",
+  "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
-    {"ip":"10.9.110.23","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
-    {"ip":"10.9.5.144","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},
-    {"ip":"10.9.116.123","node_type":"zookeeper","zk_id":"5","zk_2_id":"6"},
+    {"ip":"10.9.124.120","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
+    {"ip":"10.9.164.14","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},
+    {"ip":"10.9.19.233","node_type":"zookeeper","zk_id":"5","zk_2_id":"6"},
 
-    {"ip":"10.9.110.23","node_type":"kafka","kfk_id":"1"},
-    {"ip":"10.9.5.144","node_type":"kafka","kfk_id":"2"},
-    {"ip":"10.9.116.123","node_type":"kafka","kfk_id":"3"},
+    {"ip":"10.9.124.120","node_type":"kafka","kfk_id":"1"},
+    {"ip":"10.9.164.14","node_type":"kafka","kfk_id":"2"},
+    {"ip":"10.9.19.233","node_type":"kafka","kfk_id":"3"},
 
-    {"ip":"10.9.189.126","node_type":"order","order_id":"0","org_id":"1"},
-    {"ip":"10.9.182.229","node_type":"order","order_id":"1","org_id":"1"},
+    {"ip":"10.9.43.68","node_type":"order","order_id":"0","org_id":"1"},
+    {"ip":"10.9.129.1","node_type":"order","order_id":"1","org_id":"1"},
 
-    {"ip":"10.9.24.122","apiip":"10.9.40.192","node_type":"peer","peer_id":"0","org_id":"1"},
-    {"ip":"10.9.81.32","apiip":"10.9.169.240","node_type":"peer","peer_id":"1","org_id":"1"}
+    {"ip":"10.9.90.114","apiip":"10.9.139.72","node_type":"peer","peer_id":"0","org_id":"1"},
+    {"ip":"10.9.24.161","apiip":"10.9.28.155","node_type":"peer","peer_id":"1","org_id":"1"}
   ]
 }
