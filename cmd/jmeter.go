@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/fabtestorg/fabtest/tpl"
-	"sync"
 )
 
 const TplJmeterConfig = "./templates/jmeterconfig.tpl"
@@ -11,30 +10,10 @@ const TplHaproxyConfig = "./templates/haproxycfg.tpl"
 
 func CreateJmeterConfig() error {
 	inputData := GetJsonMap("node.json")
-	list := inputData[List].([]interface{})
 	dir := ConfigDir()
-	tempMap := make(map[string]string)
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		value["jmeter"] = inputData["jmeter"]
-		if value[NodeType].(string) == TypePeer {
-			orgname := "org" + value[OrgId].(string)
-			if _, ok := tempMap[orgname]; !ok {
-				tempMap[orgname] = "already"
-				//creat jmeter jmx request file
-				err := tpl.Handler(param, TplJmeterConfig, dir+orgname+"jmeter.jmx")
-				if err != nil {
-					return err
-				}
-				//creat haproxy cfg
-				value["apiip1"] = value[APIIP].(string)
-				value["apiip2"] = findMapValue(TypePeer, "1", value[OrgId].(string), APIIP)
-				err = tpl.Handler(param, TplHaproxyConfig, dir+orgname+"haproxy.cfg")
-				if err != nil {
-					return err
-				}
-			}
-		}
+	err := tpl.Handler(inputData, TplJmeterConfig, dir+"jmeter.jmx")
+	if err != nil {
+		return err
 	}
 	return nil
 }
@@ -43,98 +22,53 @@ func CreateHaproxyConfig() error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
-	tempMap := make(map[string]string)
+	var apilist []string
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		value["jmeter"] = inputData["jmeter"]
 		if value[NodeType].(string) == TypePeer {
-			orgname := "org" + value[OrgId].(string)
-			if _, ok := tempMap[orgname]; !ok {
-				tempMap[orgname] = "already"
-				//creat haproxy cfg
-				value["apiip1"] = value[APIIP].(string)
-				value["apiip2"] = findMapValue(TypePeer, "1", value[OrgId].(string), APIIP)
-				err := tpl.Handler(param, TplHaproxyConfig, dir+orgname+"haproxy.cfg")
-				if err != nil {
-					return err
-				}
-			}
+			apilist = append(apilist, value[APIIP].(string))
 		}
+	}
+	inputData["apilist"] = apilist
+	err := tpl.Handler(inputData, TplHaproxyConfig, dir+"haproxy_config/haproxy.cfg")
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
 func StartJmeter() error {
 	inputData := GetJsonMap("node.json")
-	list := inputData[List].([]interface{})
+	value := inputData[JMETER].(map[string]interface{})
 	dir := ConfigDir()
-	tempMap := make(map[string]string)
-	var wg sync.WaitGroup
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			orgname := "org" + value[OrgId].(string)
-			if _, ok := tempMap[orgname]; !ok {
-				tempMap[orgname] = "already"
-				jmeterip := value[JMETERIP].(string)
-				wg.Add(1)
-				go func(filename, ip string) {
-					obj := NewFabCmd("jmeter.py", ip)
-					err := obj.RunShow("start_jmeter", filename, dir)
-					if err != nil {
-						fmt.Println("******star_jmeter error******", filename)
-					}
-					wg.Done()
-				}(orgname, jmeterip)
-			}
-		}
+	obj := NewFabCmd("jmeter.py", value[IP].(string))
+	err := obj.RunShow("start_jmeter", dir)
+	if err != nil {
+		fmt.Println("******star_jmeter error******")
 	}
-	wg.Wait()
 	return nil
 }
 
 func StartHaproxy() error {
 	inputData := GetJsonMap("node.json")
-	list := inputData[List].([]interface{})
+	value := inputData[JMETER].(map[string]interface{})
 	dir := ConfigDir()
-	tempMap := make(map[string]string)
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			orgname := "org" + value[OrgId].(string)
-			if _, ok := tempMap[orgname]; !ok {
-				tempMap[orgname] = "already"
-				jmeterip := value[JMETERIP].(string)
-				obj := NewFabCmd("jmeter.py", jmeterip)
-				err := obj.RunShow("start_haproxy", orgname, dir)
-				if err != nil {
-					fmt.Println("******start_haproxy error******", orgname)
-				}
-			}
-		}
+	obj := NewFabCmd("jmeter.py", value[IP].(string))
+	err := obj.RunShow("start_haproxy", dir)
+	if err != nil {
+		fmt.Println("******start_haproxy error******")
 	}
 	return nil
 }
 
 func GetJmeterLog(logdir string) error {
 	inputData := GetJsonMap("node.json")
-	list := inputData[List].([]interface{})
+	value := inputData[JMETER].(map[string]interface{})
 	dir := ConfigDir()
-	jmeterMap := make(map[string]string)
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			jmeterIp := value[JMETERIP].(string)
-			clientname := "org" + value[OrgId].(string)
-			if _, ok := jmeterMap[jmeterIp]; !ok {
-				jmeterMap[jmeterIp] = "already"
-				obj := NewFabCmd("jmeter.py", jmeterIp)
-				err := obj.RunShow("get_jmeter_log", clientname, dir, logdir)
-				if err != nil {
-					return err
-				}
-			}
-		}
+	obj := NewFabCmd("jmeter.py", value[IP].(string))
+	err := obj.RunShow("get_jmeter_log", dir, logdir)
+	if err != nil {
+		fmt.Println("******get_jmeter_log error******")
 	}
 	return nil
 }

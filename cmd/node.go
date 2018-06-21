@@ -126,6 +126,7 @@ func DeleteObj(stringType string) error {
 	inputData := GetJsonMap("node.json")
 	peerdomain := inputData[PeerDomain].(string)
 	kfkdomain := inputData[KfkDomain].(string)
+	Jmeter := inputData[JMETER].(map[string]interface{})
 	list := inputData[List].([]interface{})
 	for _, param := range list {
 		value := param.(map[string]interface{})
@@ -149,7 +150,7 @@ func DeleteObj(stringType string) error {
 			}
 		} else if stringType == "jmeter" {
 				if nodeType == TypePeer {
-					obj := NewFabCmd("removenode.py", value[JMETERIP].(string))
+					obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
 					err := obj.RunShow("remove_jmeter")
 					if err != nil {
 						return err

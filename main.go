@@ -103,8 +103,6 @@ func main() {
 			os.Exit(1)
 		}
 		err = cmd.GetEventServerLog(*logdir)
-		err = cmd.GetJmeterLog(*logdir)
-		err = cmd.EventAnalyse(*logdir)
 	} else if *put != "" {
 		err = cmd.PutCryptoConfig()
 	} else if *deleteobj != "" {
