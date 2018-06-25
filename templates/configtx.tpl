@@ -36,8 +36,7 @@ Organizations:{{range $index,$value:= .orgs}}
 Orderer: &OrdererDefaults
     OrdererType: solo
     Addresses:{{range $index,$value:= .orgs}}
-        - orderer0.ord{{$value}}.finblockchain.cn:7050
-        - orderer1.ord{{$value}}.finblockchain.cn:7050{{end}}
+        - orderer0.ord{{$value}}.finblockchain.cn:7050{{end}}
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}

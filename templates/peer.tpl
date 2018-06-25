@@ -61,7 +61,6 @@ services:
        peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
       {{end}}
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
-       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb
