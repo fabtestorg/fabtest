@@ -28,6 +28,7 @@ const (
 	TypeApi = "api"
 	PeerDomain = "peer_domain"
 	OrgCounts = "org_counts"
+	OrderOrgCounts = "orderorg_counts"
 	KfkDomain = "kfk_domain"
 	KFK1_ADDRESS = "kfk1_address"
 	KFK2_ADDRESS = "kfk2_address"

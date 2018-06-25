@@ -20,9 +20,13 @@ func CreateYamlByJson(strType string) error {
 	if strType == "configtx" {
 		inputData := GetJsonMap("node.json")
 		orgcounts := inputData[OrgCounts].(float64)
-		var orgslist,kafkalist []string
+		orderorgcounts := inputData[OrderOrgCounts].(float64)
+		var orgslist,orderorgslist,kafkalist []string
 		for i := 1; i <= int(orgcounts); i++ {
 			orgslist = append(orgslist,strconv.Itoa(i))
+		}
+		for i := 1; i <= int(orderorgcounts); i++ {
+			orderorgslist = append(orderorgslist,strconv.Itoa(i))
 		}
 		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
 		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
@@ -31,16 +35,22 @@ func CreateYamlByJson(strType string) error {
 		kafkalist = append(kafkalist,"kafka2")
 		kafkalist = append(kafkalist,"kafka3")
 		inputData["orgs"] = orgslist
+		inputData["orderorgs"] = orderorgslist
 		inputData["kafkas"] = kafkalist
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
 		inputData := GetJsonMap("node.json")
 		orgcounts := inputData[OrgCounts].(float64)
-		var orgslist []string
+		orderorgcounts := inputData[OrderOrgCounts].(float64)
+		var orgslist, orderorgslist []string
 		for i := 1; i <= int(orgcounts); i++ {
 			orgslist = append(orgslist,strconv.Itoa(i))
 		}
+		for i := 1; i <= int(orderorgcounts); i++ {
+			orderorgslist = append(orderorgslist,strconv.Itoa(i))
+		}
 		inputData["orgs"] = orgslist
+		inputData["orderorgs"] = orderorgslist
 		return tpl.Handler(inputData, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
 	} else if strType == "node" || strType == "client" {
 		inputData := GetJsonMap("node.json")

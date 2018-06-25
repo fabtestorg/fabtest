@@ -4,7 +4,7 @@ Profiles:
             <<: *ChannelCapabilities
         Orderer:
             <<: *OrdererDefaults
-            Organizations:{{range $index,$value:= .orgs}}
+            Organizations:{{range $index,$value:= .orderorgs}}
                 - *OrdererOrg{{$value}}{{end}}
             Capabilities:
                 <<: *OrdererCapabilities
@@ -20,7 +20,7 @@ Profiles:
                 - *Org{{$value}}{{end}}
             Capabilities:
                 <<: *ApplicationCapabilities
-Organizations:{{range $index,$value:= .orgs}}
+Organizations:{{range $index,$value:= .orderorgs}}
     - &OrdererOrg{{$value}}
         Name: OrdererOrg{{$value}}
         ID: Orderer{{$value}}MSP
@@ -35,8 +35,8 @@ Organizations:{{range $index,$value:= .orgs}}
               Port: 7051{{end}}
 Orderer: &OrdererDefaults
     OrdererType: solo
-    Addresses:
-        - orderer0.ord1.finblockchain.cn:7050
+    Addresses:{{range $index,$value:= .orderorgs}}
+        - orderer0.ord{{$value}}.finblockchain.cn:7050{{end}}
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}

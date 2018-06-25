@@ -1,4 +1,4 @@
-OrdererOrgs:{{range $index,$value:= .orgs}}
+OrdererOrgs:{{range $index,$value:= .orderorgs}}
   - Name: ord{{$value}}
     Domain: ord{{$value}}.{{$.peer_domain}}
     EnableNodeOUs: true
