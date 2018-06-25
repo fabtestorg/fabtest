@@ -35,8 +35,8 @@ Organizations:{{range $index,$value:= .orgs}}
               Port: 7051{{end}}
 Orderer: &OrdererDefaults
     OrdererType: solo
-    Addresses:{{range $index,$value:= .orgs}}
-        - orderer0.ord{{$value}}.finblockchain.cn:7050{{end}}
+    Addresses:
+        - orderer0.ord1.finblockchain.cn:7050
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}
