@@ -125,7 +125,7 @@ func CreateYamlByJson(strType string) error {
 			case TypePeer:
 				curid := value[PeerId].(string)
 				curorgid := value[OrgId].(string)
-				value[Order0_Address] = findMapValue(TypeOrder, "0", curorgid,IP)
+				value[Order0_Address] = findMapValue(TypeOrder, "0", "1",IP)
 				value[Order1_Address] = findMapValue(TypeOrder, "1", curorgid,IP)
 				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
 				if curid == "0" {
