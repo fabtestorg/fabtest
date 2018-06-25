@@ -4,9 +4,9 @@ crypto:
   hash: SHA2-256
 orderers:
   orderer:
-    host: orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050
+    host: orderer0.ord1.{{.peer_domain}}:7050
     useTLS: true
-    tlsPath: /home/ubuntu/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
+    tlsPath: /home/ubuntu/fabTestData/crypto-config/ordererOrganizations/ord1.{{.peer_domain}}/orderers/orderer0.ord1.{{.peer_domain}}/tls/server.crt
 peers:
   peer:
     host: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051

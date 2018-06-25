@@ -21,6 +21,5 @@ services:
      - 5555:5555
     extra_hosts:
        peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}: {{.ip}}
-       orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
-       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
+       orderer0.ord1.{{.peer_domain}}: {{.order0_address}}
 
