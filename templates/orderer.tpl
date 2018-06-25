@@ -6,7 +6,7 @@ services:
     image: hyperledger/fabric-orderer
     restart: always
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_GENERAL_LOGLEVEL=ERROR
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block

@@ -26,6 +26,7 @@ services:
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       {{else if eq .peer_id "1"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
       {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
