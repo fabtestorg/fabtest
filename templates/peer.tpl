@@ -8,12 +8,11 @@ services:
       # base env
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=peer{{.peer_id}}_default
-      - CORE_LOGGING_LEVEL=ERROR
+      - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_EVENTS_TIMEOUT=0ms
-      - CORE_PEER_GOSSIP_USELEADERELECTION=false
-      - CORE_PEER_GOSSIP_ORGLEADER=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
@@ -26,6 +25,7 @@ services:
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       {{else if eq .peer_id "1"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
       {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
@@ -55,11 +55,11 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-#      {{if eq .peer_id "0"}}
-#       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-#      {{else if eq .peer_id "1"}}
-#       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-#      {{end}}
+      {{if eq .peer_id "0"}}
+       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+      {{else if eq .peer_id "1"}}
+       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+      {{end}}
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
        orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
