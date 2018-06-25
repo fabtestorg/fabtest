@@ -135,6 +135,13 @@ func CreateYamlByJson(strType string) error {
 				} else if curid == "2" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "0", curorgid,IP)
 				}
+				if curorgid == "1" {
+					value["otherorg_peer0address"] = findMapValue(TypePeer, "0", "2",IP)
+					value["otherorg_peer1address"] = findMapValue(TypePeer, "1", "2",IP)
+				} else if curorgid == "2" {
+					value["otherorg_peer0address"] = findMapValue(TypePeer, "0", "1",IP)
+					value["otherorg_peer1address"] = findMapValue(TypePeer, "1", "1",IP)
+				}
 				yamlname = nodeType + curid + "org" + curorgid
 				tplfile = TplPeer
 			}

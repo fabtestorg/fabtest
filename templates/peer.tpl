@@ -58,6 +58,13 @@ services:
       {{else if eq .peer_id "1"}}
        peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
       {{end}}
+      {{if eq .org_id "1"}}
+       peer0.org2.{{.peer_domain}}: {{.otherorg_peer0address}}
+       peer1.org2.{{.peer_domain}}: {{.otherorg_peer1address}}
+      {{else if eq .org_id "2"}}
+       peer0.org1.{{.peer_domain}}: {{.otherorg_peer0address}}
+       peer1.org1.{{.peer_domain}}: {{.otherorg_peer1address}}
+      {{end}}
        orderer0.ord1.{{.peer_domain}}: {{.order0_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
