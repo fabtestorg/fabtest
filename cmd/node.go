@@ -26,6 +26,10 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
+				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s", peerid))
+				if err != nil {
+					return err
+				}
 				continue
 			} else if stringType == "event" && nodeType == TypePeer {
 				//启动api
@@ -50,6 +54,10 @@ func StartNode(stringType string) error {
 		case TypeKafka:
 			nodeId = value[KfkId].(string)
 			yamlname = nodeType + value[KfkId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("kafka%s", nodeId))
+			if err != nil {
+				return err
+			}
 		case TypeOrder:
 			nodeId = value[OrderId].(string)
 			ordId := value[OrgId].(string)
@@ -58,11 +66,19 @@ func StartNode(stringType string) error {
 			if err != nil {
 				return err
 			}
+			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s", nodeId))
+			if err != nil {
+				return err
+			}
 		case TypePeer:
 			nodeId = value[PeerId].(string)
 			orgId := value[OrgId].(string)
 			yamlname = nodeType + nodeId + "org" + orgId
 			err := LocalHostsSet(ip, "peer"+nodeId+".org"+orgId+"."+peerdomain)
+			if err != nil {
+				return err
+			}
+			err = LocalHostsSet(ip, fmt.Sprintf("peer%s", nodeId))
 			if err != nil {
 				return err
 			}
