@@ -22,6 +22,7 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord1.{{.peer_domain}}:7050
+      {{if eq .peer_id "1"}}
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
       {{end}}
       # improve env
