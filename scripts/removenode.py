@@ -16,13 +16,14 @@ def remove_node(type):
         run("docker network prune -f")
         sudo("rm -rf ~/fabtest")
         sudo("rm -rf ~/fabTestData")
+        sudo("rm -rf /data/*")
 
 def remove_client():
     with settings(warn_only=True):
        run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
        run("docker network prune -f")
        # sudo("rm -rf ~/fabtest")
-       sudo("rm -rf ~/fabTestData")
+      # sudo("rm -rf ~/fabTestData")
        utils.kill_process("eventserver")
 
 def remove_jmeter():
