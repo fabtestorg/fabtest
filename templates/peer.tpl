@@ -8,11 +8,20 @@ services:
       # base env
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=peer{{.peer_id}}_default
+      {{if eq .peer_id "0"}}
       - CORE_LOGGING_LEVEL=INFO
+      {{else if eq .peer_id "1"}}
+      - CORE_LOGGING_LEVEL=DEBUG
+      {{end}}
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_EVENTS_TIMEOUT=0ms
-      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=false
+      {{if eq .peer_id "0"}}
+      - CORE_PEER_GOSSIP_ORGLEADER=true
+      {{else if eq .peer_id "1"}}
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      {{end}}
       - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
@@ -21,8 +30,10 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIOD=5
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord1.{{.peer_domain}}:7050
-      {{if eq .peer_id "1"}}
+      {{if eq .peer_id "0"}}
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
+      {{else if eq .peer_id "1"}}
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
       {{end}}
       # improve env
@@ -58,14 +69,8 @@ services:
       {{else if eq .peer_id "1"}}
        peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
       {{end}}
-      {{if eq .org_id "1"}}
-       peer0.org2.{{.peer_domain}}: {{.otherorg_peer0address}}
-       peer1.org2.{{.peer_domain}}: {{.otherorg_peer1address}}
-      {{else if eq .org_id "2"}}
-       peer0.org1.{{.peer_domain}}: {{.otherorg_peer0address}}
-       peer1.org1.{{.peer_domain}}: {{.otherorg_peer1address}}
-      {{end}}
-       orderer0.ord1.{{.peer_domain}}: {{.order0_address}}
+       orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
+       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb

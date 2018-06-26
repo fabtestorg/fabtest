@@ -251,6 +251,15 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+          <intProp name="calcMode">0</intProp>
+          <doubleProp>
+            <name>throughput</name>
+            <value>{{.jmeter.throughput}}</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+        </ConstantThroughputTimer>
+        <hashTree/>
       </hashTree>
     </hashTree>
     <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="工作台" enabled="true">
