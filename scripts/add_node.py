@@ -61,8 +61,8 @@ def start_api(peer_id, org_id, config_dir):
         run("tar zxvfm api_server.tar.gz")
         run("rm api_server.tar.gz")
     with cd("~/fabtest/api_server"):
-        run("docker-compose -f docker-compose.yaml restart")
-        #run("docker-compose -f docker-compose.yaml up -d")
+        run("docker-compose -f docker-compose.yaml down")
+        run("docker-compose -f docker-compose.yaml up -d")
 
 def start_api_event(peer_id, org_id, config_dir, clitype):
     name = "peer" + peer_id + "org" + org_id
