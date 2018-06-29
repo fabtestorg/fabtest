@@ -11,7 +11,7 @@ services:
       {{if eq .peer_id "0"}}
       - CORE_LOGGING_LEVEL=INFO
       {{else if eq .peer_id "1"}}
-      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
       {{end}}
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_ENDORSER_ENABLED=true
