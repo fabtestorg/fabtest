@@ -23,7 +23,7 @@ def remove_client():
        run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
        run("docker network prune -f")
        # sudo("rm -rf ~/fabtest")
-      # sudo("rm -rf ~/fabTestData")
+       sudo("rm -rf ~/fabTestData")
        utils.kill_process("eventserver")
 
 def remove_jmeter():
