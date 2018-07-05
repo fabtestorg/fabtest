@@ -66,7 +66,7 @@ func StartNode(stringType string) error {
 			if err != nil {
 				return err
 			}
-			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s", nodeId))
+			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId,nodeId))
 			if err != nil {
 				return err
 			}
@@ -78,7 +78,7 @@ func StartNode(stringType string) error {
 			if err != nil {
 				return err
 			}
-			err = LocalHostsSet(ip, fmt.Sprintf("peer%s", nodeId))
+			err = LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId,nodeId))
 			if err != nil {
 				return err
 			}
