@@ -55,6 +55,7 @@ services:
       - 7051:7051
       - 7052:7052
       - 7053:7053
+      - 6060:6060
     extra_hosts:
 #      {{if eq .peer_id "0"}}
 #       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
