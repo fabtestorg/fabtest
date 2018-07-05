@@ -5,7 +5,7 @@
 ./fabtest -c channel -n testchannel
 
 #6. 更新锚节点
-./fabtest -r updateanchor -n testchannel
+#./fabtest -r updateanchor -n testchannel
 
 #7. peer 加入channel
 ./fabtest -r joinchannel -n testchannel

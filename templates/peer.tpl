@@ -9,7 +9,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=peer{{.peer_id}}_default
       {{if eq .peer_id "0"}}
-      - CORE_LOGGING_LEVEL=INFO
+      - CORE_LOGGING_LEVEL=DEBUG
       {{else if eq .peer_id "1"}}
       - CORE_LOGGING_LEVEL=INFO
       {{end}}
@@ -23,6 +23,7 @@ services:
       - CORE_PEER_GOSSIP_ORGLEADER=false
       {{end}}
       - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_PROFILE_LISTENADDRESS=0.0.0.0:6060
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
@@ -31,7 +32,7 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
       {{if eq .peer_id "0"}}
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord1.{{.peer_domain}}:7050
       {{else if eq .peer_id "1"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
@@ -53,7 +54,7 @@ services:
         - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/msp:/etc/hyperledger/fabric/msp
         - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls:/etc/hyperledger/fabric/tls
         - /etc/localtime:/etc/localtime
-        - /data/peer_data:/var/hyperledger/production
+      #  - /data/peer_data:/var/hyperledger/production
     logging:
       driver: "json-file"
       options:
@@ -63,14 +64,15 @@ services:
       - 7051:7051
       - 7052:7052
       - 7053:7053
+      - 6060:6060
     extra_hosts:
-      {{if eq .peer_id "0"}}
-       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{else if eq .peer_id "1"}}
-       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{end}}
-       orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
-       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
+     # {{if eq .peer_id "0"}}
+     #  peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+     # {{else if eq .peer_id "1"}}
+     #  peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
+     # {{end}}
+       orderer0.ord1.{{.peer_domain}}: {{.order0_address}}
+     #  orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb
