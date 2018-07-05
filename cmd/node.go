@@ -26,7 +26,7 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
-				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s", peerid))
+				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid,peerid))
 				if err != nil {
 					return err
 				}

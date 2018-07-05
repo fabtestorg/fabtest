@@ -60,4 +60,5 @@ def start_haproxy(config_dir):
         run("tar zxvfm haproxyconfig.tar.gz")
         run("rm -rf haproxyconfig.tar.gz")
     with cd("~/fabtest/haproxy_config"):
+        run("docker-compose -f docker-compose.yaml down")
         run("docker-compose -f docker-compose.yaml up -d")
