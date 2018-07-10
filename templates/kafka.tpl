@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       - KAFKA_BROKER_ID={{.kfk_id}}
-      - KAFKA_ZOOKEEPER_CONNECT=zk1.{{.kfk_domain}}:2181,zk2.{{.kfk_domain}}:12181,zk3.{{.kfk_domain}}:2181,zk4.{{.kfk_domain}}:12181,zk5.{{.kfk_domain}}:2181
+      - KAFKA_ZOOKEEPER_CONNECT=zk0.{{.kfk_domain}}:2181,zk1.{{.kfk_domain}}:2181,zk2.{{.kfk_domain}}:2181
       - KAFKA_MIN_INSYNC_REPLICAS=2
       - KAFKA_DEFAULT_REPLICATION_FACTOR=2
       - KAFKA_MESSAGE_MAX_BYTES=103809024 # 99 * 1024 * 1024 B
@@ -41,9 +41,7 @@ services:
         max-size: "50m"
         max-file: "10"
     extra_hosts:
+      zk0.{{.kfk_domain}}: {{.zk_ip0}}
       zk1.{{.kfk_domain}}: {{.zk_ip1}}
       zk2.{{.kfk_domain}}: {{.zk_ip2}}
-      zk3.{{.kfk_domain}}: {{.zk_ip3}}
-      zk4.{{.kfk_domain}}: {{.zk_ip4}}
-      zk5.{{.kfk_domain}}: {{.zk_ip5}}
 

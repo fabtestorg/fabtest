@@ -6,7 +6,7 @@ services:
     image: hyperledger/fabric-orderer
     restart: always
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=ERROR
+      - ORDERER_GENERAL_LOGLEVEL=INFO
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -46,6 +46,7 @@ services:
       - 7002:7050
       - 7050:7050
     extra_hosts:
+       kafka0: {{.kfk0_address}}
        kafka1: {{.kfk1_address}}
        kafka2: {{.kfk2_address}}
        kafka3: {{.kfk3_address}}

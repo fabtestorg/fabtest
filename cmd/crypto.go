@@ -24,9 +24,7 @@ func CreateYamlByJson(strType string) error {
 		for i := 1; i <= int(orgcounts); i++ {
 			orgslist = append(orgslist,strconv.Itoa(i))
 		}
-		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"1",""))
-		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"2",""))
-		//kafkalist = append(kafkalist,findMapValue(TypeKafka,"3",""))
+		kafkalist = append(kafkalist,"kafka0")
 		kafkalist = append(kafkalist,"kafka1")
 		kafkalist = append(kafkalist,"kafka2")
 		kafkalist = append(kafkalist,"kafka3")
@@ -82,31 +80,19 @@ func CreateYamlByJson(strType string) error {
 			switch nodeType {
 			case TypeZookeeper:
 				curzkid := value[ZkId].(string)
-				if curzkid == "1"{
-					value[IP3] = findMapValue(TypeZookeeper, "3", "",IP)
-					value[IP4] = value[IP3]
-					value[IP5] = findMapValue(TypeZookeeper, "5", "",IP)
-				}else if curzkid == "3"{
-					value[IP1] = findMapValue(TypeZookeeper, "1", "",IP)
-					value[IP2] = value[IP1]
-					value[IP5] = findMapValue(TypeZookeeper, "5", "",IP)
-				}else if curzkid == "5" {
-					value[IP1] = findMapValue(TypeZookeeper, "1", "",IP)
-					value[IP2] = value[IP1]
-					value[IP3] = findMapValue(TypeZookeeper, "3", "",IP)
-					value[IP4] = value[IP3]
-				}
-				yamlname = nodeType + curzkid + value[Zk2Id].(string)
+				value[IP0] = findMapValue(TypeZookeeper, "0", "",IP)
+				value[IP1] = findMapValue(TypeZookeeper, "1", "",IP)
+				value[IP2] = findMapValue(TypeZookeeper, "2", "",IP)
+				yamlname = nodeType + curzkid
 				tplfile = TplZookeeper
 			case TypeKafka:
+				value[Zk_IP0] = findMapValue(TypeZookeeper, "0", "",IP)
 				value[Zk_IP1] = findMapValue(TypeZookeeper, "1", "",IP)
-				value[Zk_IP2] = value[Zk_IP1]
-				value[Zk_IP3] = findMapValue(TypeZookeeper, "3", "",IP)
-				value[Zk_IP4] = value[Zk_IP3]
-				value[Zk_IP5] = findMapValue(TypeZookeeper, "5", "",IP)
+				value[Zk_IP2] = findMapValue(TypeZookeeper, "2", "",IP)
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
+				value[KFK0_ADDRESS] = findMapValue(TypeKafka,"0","",IP)
 				value[KFK1_ADDRESS] = findMapValue(TypeKafka,"1","",IP)
 				value[KFK2_ADDRESS] = findMapValue(TypeKafka,"2","",IP)
 				value[KFK3_ADDRESS] = findMapValue(TypeKafka,"3","",IP)

@@ -11,10 +11,11 @@
   "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
-    {"ip":"10.9.113.197","node_type":"zookeeper","zk_id":"1","zk_2_id":"2"},
-    {"ip":"10.9.14.52","node_type":"zookeeper","zk_id":"3","zk_2_id":"4"},
-    {"ip":"10.9.114.202","node_type":"zookeeper","zk_id":"5","zk_2_id":"6"},
+    {"ip":"10.9.113.197","node_type":"zookeeper","zk_id":"0"},
+    {"ip":"10.9.14.52","node_type":"zookeeper","zk_id":"1"},
+    {"ip":"10.9.114.202","node_type":"zookeeper","zk_id":"2"},
 
+    {"ip":"10.9.113.100","node_type":"kafka","kfk_id":"0"},
     {"ip":"10.9.113.197","node_type":"kafka","kfk_id":"1"},
     {"ip":"10.9.14.52","node_type":"kafka","kfk_id":"2"},
     {"ip":"10.9.114.202","node_type":"kafka","kfk_id":"3"},
