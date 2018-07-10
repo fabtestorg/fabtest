@@ -49,8 +49,12 @@ func StartNode(stringType string) error {
 		var ip = value[IP].(string)
 		switch nodeType {
 		case TypeZookeeper:
-			nodeId = value[ZkId].(string) + value[Zk2Id].(string)
-			yamlname = nodeType + value[ZkId].(string) + value[Zk2Id].(string)
+			nodeId = value[ZkId].(string)
+			yamlname = nodeType + value[ZkId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("zk%s", nodeId))
+			if err != nil {
+				return err
+			}
 		case TypeKafka:
 			nodeId = value[KfkId].(string)
 			yamlname = nodeType + value[KfkId].(string)

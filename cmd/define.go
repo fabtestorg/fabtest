@@ -40,7 +40,6 @@ const (
 	List = "list"
 	NodeType = "node_type"
 	ZkId = "zk_id"
-	Zk2Id = "zk_2_id"
 	IP = "ip"
 	APIIP = "apiip"
 	JMETER= "jmeter"
