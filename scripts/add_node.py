@@ -64,7 +64,7 @@ def start_api(peer_id, org_id, config_dir):
         run("docker-compose -f docker-compose.yaml down")
         run("docker-compose -f docker-compose.yaml up -d")
 
-def start_api_event(peer_id, org_id, config_dir, clitype):
+def start_event(peer_id, org_id, config_dir, clitype):
     name = "peer" + peer_id + "org" + org_id
     yamlname = name + "%sclient"%clitype
     parent_path  = os.path.dirname(config_dir)
@@ -89,7 +89,6 @@ def start_api_event(peer_id, org_id, config_dir, clitype):
         run("rm -rf %sserver.log"%clitype)
         run("$(nohup ./%sserver >> %sserver.log 2>&1 &) && sleep 1"%(clitype,clitype))
         run("cat /dev/null > %sserver.log"%clitype)
-        #run("docker-compose -f docker-compose.yaml up -d")
 
 def stop_node(type, node_id, yaml_name):
     dir_name = type + node_id

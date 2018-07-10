@@ -10,4 +10,5 @@ ssh ubuntu@api0 "mkdir -p ~/nmon_log; cd ~/nmon_log;nmon -f -s 2 -c 600"
 ssh ubuntu@api1 "mkdir -p ~/nmon_log; cd ~/nmon_log;nmon -f -s 2 -c 600"
 sleep 3
 
+./fabtest -d jmeter
 ./fabtest -s jmeter

@@ -20,7 +20,6 @@ def start_jmeter(config_dir):
     with cd("~/fabtest/%s"%dir_name):
         run("tar zxvfm jmeterjmx.tar.gz")
         run("rm jmeterjmx.tar.gz")
-#        utils.kill_process("jmeter")
         run("screen -d -m ~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t jmeter.jmx -l jmeter.jtl", pty=False)
 
 #get jmeter log from remote
