@@ -1,3 +1,3 @@
 #!/bin/bash
 set -x
-ssh ubuntu@$1
+ssh root@$1

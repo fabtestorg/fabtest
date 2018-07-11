@@ -1,3 +1,3 @@
 #!/bin/bash
 set -x
-ssh-copy-id -i ~/.ssh/id_rsa.pub ubuntu@orderer0
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@orderer0
