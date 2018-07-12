@@ -19,4 +19,3 @@ services:
     command: ./apiserver
     ports:
      - 5555:5555
-     
