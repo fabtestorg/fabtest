@@ -1,13 +1,9 @@
 Profiles:
     OrgsOrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
         Orderer:
             <<: *OrdererDefaults
             Organizations:{{range $index,$value:= .orgs}}
                 - *OrdererOrg{{$value}}{{end}}
-            Capabilities:
-                <<: *OrdererCapabilities
         Consortiums:
             SampleConsortium:
                 Organizations:{{range $index,$value:= .orgs}}
@@ -18,8 +14,6 @@ Profiles:
             <<: *ApplicationDefaults
             Organizations:{{range $index,$value:= .orgs}}
                 - *Org{{$value}}{{end}}
-            Capabilities:
-                <<: *ApplicationCapabilities
 Organizations:{{range $index,$value:= .orgs}}
     - &OrdererOrg{{$value}}
         Name: OrdererOrg{{$value}}
@@ -49,12 +43,4 @@ Orderer: &OrdererDefaults
     Organizations:
 Application: &ApplicationDefaults
     Organizations:
-
-Capabilities:
-    Global: &ChannelCapabilities
-        V1_1: true
-    Orderer: &OrdererCapabilities
-        V1_1: true
-    Application: &ApplicationCapabilities
-        V1_1: true
 
