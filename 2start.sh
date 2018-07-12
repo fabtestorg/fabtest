@@ -11,10 +11,10 @@
 ./fabtest -r joinchannel -n testchannel
 
 #8. 安装chaincode
-./fabtest -r installchaincode -ccoutpath $PWD/config/testfabric.out
+./fabtest -r installchaincode -ccoutpath $PWD/config/factor.out
 
 #9. 实例化chaincode
-./fabtest -r runchaincode -ccname testfabric -n testchannel
+./fabtest -r runchaincode -ccname factor -n testchannel
 
 #10. 启动api, event
 ./fabtest -s api
