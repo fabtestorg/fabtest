@@ -67,7 +67,7 @@ def start_nmon(rate,times_number,out_file_name):
     run("rm -rf ~/nmon_log")
     run("mkdir -p ~/nmon_log")
     with cd("~/nmon_log"):
-       # utils.kill_process(nmon)
+        utils.kill_process("nmon")
         run("nmon -s%s -c%s -F %s.nmon"%(rate,times_number,out_file_name))
 
 #get nmon log from remote
@@ -78,5 +78,5 @@ def get_nmon_log(rate,times_number,out_file_name,config_dir,log_dir):
     if os.path.exists(file):
         local("rm -rf %s"%file)
     with cd("~/nmon_log"):
-        utils.kill_process(nmon)
-        get("%s.nmon"%out_file_name,"%s"%file)
+        utils.kill_process("nmon")
+        get("~/nmon_log/%s.nmon"%out_file_name,"%s"%file)
