@@ -34,7 +34,7 @@ services:
     volumes:
       - ~/fabTestData/kafkaTLSserver:/opt/kafka/ssl
       - /etc/localtime:/etc/localtime
-      - ./kafka_log:/tmp/kafka-logs
+      - /data/kafka_log:/tmp/kafka-logs
     logging:
       driver: "json-file"
       options:
