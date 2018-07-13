@@ -6,7 +6,8 @@ sys.setdefaultencoding('utf8')
 
 def kill_process(name):
     # kill the jmeter processes for unified order project
-    run("pgrep %s | xargs kill -9"%name)
+    with settings(warn_only=True):
+        run("pgrep %s | xargs kill -9"%name)
 
 def check_remote_file_exist(file):
     with settings(warn_only=True):
