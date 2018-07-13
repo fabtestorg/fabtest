@@ -10,10 +10,10 @@ import (
 
 var (
 	file        = flag.String("f", "", "configtx, crypto-config, node, client, jmeter, zabbix ' create yaml file '")
-	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api, jmeter, zabbix 'start node or api'")
+	start       = flag.String("s", "", "peer, order, zookeeper, kafka, all ,api, jmeter,nmon, zabbix 'start node or api'")
 	image       = flag.String("i", "", "peer, order, zookeeper, kafka, all  'load image'")
 	create      = flag.String("c", "", "crypto, genesisblock, channel, 'create source'")
-	getlog      = flag.String("g", "", "get jmeter or event logs")
+	getlog      = flag.String("g", "", "get jmeter or event or nmon logs")
 	logdir      = flag.String("gn", "", "log dir name eg: 50_50  loop 50*50")
 	channelname = flag.String("n", "", "channelname")
 	ccname      = flag.String("ccname", "", "chaincode name")
@@ -48,6 +48,8 @@ func main() {
 			err = cmd.StartJmeter()
 		} else if *start == "haproxy"{
 			err = cmd.StartHaproxy()
+		} else if *start == "nmon"{
+			err = cmd.StartNmon()
 		} else if *start == "zabbix" {
 			err = cmd.StartZabbix()
 		} else {
@@ -95,7 +97,19 @@ func main() {
 		}
 		err = cmd.RunChaincode(*ccname, *channelname)
 	} else if *getlog == "jmeter" {
+		if *logdir == "" {
+			flag.Usage()
+			fmt.Println("logdir is nil")
+			os.Exit(1)
+		}
 		err = cmd.GetJmeterLog(*logdir)
+	} else if *getlog == "nmon" {
+		if *logdir == "" {
+			flag.Usage()
+			fmt.Println("logdir is nil")
+			os.Exit(1)
+		}
+		err = cmd.GetNmonLog(*logdir)
 	} else if *getlog == "event" {
 		if *logdir == "" {
 			flag.Usage()

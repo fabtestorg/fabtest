@@ -61,3 +61,22 @@ def start_haproxy(config_dir):
     with cd("~/fabtest/haproxy_config"):
         run("docker-compose -f docker-compose.yaml down")
         run("docker-compose -f docker-compose.yaml up -d")
+
+
+def start_nmon(rate,times_number,out_file_name):
+    run("rm -rf ~/nmon_log")
+    run("mkdir -p ~/nmon_log")
+    with cd("~/nmon_log"):
+        run("pgrep nmon| xargs kill -9")
+        run("nmon -s%s -c%s -F %s.nmon"%(rate,times_number,out_file_name))
+
+#get nmon log from remote
+def get_nmon_log(rate,times_number,out_file_name,config_dir,log_dir):
+    dir = "%sevent_logs/%s"%(config_dir,log_dir)
+    local("mkdir -p %s"%dir)
+    file = '%s/%s_nmon'%(dir,out_file_name)
+    if os.path.exists(file):
+        local("rm -rf %s"%file)
+    with cd("~/nmon_log"):
+        run("pgrep nmon| xargs kill -9")
+        get("%s.nmon"%out_file_name,"%s"%file)

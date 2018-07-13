@@ -28,6 +28,8 @@ const (
 	TypeApi = "api"
 	PeerDomain = "peer_domain"
 	OrgCounts = "org_counts"
+	Nmon_Rate = "nmon_rate"
+	Nmon_Times = "nmon_times"
 	KfkDomain = "kfk_domain"
 	KFK0_ADDRESS = "kfk0_address"
 	KFK1_ADDRESS = "kfk1_address"
