@@ -20,12 +20,11 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMAXPERIOD=300
       - CORE_PEER_GOSSIP_RECONNECTMINPERIOD=5
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
-      - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCD=100
+      - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
       {{if eq .peer_id "0"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
       {{else if eq .peer_id "1"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
       {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
@@ -55,11 +54,6 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-      {{if eq .peer_id "0"}}
-       peer1.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{else if eq .peer_id "1"}}
-       peer0.org{{.org_id}}.{{.peer_domain}}: {{.other_peeraddress}}
-      {{end}}
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
        orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
