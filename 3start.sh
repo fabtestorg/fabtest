@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -x
 ./fabtest -s nmon
 sleep 3

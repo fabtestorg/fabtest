@@ -6,26 +6,26 @@
   "nmon_times": "600",
   "zabbix_server_ip":"10.9.43.204",
   "zabbix_server_port":"10056",
-  "jmeter":{"ip":"127.0.0.1", "haproxyip":"127.0.0.1","haproxyport":2222, "thread_count":500, "loop_count":200, "throughput":"60.0"},
-  "org_counts": 2,
+  "jmeter":{"ip":"127.0.0.1", "haproxyip":"127.0.0.1","haproxyport":2222, "thread_count":1, "loop_count":1, "throughput":"60.0"},
+  "org_counts": 1,
   "batchTime": "1s",
   "batchSize": 100,
   "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
-    {"ip":"10.9.113.197","node_type":"zookeeper","zk_id":"0"},
-    {"ip":"10.9.14.52","node_type":"zookeeper","zk_id":"1"},
-    {"ip":"10.9.114.202","node_type":"zookeeper","zk_id":"2"},
+    {"ip":"10.9.165.226","node_type":"zookeeper","zk_id":"0"},
+    {"ip":"10.9.35.195","node_type":"zookeeper","zk_id":"1"},
+    {"ip":"10.9.5.87","node_type":"zookeeper","zk_id":"2"},
 
-    {"ip":"10.9.113.100","node_type":"kafka","kfk_id":"0"},
-    {"ip":"10.9.113.197","node_type":"kafka","kfk_id":"1"},
-    {"ip":"10.9.14.52","node_type":"kafka","kfk_id":"2"},
-    {"ip":"10.9.114.202","node_type":"kafka","kfk_id":"3"},
+    {"ip":"10.9.122.91","node_type":"kafka","kfk_id":"0"},
+    {"ip":"10.9.118.94","node_type":"kafka","kfk_id":"1"},
+    {"ip":"10.9.46.230","node_type":"kafka","kfk_id":"2"},
+    {"ip":"10.9.153.75","node_type":"kafka","kfk_id":"3"},
 
-    {"ip":"10.9.190.247","node_type":"order","order_id":"0","org_id":"1"},
-    {"ip":"10.9.118.19","node_type":"order","order_id":"0","org_id":"2"},
+    {"ip":"10.9.100.52","node_type":"order","order_id":"0","org_id":"1"},
+    {"ip":"10.9.37.84","node_type":"order","order_id":"1","org_id":"1"},
 
-    {"ip":"10.9.167.31","apiip":"10.9.144.250","node_type":"peer","peer_id":"0","org_id":"1"},
-    {"ip":"10.9.107.172","apiip":"10.9.7.113","node_type":"peer","peer_id":"0","org_id":"2"}
+    {"ip":"10.9.144.114","apiip":"10.9.49.89","node_type":"peer","peer_id":"0","org_id":"1"},
+    {"ip":"10.9.168.182","apiip":"10.9.93.217","node_type":"peer","peer_id":"1","org_id":"1"}
   ]
 }
