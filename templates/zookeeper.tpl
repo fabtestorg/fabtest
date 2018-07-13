@@ -5,13 +5,7 @@ services:
         restart: always
         environment:
           ZOO_MY_ID: {{.zk_id}}
-          {{if eq .zk_id "0"}}
-          ZOO_SERVERS: server.1=zk1.{{.kfk_domain}}:2888:3888 server.2=zk2.{{.kfk_domain}}:2888:3888
-          {{else if eq .zk_id "1"}}
-          ZOO_SERVERS: server.1=zk0.{{.kfk_domain}}:2888:3888 server.2=zk2.{{.kfk_domain}}:2888:3888
-          {{else if eq .zk_id "2"}}
-          ZOO_SERVERS: server.1=zk0.{{.kfk_domain}}:2888:3888 server.2=zk1.{{.kfk_domain}}:2888:3888
-          {{end}}
+          ZOO_SERVERS: server.1=zk0.{{.kfk_domain}}:2888:3888 server.2=zk1.{{.kfk_domain}}:2888:3888 server.3=zk2.{{.kfk_domain}}:2888:3888
         ports:
           - 2181:2181
           - 2888:2888
