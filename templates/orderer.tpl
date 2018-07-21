@@ -6,7 +6,13 @@ services:
     image: hyperledger/fabric-orderer
     restart: always
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=debug
+      #benchmark
+      - ORDERER_BENCHMARK_BROADCASTNUM=10
+      - ORDERER_BENCHMARK_MAXLOOPNUM=10
+      - ORDERER_BENCHMARK_SPACE=2
+      - ORDERER_BENCHMARK_HOST=orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}
+
+      - ORDERER_GENERAL_LOGLEVEL=INFO
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -34,6 +40,8 @@ services:
       - ~/fabTestData/kafkaTLSclient:/var/hyperledger/orderer/kafka/tls
       - /etc/localtime:/etc/localtime
       - /data/orderer_data:/var/hyperledger/production
+      - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem:/var/hyperledger/orderer/msp/tlscacerts/tlsca.example.com-cert.pem
+      - ~/fabTestData/nomalTxEnv.txt:/var/nomalTxEnv.txt
     logging:
       driver: "json-file"
       options:
