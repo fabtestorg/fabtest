@@ -42,6 +42,10 @@ def start_node(type, node_id, yaml_name, config_dir):
         run("docker-compose -f %s.yaml up -d"%yaml_name)
 
 
+def start_docker():
+    #start docker service
+    sudo("systemctl restart docker")
+
 def start_api(peer_id, org_id, config_dir):
     name = "peer" + peer_id + "org" + org_id
     apiclientname = name + "apiclient"

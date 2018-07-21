@@ -243,3 +243,29 @@ func LocalHostsSet(ip, domain string) error {
 	}
 	return nil
 }
+
+func StartDocker() error {
+	inputData := GetJsonMap("node.json")
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		nodeType := value[NodeType].(string)
+		var ip = value[IP].(string)
+		//启动docker server
+		obj := NewFabCmd("add_node.py", ip)
+		err := obj.RunShow("start_docker")
+		if err != nil {
+			return err
+		}
+		if nodeType == TypePeer {
+			obj := NewFabCmd("add_node.py", value[APIIP].(string))
+			err := obj.RunShow("start_docker")
+			if err != nil {
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}

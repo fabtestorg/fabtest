@@ -52,6 +52,8 @@ func main() {
 			err = cmd.StartNmon()
 		} else if *start == "zabbix" {
 			err = cmd.StartZabbix()
+		} else if *start == "docker" {
+			err = cmd.StartDocker()
 		} else {
 			err = cmd.StartNode(*start)
 		}
