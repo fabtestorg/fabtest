@@ -13,6 +13,7 @@
   "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
+
     {"ip":"10.9.165.226","node_type":"zookeeper","zk_id":"0"},
     {"ip":"10.9.35.195","node_type":"zookeeper","zk_id":"1"},
     {"ip":"10.9.5.87","node_type":"zookeeper","zk_id":"2"},
