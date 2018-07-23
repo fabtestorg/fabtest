@@ -27,9 +27,11 @@ def load_images(type,images_path):
         sys.stdout.write("%s image is exsit"%type)
 
 def replace_images(type, config_path):
-    local("docker save hyperledger-fabric:latest -o %s/%s.tar"%(config_path,type))
+    if type == "order":
+        type = "orderer"
+    local("docker save hyperledger/fabric-%s:latest -o %s%s.tar"%(type,config_path,type))
     run("rm -rf ~/%s.tar"%type)
-    put("%s/%s.tar"%(config_path,type),"~")
+    put("%s%s.tar"%(config_path,type),"~")
     run("docker load -i ~/%s.tar"%type)
 
 def start_node(type, node_id, yaml_name, config_dir):
