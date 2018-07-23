@@ -137,8 +137,10 @@ func CreateGenesisBlock() error {
 }
 
 func CreateChannel(channelName string) error {
+	inputData := GetJsonMap("node.json")
+	peerdomain := inputData[PeerDomain].(string)
 	obj := NewFabCmd("create_channel.py", "")
-	err := obj.RunShow("create_channel", BinPath(), ConfigDir(), ChannelPath(), channelName, Domain_Name)
+	err := obj.RunShow("create_channel", BinPath(), ConfigDir(), ChannelPath(), channelName, peerdomain)
 	if err != nil {
 		return err
 	}

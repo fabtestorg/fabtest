@@ -7,7 +7,6 @@ import (
 )
 
 const (
-	Domain_Name     = "finblockchain.cn"
 	SshUserName     = "root"
 	SshPwd          = "dev@peersafe"
 	SudoPwd          = "dev@peersafe"
