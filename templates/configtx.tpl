@@ -18,19 +18,19 @@ Organizations:{{range $index,$value:= .orgs}}
     - &OrdererOrg{{$value}}
         Name: OrdererOrg{{$value}}
         ID: Orderer{{$value}}MSP
-        MSPDir: crypto-config/ordererOrganizations/ord{{$value}}.{{.peer_domain}}/msp{{end}}
+        MSPDir: crypto-config/ordererOrganizations/ord{{$value}}.example.com/msp{{end}}
     {{range $index,$value:= .orgs}}
     - &Org{{$value}}
         Name: Org{{$value}}MSP
         ID: Org{{$value}}MSP
-        MSPDir: crypto-config/peerOrganizations/org{{$value}}.{{.peer_domain}}/msp
+        MSPDir: crypto-config/peerOrganizations/org{{$value}}.example.com/msp
         AnchorPeers:
-            - Host: peer0.org{{$value}}.{{.peer_domain}}
+            - Host: peer0.org{{$value}}.example.com
               Port: 7051{{end}}
 Orderer: &OrdererDefaults
     OrdererType: kafka
     Addresses:{{range $index,$value:= .orgs}}
-        - orderer0.ord{{$value}}.{{.peer_domain}}:7050{{end}}
+        - orderer0.ord{{$value}}.example.com:7050{{end}}
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}
