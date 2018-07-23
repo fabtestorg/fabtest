@@ -12,6 +12,8 @@ func StartNode(stringType string) error {
 	peerdomain := inputData[PeerDomain].(string)
 	kfkdomain := inputData[KfkDomain].(string)
 	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
+	wg.Add(len(list))
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -89,8 +91,6 @@ func StartNode(stringType string) error {
 			}
 		}
 		//启动节点
-		var wg sync.WaitGroup
-		wg.Add(len(list))
 		go func(ip, nodeType, nodeId, yamlname, configpath string) {
 			obj := NewFabCmd("add_node.py", ip)
 			err := obj.RunShow("start_node", nodeType, nodeId, yamlname, ConfigDir())
@@ -100,9 +100,8 @@ func StartNode(stringType string) error {
 			}
 			wg.Done()
 		}(ip, nodeType, nodeId, yamlname, ConfigDir())
-		wg.Wait()
 	}
-
+	wg.Wait()
 	return nil
 }
 
