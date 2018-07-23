@@ -23,6 +23,7 @@ var (
 	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
 	analyse     = flag.String("a", "", "event analyse")
 	replace     = flag.String("t", "", "replace  images")
+	index     = flag.String("id", "", "replace  images id")
 	operation    = flag.String("op", "", "operation node  eg: start or stop")
 )
 
@@ -61,7 +62,7 @@ func main() {
 	} else if *image != "" {
 		err = cmd.LoadImage(*image)
 	} else if *replace != "" {
-		err = cmd.ReplaceImage(*replace)
+		err = cmd.ReplaceImage(*replace, *index)
 	} else if *create == "genesisblock" {
 		err = cmd.CreateGenesisBlock()
 	} else if *create == "crypto" {

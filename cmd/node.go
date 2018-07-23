@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"sync"
 )
 
 func StartNode(stringType string) error {
@@ -88,17 +89,81 @@ func StartNode(stringType string) error {
 			}
 		}
 		//启动节点
-		obj := NewFabCmd("add_node.py", ip)
-		err := obj.RunShow("start_node", nodeType, nodeId, yamlname, ConfigDir())
-		if err != nil {
-			return err
+		var wg sync.WaitGroup
+		wg.Add(len(list))
+		go func(ip, nodeType, nodeId, yamlname, configpath string) {
+			obj := NewFabCmd("add_node.py", ip)
+			err := obj.RunShow("start_node", nodeType, nodeId, yamlname, ConfigDir())
+			if err != nil {
+				fmt.Errorf("start node err or")
+				return
+			}
+			wg.Done()
+		}(ip, nodeType, nodeId, yamlname, ConfigDir())
+		wg.Wait()
+	}
+
+	return nil
+}
+
+func WriteHost(stringType string) error {
+	inputData := GetJsonMap("node.json")
+	peerdomain := inputData[PeerDomain].(string)
+	kfkdomain := inputData[KfkDomain].(string)
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		value[PeerDomain] = peerdomain
+		value[KfkDomain] = kfkdomain
+		nodeType := value[NodeType].(string)
+		if nodeType != stringType {
+			if stringType == "api" && nodeType == TypePeer {
+				//启动api
+				peerid := value[PeerId].(string)
+				orgid := value[OrgId].(string)
+				err := LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
+				if err != nil {
+					return err
+				}
+			}
+		}
+		var nodeId string
+		var ip = value[IP].(string)
+		switch nodeType {
+		case TypeZookeeper:
+			nodeId = value[ZkId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("zk%s", nodeId))
+			if err != nil {
+				return err
+			}
+		case TypeKafka:
+			nodeId = value[KfkId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("kafka%s", nodeId))
+			if err != nil {
+				return err
+			}
+		case TypeOrder:
+			nodeId = value[OrderId].(string)
+			ordId := value[OrgId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId, nodeId))
+			if err != nil {
+				return err
+			}
+		case TypePeer:
+			nodeId = value[PeerId].(string)
+			orgId := value[OrgId].(string)
+			err := LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId, nodeId))
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func ReplaceImage(imagesType string) error {
+
+func ReplaceImage(imagesType , id string) error {
 	var inputData map[string]interface{}
 	var jsonData []byte
 	var err error
