@@ -181,11 +181,21 @@ func ReplaceImage(imagesType , id string) error {
 		return err
 	}
 	list := inputData[List].([]interface{})
+	var nodeId string
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
 		if id != "" {
-			nodeId := value[OrderId].(string)
+			switch nodeType {
+			case TypeZookeeper:
+				nodeId = value[ZkId].(string)
+			case TypeKafka:
+				nodeId = value[KfkId].(string)
+			case TypeOrder:
+				nodeId = value[OrderId].(string)
+			case TypePeer:
+				nodeId = value[PeerId].(string)
+			}
 			if nodeId != id {
 				continue
 			}
