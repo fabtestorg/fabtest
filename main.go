@@ -23,6 +23,7 @@ var (
 	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
 	analyse     = flag.String("a", "", "event analyse")
 	replace     = flag.String("t", "", "replace  images")
+	write     = flag.String("w", "", "write  hosts")
 	index     = flag.String("id", "", "replace  images id")
 	operation    = flag.String("op", "", "operation node  eg: start or stop")
 )
@@ -61,6 +62,8 @@ func main() {
 		}
 	} else if *image != "" {
 		err = cmd.LoadImage(*image)
+	} else if *write != "" {
+		err = cmd.WriteHost(*write)
 	} else if *replace != "" {
 		err = cmd.ReplaceImage(*replace, *index)
 	} else if *create == "genesisblock" {

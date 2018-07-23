@@ -185,7 +185,10 @@ func ReplaceImage(imagesType , id string) error {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
 		if id != "" {
-
+			nodeId := value[OrderId].(string)
+			if nodeId != id {
+				continue
+			}
 		}
 		if nodeType == imagesType {
 			//copy images
