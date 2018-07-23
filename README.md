@@ -3,7 +3,7 @@
 备注: 正确使用步骤
 1. 根据镜像创建所需个数和配置的测试机器(用户名: root 密码: dev@peersafe)
    控制机需要外网ip，其他机器不需要
-2. 选一台为控制机器，（同时为jmeter+haproxy）
+2. 选一台为控制机器，（同时为jmeter+haproxy)
 3. 进入控制机cd $GOPATH/src/github.com/fabtestorg/
 4. vi data/node.json   //编辑不同测试所需参数
 5. 执行脚本 ./1star.sh   //生成配置文件，证书目录等， 并启动zk，kfk，order，peer 节点
@@ -118,3 +118,9 @@ systemctl start zabbix-server
 
 19. 删除节点
 ./fabtest -d all/peer/order/api
+
+20. 替换镜像
+./fabtest -t order/peer
+
+21. 重启docker服务
+./fabtest -s docker

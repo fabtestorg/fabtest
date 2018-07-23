@@ -26,7 +26,7 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
-				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid,peerid))
+				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
 				if err != nil {
 					return err
 				}
@@ -70,7 +70,7 @@ func StartNode(stringType string) error {
 			if err != nil {
 				return err
 			}
-			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId,nodeId))
+			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId, nodeId))
 			if err != nil {
 				return err
 			}
@@ -82,7 +82,7 @@ func StartNode(stringType string) error {
 			if err != nil {
 				return err
 			}
-			err = LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId,nodeId))
+			err = LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId, nodeId))
 			if err != nil {
 				return err
 			}
@@ -98,6 +98,36 @@ func StartNode(stringType string) error {
 	return nil
 }
 
+func ReplaceImage(imagesType string) error {
+	var inputData map[string]interface{}
+	var jsonData []byte
+	var err error
+
+	inputfile := InputDir() + "node.json"
+	jsonData, err = ioutil.ReadFile(inputfile)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(jsonData, &inputData)
+	if err != nil {
+		return err
+	}
+	list := inputData[List].([]interface{})
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		nodeType := value[NodeType].(string)
+		if nodeType == imagesType {
+			//copy images
+			obj := NewFabCmd("add_node.py", value[IP].(string))
+			err = obj.RunShow("replace_images", nodeType, ConfigDir())
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
 func LoadImage(stringType string) error {
 	var inputData map[string]interface{}
 	var jsonData []byte
@@ -169,15 +199,15 @@ func DeleteObj(stringType string) error {
 				}
 			}
 		} else if stringType == "jmeter" {
-				if nodeType == TypePeer {
-					obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
-					err := obj.RunShow("remove_jmeter")
-					if err != nil {
-						return err
-					}
+			if nodeType == TypePeer {
+				obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
+				err := obj.RunShow("remove_jmeter")
+				if err != nil {
+					return err
 				}
-		} else if stringType == "all" && ( nodeType == TypeKafka || nodeType == TypeZookeeper ||
-			nodeType == TypePeer || nodeType == TypeOrder ){
+			}
+		} else if stringType == "all" && (nodeType == TypeKafka || nodeType == TypeZookeeper ||
+			nodeType == TypePeer || nodeType == TypeOrder) {
 			//删除节点
 			obj := NewFabCmd("removenode.py", value[IP].(string))
 			err := obj.RunShow("remove_node", stringType)
@@ -237,7 +267,7 @@ func LocalHostsSet(ip, domain string) error {
 	if ip == domain {
 		return nil
 	}
-	if err := ModifyHosts("/etc/hosts",ip,domain); err != nil {
+	if err := ModifyHosts("/etc/hosts", ip, domain); err != nil {
 		fmt.Errorf(err.Error())
 		return err
 	}
