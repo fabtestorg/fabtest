@@ -30,6 +30,7 @@ func CreateYamlByJson(strType string) error {
 		kafkalist = append(kafkalist,"kafka3")
 		inputData["orgs"] = orgslist
 		inputData["kafkas"] = kafkalist
+		inputData[PeerDomain] = inputData[PeerDomain].(string)
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
 		inputData := GetJsonMap("node.json")
