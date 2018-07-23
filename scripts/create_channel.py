@@ -100,6 +100,7 @@ def put_cryptoconfig(config_path, type):
             run("tar zxvfm channel-artifacts.tar.gz")
         copy_file(config_path,"crypto-config.tar.gz")
         copy_file(config_path,"kafkaTLSclient.tar.gz")
+        copy_file(config_path,"nomalTxEnv.tar.gz")
     elif type == "kafka":
         copy_file(config_path,"kafkaTLSserver.tar.gz")
     elif type == "peer":
