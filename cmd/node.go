@@ -33,6 +33,7 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
+				wg.Done()
 				continue
 			} else if stringType == "event" && nodeType == TypePeer {
 				//启动api
@@ -43,8 +44,10 @@ func StartNode(stringType string) error {
 				if err != nil {
 					return err
 				}
+				wg.Done()
 				continue
 			} else if stringType != "all" {
+				wg.Done()
 				continue
 			}
 		}
@@ -181,6 +184,9 @@ func ReplaceImage(imagesType , id string) error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
+		if id != "" {
+
+		}
 		if nodeType == imagesType {
 			//copy images
 			obj := NewFabCmd("add_node.py", value[IP].(string))
