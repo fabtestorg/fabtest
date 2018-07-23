@@ -32,10 +32,10 @@ def replace_images(type, config_path):
     local("docker save hyperledger/fabric-%s:latest -o %s%s.tar"%(type,config_path,type))
     run("rm -rf ~/%s.tar"%type)
     put("%s%s.tar"%(config_path,type),"~")
-    sudo("system restart docker")
+    sudo("systemctl restart docker")
     run("docker rmi hyperledger/fabric-%s:latest"%type)
     run("docker load -i ~/%s.tar"%type)
-    sudo("system restart docker")
+    sudo("systemctl restart docker")
 
 def start_node(type, node_id, yaml_name, config_dir):
     dir_name = type + node_id
