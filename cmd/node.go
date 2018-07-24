@@ -118,8 +118,8 @@ func WriteHost(stringType string) error {
 		value[PeerDomain] = peerdomain
 		value[KfkDomain] = kfkdomain
 		nodeType := value[NodeType].(string)
-		if stringType != "all"{
-			if nodeType != stringType{
+		if stringType != "all" {
+			if nodeType != stringType {
 				continue
 			}
 		}
@@ -162,8 +162,7 @@ func WriteHost(stringType string) error {
 	return nil
 }
 
-
-func ReplaceImage(imagesType , id string) error {
+func ReplaceImage(imagesType, id string) error {
 	var inputData map[string]interface{}
 	var jsonData []byte
 	var err error
@@ -259,6 +258,13 @@ func DeleteObj(stringType string) error {
 	kfkdomain := inputData[KfkDomain].(string)
 	Jmeter := inputData[JMETER].(map[string]interface{})
 	list := inputData[List].([]interface{})
+	if stringType == "jmeter" {
+		obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
+		if err := obj.RunShow("remove_jmeter"); err != nil {
+			return err
+		}
+		return nil
+	}
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -275,14 +281,6 @@ func DeleteObj(stringType string) error {
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
-				if err != nil {
-					return err
-				}
-			}
-		} else if stringType == "jmeter" {
-			if nodeType == TypePeer {
-				obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
-				err := obj.RunShow("remove_jmeter")
 				if err != nil {
 					return err
 				}
