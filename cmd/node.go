@@ -309,6 +309,8 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
+		}else {
+			wg.Done()
 		}
 	}
 	wg.Wait()
