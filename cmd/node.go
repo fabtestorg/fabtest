@@ -267,8 +267,6 @@ func DeleteObj(stringType string) error {
 		}
 		return nil
 	}
-	var wg sync.WaitGroup
-	wg.Add(len(list))
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -281,7 +279,6 @@ func DeleteObj(stringType string) error {
 			if err != nil {
 				return err
 			}
-			wg.Done()
 		} else if stringType == TypeApi {
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
@@ -290,18 +287,14 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
-			wg.Done()
 		} else if stringType == "all" && (nodeType == TypeKafka || nodeType == TypeZookeeper ||
 			nodeType == TypePeer || nodeType == TypeOrder) {
 			//删除节点
-			go func(iP,str string){
-				obj := NewFabCmd("removenode.py", iP)
-				err := obj.RunShow("remove_node", str)
-				if err != nil {
-					fmt.Println(err.Error())
-				}
-				wg.Done()
-			}(value[IP].(string), stringType)
+			obj := NewFabCmd("removenode.py", value[IP].(string))
+			err := obj.RunShow("remove_node", stringType)
+			if err != nil {
+				fmt.Println(err.Error())
+			}
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
@@ -309,11 +302,8 @@ func DeleteObj(stringType string) error {
 					return err
 				}
 			}
-		}else {
-			wg.Done()
 		}
 	}
-	wg.Wait()
 	return nil
 }
 
