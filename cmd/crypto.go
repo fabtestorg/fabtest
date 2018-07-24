@@ -269,7 +269,7 @@ func RunChaincode(ccname, channelName string) error {
 					wg.Done()
 				}(peer_address, peerid, orgid)
 			}
-		}else {
+		} else {
 			wg.Done()
 		}
 	}
@@ -281,23 +281,30 @@ func PutCryptoConfig() error {
 	inputData := GetJsonMap("node.json")
 	peerdomain := inputData[PeerDomain].(string)
 	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
+	wg.Add(len(list))
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
 		nodeType := value[NodeType].(string)
 		if nodeType == TypePeer || nodeType == TypeOrder || nodeType == TypeKafka {
-			obj := NewFabCmd("create_channel.py", value[IP].(string))
-			err := obj.RunShow("put_cryptoconfig", ConfigDir(), nodeType)
-			if err != nil {
-				return err
-			}
+			go func(ip, cfg, nodeTy string) {
+				obj := NewFabCmd("create_channel.py", ip)
+				err := obj.RunShow("put_cryptoconfig", cfg, nodeTy)
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				wg.Done()
+			}(value[IP].(string), ConfigDir(), nodeType)
 			if nodeType == TypePeer {
 				obj := NewFabCmd("create_channel.py", value[APIIP].(string))
 				err := obj.RunShow("put_cryptoconfig", ConfigDir(), TypeApi)
 				if err != nil {
-					return err
+					fmt.Println(err.Error())
 				}
 			}
+		} else {
+			wg.Done()
 		}
 	}
 	return nil
