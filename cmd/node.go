@@ -24,18 +24,16 @@ func StartNode(stringType string) error {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
-				go func(ip, peerId, orgID, cfg string) {
-					obj := NewFabCmd("add_node.py", value[APIIP].(string))
-					err := obj.RunShow("start_api", peerid, orgid, cfg)
-					if err != nil {
-						fmt.Printf(err.Error())
-					}
-					wg.Done()
-				}(value[APIIP].(string), peerid, orgid, ConfigDir())
-				err := LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
+				obj := NewFabCmd("add_node.py", value[APIIP].(string))
+				err := obj.RunShow("start_api", peerid, orgid, ConfigDir())
+				if err != nil {
+					fmt.Printf(err.Error())
+				}
+				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
 				if err != nil {
 					return err
 				}
+				wg.Done()
 				continue
 			} else if stringType == "event" && nodeType == TypePeer {
 				//启动api
