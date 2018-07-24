@@ -118,15 +118,9 @@ func WriteHost(stringType string) error {
 		value[PeerDomain] = peerdomain
 		value[KfkDomain] = kfkdomain
 		nodeType := value[NodeType].(string)
-		if nodeType != stringType {
-			if stringType == "api" && nodeType == TypePeer {
-				//启动api
-				peerid := value[PeerId].(string)
-				orgid := value[OrgId].(string)
-				err := LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
-				if err != nil {
-					return err
-				}
+		if stringType != "all"{
+			if nodeType != stringType{
+				continue
 			}
 		}
 		var nodeId string
@@ -155,6 +149,10 @@ func WriteHost(stringType string) error {
 			nodeId = value[PeerId].(string)
 			orgId := value[OrgId].(string)
 			err := LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId, nodeId))
+			if err != nil {
+				return err
+			}
+			err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgId, nodeId))
 			if err != nil {
 				return err
 			}
