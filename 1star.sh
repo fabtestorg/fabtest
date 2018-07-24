@@ -5,5 +5,5 @@
 ./fabtest -s kafka
 sleep 10
 ./fabtest -s order
-sleep 15
-./fabtest -c channel -n mychannel
+sleep 5
+./fabtest -s peer

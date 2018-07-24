@@ -2,7 +2,7 @@ OrdererOrgs:{{range $index,$value:= .orgs}}
   - Name: ord{{$value}}
     Domain: ord{{$value}}.{{$.peer_domain}}
     Template:
-      Count: 50{{end}}
+      Count: 2{{end}}
 
 PeerOrgs:{{range $index,$value:= .orgs}}
   - Name: org{{$value}}

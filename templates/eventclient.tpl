@@ -27,15 +27,11 @@ client:
               serverHostOverride: "peer{{.peer_id}}"
 
     orderer:
-        {{if eq .peer_id "0"}}
         address: "{{.order0_address}}:7050"
-        {{else if eq .peer_id "1"}}
-        address: "{{.order1_address}}:7050"
-        {{end}}
         tls:
              # Certificate location absolute path
-             certificate: "/root/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
-             serverHostOverride: "orderer{{.peer_id}}"
+             certificate: "/root/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer0.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
+             serverHostOverride: "orderer0"
 ###############################################################################
 #
 #    Peer section

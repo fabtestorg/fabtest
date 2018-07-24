@@ -8,7 +8,7 @@ services:
       # base env
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=peer{{.peer_id}}_default
-      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=false
@@ -21,10 +21,7 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIOD=5
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
-      {{if eq .peer_id "0"}}
       - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
-      {{else if eq .peer_id "1"}}
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
       {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
@@ -55,7 +52,6 @@ services:
       - 7053:7053
     extra_hosts:
        orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
-       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb

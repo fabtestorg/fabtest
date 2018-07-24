@@ -11,7 +11,7 @@ echo $tmp
 ./fabtest -a event -gn $tmp > config/event_logs/$tmp/analysis.txt
 
 # kill remote nmon and rename logfile
-./fabtest -g nmon -gn $tmp
+#./fabtest -g nmon -gn $tmp
 
 cat config/event_logs/$tmp/analysis.txt
 echo "######"

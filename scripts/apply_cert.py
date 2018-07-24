@@ -34,7 +34,5 @@ def generate_certs(bin_path, cfg_path ,out_path):
     local("%s generate --config=%s --output='%s'"%(cryptotool,yamlfile,mm_path))
     with lcd(out_path):
         local("tar -zxvf cryptobench.tar.gz")
-        local("rm -rf crypto-config/peerOrganizations")
-        local("cp -r cryptobench/peerOrganizations crypto-config/")
         local("tar -zcvf crypto-config.tar.gz crypto-config")
 
