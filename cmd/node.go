@@ -41,14 +41,12 @@ func StartNode(stringType string) error {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
-				go func(ip, peerId, orgID string) {
-					obj := NewFabCmd("add_node.py", ip)
-					err := obj.RunShow("start_event", peerId, orgID, ConfigDir(), "event")
-					if err != nil {
-						fmt.Println(err.Error())
-					}
-					wg.Done()
-				}(value[APIIP].(string), peerid, orgid)
+				obj := NewFabCmd("add_node.py", value[APIIP].(string))
+				err := obj.RunShow("start_event", peerid, orgid, ConfigDir(), "event")
+				if err != nil {
+			        	return err
+				}
+				wg.Done()
 				continue
 			} else if stringType != "all" {
 				wg.Done()
