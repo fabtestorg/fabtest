@@ -37,7 +37,7 @@ def statistics(filename, results):
 			if i >= 8000:
 				more8+=1
 	if length > 0 :
-		print ("%s: aver:%.2f,max:%d,min:%d,total:%d    <3s:%d,%.2f    >3s:%d,%.2f    <1s:%d,%.2f    >8s:%d,%.2f"%(filename,float(total)/length,max(results),min(results),length,less3,float(less3)/length,more3,float(more3)/length,less1_5,float(less1_5)/length,more8,float(more8)/length))
+		print ("%s: aver:%.2f,max:%d,min:%d,total:%d    <3s:%d,%.2f    >3s:%d,%.2f    <1.5s:%d,%.2f    >8s:%d,%.2f"%(filename,float(total)/length,max(results),min(results),length,less3,float(less3)/length,more3,float(more3)/length,less1_5,float(less1_5)/length,more8,float(more8)/length))
 
 
 
