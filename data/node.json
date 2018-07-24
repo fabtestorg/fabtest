@@ -25,11 +25,8 @@
 
     {"ip":"10.9.111.48","node_type":"order","order_id":"0","org_id":"1"},
     {"ip":"10.9.150.97","node_type":"order","order_id":"1","org_id":"1"},
-    {"ip":"10.9.165.8","node_type":"order","order_id":"3","org_id":"1"},
-    {"ip":"10.9.90.55","node_type":"order","order_id":"4","org_id":"1"},
-    {"ip":"10.9.14.201","node_type":"order","order_id":"5","org_id":"1"},
-    {"ip":"10.9.72.45","node_type":"order","order_id":"6","org_id":"1"},
-    {"ip":"10.9.154.37","node_type":"order","order_id":"7","org_id":"1"},
-    {"ip":"10.9.1.219","node_type":"order","order_id":"2","org_id":"1"}
+
+    {"ip":"10.9.144.114","apiip":"10.9.49.89","node_type":"peer","peer_id":"0","org_id":"1"},
+    {"ip":"10.9.168.182","apiip":"10.9.93.217","node_type":"peer","peer_id":"1","org_id":"1"}
   ]
 }
