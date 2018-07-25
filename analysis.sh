@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+#set -x
 tmp="aa"
 if [ $1 != "" ]; then
     tmp="$1"
@@ -14,6 +14,7 @@ echo $tmp
 #./fabtest -g nmon -gn $tmp
 
 cat config/event_logs/$tmp/analysis.txt
+cat config/event_logs/$tmp/jmeter_send.txt | grep Summariser
 echo "######"
 ls config/event_logs/$tmp/
 
