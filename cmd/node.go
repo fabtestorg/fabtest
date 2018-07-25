@@ -13,7 +13,6 @@ func StartNode(stringType string) error {
 	kfkdomain := inputData[KfkDomain].(string)
 	list := inputData[List].([]interface{})
 	var wg sync.WaitGroup
-	wg.Add(len(list))
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -24,30 +23,35 @@ func StartNode(stringType string) error {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
-				obj := NewFabCmd("add_node.py", value[APIIP].(string))
-				err := obj.RunShow("start_api", peerid, orgid, ConfigDir())
-				if err != nil {
-					fmt.Printf(err.Error())
-				}
-				err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
+				wg.Add(1)
+				go func(IP, PeerId, OrgId string) {
+					obj := NewFabCmd("add_node.py", IP)
+					err := obj.RunShow("start_api", PeerId, OrgId, ConfigDir())
+					if err != nil {
+						fmt.Printf(err.Error())
+					}
+					wg.Done()
+				}(value[APIIP].(string), peerid, orgid)
+				err := LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
 				if err != nil {
 					return err
 				}
-				wg.Done()
 				continue
 			} else if stringType == "event" && nodeType == TypePeer {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
-				obj := NewFabCmd("add_node.py", value[APIIP].(string))
-				err := obj.RunShow("start_event", peerid, orgid, ConfigDir(), "event")
-				if err != nil {
-					fmt.Println(err)
-				}
-				wg.Done()
+				wg.Add(1)
+				go func(IP, PeerId, OrgId string) {
+					obj := NewFabCmd("add_node.py", IP)
+					err := obj.RunShow("start_event", PeerId, OrgId, ConfigDir(), "event")
+					if err != nil {
+						fmt.Println(err)
+					}
+					wg.Done()
+				}(value[APIIP].(string), peerid, orgid)
 				continue
 			} else if stringType != "all" {
-				wg.Done()
 				continue
 			}
 		}
@@ -94,15 +98,16 @@ func StartNode(stringType string) error {
 			}
 		}
 		//启动节点
-		go func(ip, nodeType, nodeId, yamlname, configpath string) {
-			obj := NewFabCmd("add_node.py", ip)
-			err := obj.RunShow("start_node", nodeType, nodeId, yamlname, ConfigDir())
+		wg.Add(1)
+		go func(Ip, NodeType, NodeId, YamleName string) {
+			obj := NewFabCmd("add_node.py", Ip)
+			err := obj.RunShow("start_node", NodeType, NodeId, YamleName, ConfigDir())
 			if err != nil {
 				fmt.Errorf("start node err or")
 				return
 			}
 			wg.Done()
-		}(ip, nodeType, nodeId, yamlname, ConfigDir())
+		}(ip, nodeType, nodeId, yamlname)
 	}
 	wg.Wait()
 	return nil
@@ -179,6 +184,7 @@ func ReplaceImage(imagesType, id string) error {
 	}
 	list := inputData[List].([]interface{})
 	var nodeId string
+	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
@@ -199,13 +205,18 @@ func ReplaceImage(imagesType, id string) error {
 		}
 		if nodeType == imagesType {
 			//copy images
-			obj := NewFabCmd("add_node.py", value[IP].(string))
-			err = obj.RunShow("replace_images", nodeType, ConfigDir())
-			if err != nil {
-				return err
-			}
+			wg.Add(1)
+			go func(Ip ,Ty string){
+				obj := NewFabCmd("add_node.py", Ip)
+				err := obj.RunShow("replace_images", Ty, ConfigDir())
+				if err != nil {
+					fmt.Println(err)
+				}
+				wg.Done()
+			}(value[IP].(string), nodeType)
 		}
 	}
+	wg.Wait()
 	return nil
 }
 func LoadImage(stringType string) error {
@@ -265,6 +276,7 @@ func DeleteObj(stringType string) error {
 		}
 		return nil
 	}
+	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -272,36 +284,53 @@ func DeleteObj(stringType string) error {
 		nodeType := value[NodeType].(string)
 		if nodeType == stringType {
 			//删除节点
-			obj := NewFabCmd("removenode.py", value[IP].(string))
-			err := obj.RunShow("remove_node", stringType)
-			if err != nil {
-				return err
-			}
+			wg.Add(1)
+			go func(Ip, Str string) {
+				obj := NewFabCmd("removenode.py", Ip)
+				err := obj.RunShow("remove_node", Str)
+				if err != nil {
+					fmt.Println(err)
+				}
+				wg.Done()
+			}(value[IP].(string), stringType)
 		} else if stringType == TypeApi {
 			if nodeType == TypePeer {
-				obj := NewFabCmd("removenode.py", value[APIIP].(string))
-				err := obj.RunShow("remove_client")
-				if err != nil {
-					return err
-				}
+				wg.Add(1)
+				go func(Ip string) {
+					obj := NewFabCmd("removenode.py", Ip)
+					err := obj.RunShow("remove_client")
+					if err != nil {
+						fmt.Println(err)
+					}
+					wg.Done()
+				}(value[APIIP].(string))
 			}
 		} else if stringType == "all" && (nodeType == TypeKafka || nodeType == TypeZookeeper ||
 			nodeType == TypePeer || nodeType == TypeOrder) {
 			//删除节点
-			obj := NewFabCmd("removenode.py", value[IP].(string))
-			err := obj.RunShow("remove_node", stringType)
-			if err != nil {
-				fmt.Println(err.Error())
-			}
-			if nodeType == TypePeer {
-				obj := NewFabCmd("removenode.py", value[APIIP].(string))
-				err := obj.RunShow("remove_client")
+			wg.Add(1)
+			go func(Ip, str string) {
+				obj := NewFabCmd("removenode.py", Ip)
+				err := obj.RunShow("remove_node", str)
 				if err != nil {
-					return err
+					fmt.Println(err.Error())
 				}
+				wg.Done()
+			}(value[IP].(string), stringType)
+			if nodeType == TypePeer {
+				wg.Add(1)
+				go func(Ip string) {
+					obj := NewFabCmd("removenode.py", Ip)
+					err := obj.RunShow("remove_client")
+					if err != nil {
+						fmt.Println(err)
+					}
+					wg.Done()
+				}(value[APIIP].(string))
 			}
 		}
 	}
+	wg.Wait()
 	return nil
 }
 
@@ -355,25 +384,34 @@ func LocalHostsSet(ip, domain string) error {
 func StartDocker() error {
 	inputData := GetJsonMap("node.json")
 	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
-		var ip = value[IP].(string)
 		//启动docker server
-		obj := NewFabCmd("add_node.py", ip)
-		err := obj.RunShow("start_docker")
-		if err != nil {
-			return err
-		}
-		if nodeType == TypePeer {
-			obj := NewFabCmd("add_node.py", value[APIIP].(string))
+		wg.Add(1)
+		go func(Ip string){
+			obj := NewFabCmd("add_node.py", Ip)
 			err := obj.RunShow("start_docker")
 			if err != nil {
-				return err
+				fmt.Println(err)
 			}
+			wg.Done()
+		}( value[IP].(string))
+
+		if nodeType == TypePeer {
+			wg.Add(1)
+			go func(Ip string){
+				defer wg.Done()
+				obj := NewFabCmd("add_node.py",Ip)
+				err := obj.RunShow("start_docker")
+				if err != nil {
+					fmt.Println(err)
+				}
+			}( value[APIIP].(string))
 		}
 
 	}
-
+	wg.Wait()
 	return nil
 }

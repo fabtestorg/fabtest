@@ -63,18 +63,17 @@ def start_api(peer_id, org_id, config_dir):
     apidockername = name + "apidocker"
     parent_path  = os.path.dirname(config_dir)
     #apiserver
-    with lcd(config_dir):
-        local("cp %s.yaml api_server/client_sdk.yaml"%apiclientname)
-        local("cp %s.yaml api_server/docker-compose.yaml"%apidockername)
     with lcd(parent_path):
-        local("tar -zcvf api_server.tar.gz api_server")
         #remote yaml
         run("mkdir -p ~/fabtest/")
+        run("rm -rf ~/fabtest/api_server")
         put("api_server.tar.gz","~/fabtest")
-        local("rm api_server.tar.gz")
     with cd("~/fabtest"):
         run("tar zxvfm api_server.tar.gz")
-        run("rm api_server.tar.gz")
+        run("rm -rf api_server.tar.gz")
+    with lcd(config_dir):
+        put("%s.yaml"%apiclientname, "~/fabtest/api_server/client_sdk.yaml")
+        put("%s.yaml"%apidockername, "~/fabtest/api_server/docker-compose.yaml")
     with cd("~/fabtest/api_server"):
         run("docker-compose -f docker-compose.yaml down")
         run("docker-compose -f docker-compose.yaml up -d")
@@ -84,22 +83,20 @@ def start_event(peer_id, org_id, config_dir, clitype):
     yamlname = name + "%sclient"%clitype
     parent_path  = os.path.dirname(config_dir)
     #apiserver or eventserver
-    with lcd(config_dir):
-        local("cp %s.yaml %s_server/client_sdk.yaml"%(yamlname,clitype))
     with lcd(parent_path):
         put("/etc/hosts","~")
-        local("tar -zcvf %s_server.tar.gz %s_server"%(clitype,clitype))
         #remote yaml
         run("mkdir -p ~/fabtest/")
+        run("rm -rf ~/fabtest/%s_server"%clitype)
         put("%s_server.tar.gz"%clitype,"~/fabtest")
-        local("rm %s_server.tar.gz"%clitype)
         utils.kill_process("%sserver"%clitype)
     with cd("~/fabtest"):
         run("tar zxvfm %s_server.tar.gz"%clitype)
         run("rm %s_server.tar.gz"%clitype)
+    with lcd(config_dir):
+        put("%s.yaml"%yamlname, "~fabtest/%s_server/client_sdk.yaml"%clitype)
     with cd("~/fabtest/%s_server"%clitype):
         sudo("cp ~/hosts /etc/hosts")
-        run("tar zxvfm %sserver.tar.gz"%clitype)
         run("chmod +x %sserver"%clitype)
         run("rm -rf %sserver.log"%clitype)
         run("$(nohup ./%sserver >> %sserver.log 2>&1 &) && sleep 1"%(clitype,clitype))

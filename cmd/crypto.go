@@ -282,12 +282,12 @@ func PutCryptoConfig() error {
 	peerdomain := inputData[PeerDomain].(string)
 	list := inputData[List].([]interface{})
 	var wg sync.WaitGroup
-	wg.Add(len(list))
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
 		nodeType := value[NodeType].(string)
 		if nodeType == TypePeer || nodeType == TypeOrder || nodeType == TypeKafka {
+			wg.Add(1)
 			go func(ip, cfg, nodeTy string) {
 				obj := NewFabCmd("create_channel.py", ip)
 				err := obj.RunShow("put_cryptoconfig", cfg, nodeTy)
@@ -297,16 +297,19 @@ func PutCryptoConfig() error {
 				wg.Done()
 			}(value[IP].(string), ConfigDir(), nodeType)
 			if nodeType == TypePeer {
-				obj := NewFabCmd("create_channel.py", value[APIIP].(string))
-				err := obj.RunShow("put_cryptoconfig", ConfigDir(), TypeApi)
-				if err != nil {
-					fmt.Println(err.Error())
-				}
+				wg.Add(1)
+				go func(Ip string) {
+					obj := NewFabCmd("create_channel.py", Ip)
+					err := obj.RunShow("put_cryptoconfig", ConfigDir(), TypeApi)
+					if err != nil {
+						fmt.Println(err.Error())
+					}
+					wg.Done()
+				}(value[APIIP].(string))
 			}
-		} else {
-			wg.Done()
 		}
 	}
+	wg.Wait()
 	return nil
 }
 
