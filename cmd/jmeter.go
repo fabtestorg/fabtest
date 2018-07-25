@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/fabtestorg/fabtest/tpl"
+	"sync"
 )
 
 const TplJmeterConfig = "./templates/jmeterconfig.tpl"
@@ -82,17 +83,22 @@ func GetEventServerLog(logdir string) error {
 	if err != nil {
 		return err
 	}
+	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			obj := NewFabCmd("jmeter.py", value[APIIP].(string))
-			err := obj.RunShow("get_eventserver_log", clientname, dir, logdir)
-			if err != nil {
-				return err
-			}
+			wg.Add(1)
+			go func(Ip, CliName, Dir, LogDir string) {
+				obj := NewFabCmd("jmeter.py", Ip)
+				err := obj.RunShow("get_eventserver_log", CliName, Dir, LogDir)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}(value[APIIP].(string), clientname, dir, logdir)
 		}
 	}
+	wg.Wait()
 	return nil
 }
 
@@ -153,7 +159,7 @@ func GetNmonLog(logdir string) error {
 	}
 	for curIp, fileName := range nmonMap {
 		obj := NewFabCmd("jmeter.py", curIp)
-		err := obj.RunShow("get_nmon_log", rate, times, fileName,ConfigDir(),logdir)
+		err := obj.RunShow("get_nmon_log", rate, times, fileName, ConfigDir(), logdir)
 		if err != nil {
 			fmt.Println("*****get_nmon_log error******")
 		}
