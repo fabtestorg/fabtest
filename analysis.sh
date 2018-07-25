@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #set -x
 tmp="aa"
-if [ $1 != "" ]; then
-    tmp="$1"
+if [ "$1" == "" -o -d config/event_logs/$1 ]; then
+    echo error
+    exit
 fi
-echo $tmp
+tmp=$1
 
 ./fabtest -g event -gn $tmp
 ./fabtest -g jmeter -gn $tmp
