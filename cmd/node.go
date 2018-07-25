@@ -388,6 +388,9 @@ func StartDocker() error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
+		if nodeType != TypePeer || nodeType != TypeKafka || nodeType != TypeZookeeper || nodeType != TypeOrder{
+			continue
+		}
 		//启动docker server
 		wg.Add(1)
 		go func(Ip string){
