@@ -30,7 +30,8 @@ Organizations:{{range $index,$value:= .orgs}}
 Orderer: &OrdererDefaults
     OrdererType: kafka
     Addresses:{{range $index,$value:= .orgs}}
-        - orderer0.ord{{$value}}.example.com:7050{{end}}
+        - orderer0.ord{{$value}}.example.com:7050
+        - orderer1.ord{{$value}}.example.com:7050{{end}}
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}
