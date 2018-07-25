@@ -27,9 +27,11 @@ def get_jmeter_log(config_dir, log_dir):
     dir = "%sevent_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
     file = '%s/jmeter.jtl'%dir
+    log =  '%s/jmeter_send.log'%dir
     if os.path.exists(file):
         local("rm -rf %s"%file)
     get('~/fabtest/jmeter_config/jmeter.jtl',file)
+    get('~/fabtest/jmeter_config/jmeter.log',log)
     with lcd(dir):
         local("~/jmeter/apache-jmeter-3.2/bin/jmeter -g %s -e -o ./jmeterReport"%file)
         local("rm -rf jmeter.log")
