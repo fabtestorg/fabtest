@@ -95,6 +95,7 @@ func GetEventServerLog(logdir string) error {
 				if err != nil {
 					fmt.Println(err)
 				}
+				wg.Done()
 			}(value[APIIP].(string), clientname, dir, logdir)
 		}
 	}
