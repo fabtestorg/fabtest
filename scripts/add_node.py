@@ -94,7 +94,7 @@ def start_event(peer_id, org_id, config_dir, clitype):
         run("tar zxvfm %s_server.tar.gz"%clitype)
         run("rm %s_server.tar.gz"%clitype)
     with lcd(config_dir):
-        put("%s.yaml"%yamlname, "~fabtest/%s_server/client_sdk.yaml"%clitype)
+        put("%s.yaml"%yamlname, "~/fabtest/%s_server/client_sdk.yaml"%clitype)
     with cd("~/fabtest/%s_server"%clitype):
         sudo("cp ~/hosts /etc/hosts")
         run("chmod +x %sserver"%clitype)
