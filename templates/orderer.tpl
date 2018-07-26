@@ -7,8 +7,8 @@ services:
     restart: always
     environment:
       #benchmark
-      - ORDERER_BENCHMARK_BROADCASTNUM=100
-      - ORDERER_BENCHMARK_MAXLOOPNUM=120
+      - ORDERER_BENCHMARK_BROADCASTNUM=50
+      - ORDERER_BENCHMARK_MAXLOOPNUM=100
       - ORDERER_BENCHMARK_SPACE=1
       - ORDERER_BENCHMARK_HOST=orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}
 
