@@ -261,6 +261,7 @@ func DeleteObj(stringType string) error {
 	kfkdomain := inputData[KfkDomain].(string)
 	Jmeter := inputData[JMETER].(map[string]interface{})
 	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		value[PeerDomain] = peerdomain
@@ -292,11 +293,16 @@ func DeleteObj(stringType string) error {
 		} else if stringType == "all" && (nodeType == TypeKafka || nodeType == TypeZookeeper ||
 			nodeType == TypePeer || nodeType == TypeOrder) {
 			//删除节点
-			obj := NewFabCmd("removenode.py", value[IP].(string))
-			err := obj.RunShow("remove_node", stringType)
-			if err != nil {
-				return err
-			}
+			wg.Add(1)
+			go func(Ip, Str string) {
+				obj := NewFabCmd("removenode.py", Ip)
+				err := obj.RunShow("remove_node", Str)
+				if err != nil {
+					fmt.Println(err)
+				}
+				wg.Done()
+			}(value[IP].(string), stringType)
+
 			if nodeType == TypePeer {
 				obj := NewFabCmd("removenode.py", value[APIIP].(string))
 				err := obj.RunShow("remove_client")
@@ -306,7 +312,7 @@ func DeleteObj(stringType string) error {
 			}
 		}
 	}
-
+	wg.Wait()
 	return nil
 }
 
