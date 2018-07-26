@@ -60,7 +60,7 @@ const (
 	AdverAddress = "adver_address"
 	BlockChainAddress = "blockchain_address"
 
-	Order0_Address = "order0_address"
+	Order_Address = "order_address"
 	Order1_Address = "order1_address"
 	Other_PeerAddress = "other_peeraddress"
 	USECOUCHDB = "usecouchdb"

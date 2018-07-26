@@ -50,8 +50,7 @@ services:
       - 7052:7052
       - 7053:7053
     extra_hosts:
-       orderer0.ord{{.org_id}}.{{.peer_domain}}: {{.order0_address}}
-       orderer1.ord{{.org_id}}.{{.peer_domain}}: {{.order1_address}}
+       orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}: {{.order_address}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb

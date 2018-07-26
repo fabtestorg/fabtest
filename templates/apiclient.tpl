@@ -30,7 +30,7 @@ client:
               serverHostOverride: "peer{{.peer_id}}"
 
     orderer:
-        - address: "{{.order0_address}}:7050"
+        - address: "{{.order_address}}:7050"
           tls:
             # Certificate location absolute path
             certificate: "./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
@@ -74,7 +74,7 @@ user:
 
 apiserver:
     listenport: 5555
-    probe_order: "{{.order0_address}} 7050"
+    probe_order: "{{.order_address}} 7050"
 
 
 
