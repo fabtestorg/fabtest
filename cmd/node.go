@@ -41,15 +41,15 @@ func StartNode(stringType string) error {
 				//启动api
 				peerid := value[PeerId].(string)
 				orgid := value[OrgId].(string)
-				wg.Add(1)
-				go func(IP, PeerId, OrgId string) {
-					obj := NewFabCmd("add_node.py", IP)
-					err := obj.RunShow("start_event", PeerId, OrgId, ConfigDir(), "event")
-					if err != nil {
-						fmt.Println(err)
-					}
-					wg.Done()
-				}(value[APIIP].(string), peerid, orgid)
+				//wg.Add(1)
+				//go func(IP, PeerId, OrgId string) {
+				obj := NewFabCmd("add_node.py", value[APIIP].(string))
+				err := obj.RunShow("start_event", peerid, orgid, ConfigDir(), "event")
+				if err != nil {
+					fmt.Println(err)
+				}
+				//wg.Done()
+				//}(value[APIIP].(string), peerid, orgid)
 				continue
 			} else if stringType != "all" {
 				continue
@@ -206,7 +206,7 @@ func ReplaceImage(imagesType, id string) error {
 		if nodeType == imagesType {
 			//copy images
 			wg.Add(1)
-			go func(Ip ,Ty string){
+			go func(Ip, Ty string) {
 				obj := NewFabCmd("add_node.py", Ip)
 				err := obj.RunShow("replace_images", Ty, ConfigDir())
 				if err != nil {
@@ -388,30 +388,30 @@ func StartDocker() error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		nodeType := value[NodeType].(string)
-		if nodeType != TypePeer && nodeType != TypeKafka && nodeType != TypeZookeeper && nodeType != TypeOrder{
+		if nodeType != TypePeer && nodeType != TypeKafka && nodeType != TypeZookeeper && nodeType != TypeOrder {
 			continue
 		}
 		//启动docker server
 		wg.Add(1)
-		go func(Ip string){
+		go func(Ip string) {
 			obj := NewFabCmd("add_node.py", Ip)
 			err := obj.RunShow("start_docker")
 			if err != nil {
 				fmt.Println(err)
 			}
 			wg.Done()
-		}( value[IP].(string))
+		}(value[IP].(string))
 
 		if nodeType == TypePeer {
 			wg.Add(1)
-			go func(Ip string){
+			go func(Ip string) {
 				defer wg.Done()
-				obj := NewFabCmd("add_node.py",Ip)
+				obj := NewFabCmd("add_node.py", Ip)
 				err := obj.RunShow("start_docker")
 				if err != nil {
 					fmt.Println(err)
 				}
-			}( value[APIIP].(string))
+			}(value[APIIP].(string))
 		}
 
 	}
