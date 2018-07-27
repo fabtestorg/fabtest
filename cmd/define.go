@@ -20,7 +20,9 @@ const (
 	TplApiDocker     = "./templates/apidocker.tpl"
 	TplEventClient     = "./templates/eventclient.tpl"
 
+	NULLVALUE = "139.0.0.1"
 	TypePeer      = "peer"
+	TypeHaproxy      = "haproxy"
 	TypeOrder     = "order"
 	TypeKafka     = "kafka"
 	TypeZookeeper = "zookeeper"

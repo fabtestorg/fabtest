@@ -26,15 +26,24 @@ func CreateHaproxyConfig() error {
 	var apilist []string
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			apilist = append(apilist, value[APIIP].(string))
+		if value[NodeType].(string) == TypeHaproxy {
+			orgid := value[OrgId].(string)
+			api0Ip := findMapValue(TypePeer,"0",orgid,APIIP)
+			api1Ip := findMapValue(TypePeer,"1",orgid,APIIP)
+			if api0Ip != NULLVALUE{
+				apilist = append(apilist, api0Ip)
+			}
+			if api1Ip != NULLVALUE{
+				apilist = append(apilist, api1Ip)
+			}
+			inputData["apilist"] = apilist
+			err := tpl.Handler(inputData, TplHaproxyConfig, dir+fmt.Sprintf("haproxy%s.cfg",orgid))
+			if err != nil {
+				return err
+			}
 		}
 	}
-	inputData["apilist"] = apilist
-	err := tpl.Handler(inputData, TplHaproxyConfig, dir+"haproxy_config/haproxy.cfg")
-	if err != nil {
-		return err
-	}
+
 	return nil
 }
 
@@ -52,13 +61,20 @@ func StartJmeter() error {
 
 func StartHaproxy() error {
 	inputData := GetJsonMap("node.json")
-	value := inputData[JMETER].(map[string]interface{})
+	list := inputData[List].([]interface{})
 	dir := ConfigDir()
-	obj := NewFabCmd("jmeter.py", value[IP].(string))
-	err := obj.RunShow("start_haproxy", dir)
-	if err != nil {
-		fmt.Println("******start_haproxy error******")
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		if value[NodeType].(string) == TypeHaproxy {
+			orgid := value[OrgId].(string)
+			obj := NewFabCmd("jmeter.py", value[IP].(string))
+			err := obj.RunShow("start_haproxy", dir, orgid)
+			if err != nil {
+				fmt.Println("******start_haproxy error******")
+			}
+		}
 	}
+
 	return nil
 }
 

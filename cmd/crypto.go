@@ -346,5 +346,5 @@ func findMapValue(findType, findid, findorgid, key string) string {
 			}
 		}
 	}
-	return "139.0.0.1"
+	return NULLVALUE
 }

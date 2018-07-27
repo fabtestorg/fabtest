@@ -48,9 +48,10 @@ def get_eventserver_log(yaml_name, config_dir, log_dir):
     run("cat /dev/null > ~/fabtest/event_server/eventserver.log")
 
 # remote
-def start_haproxy(config_dir):
+def start_haproxy(config_dir, orgid):
     dir_name = "haproxy_config"
     with lcd(config_dir):
+        local("cp haproxy%s.cfg haproxy_config"%orgid)
         local("tar -zcvf haproxyconfig.tar.gz haproxy_config")
         #remote yaml
         run("rm -rf ~/fabtest/%s"%dir_name)
