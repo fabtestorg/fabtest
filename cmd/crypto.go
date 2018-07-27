@@ -256,7 +256,7 @@ func RunChaincode(ccname, channelName string) error {
 				if err != nil {
 					return err
 				}
-				time.Sleep(10 * time.Second)
+				time.Sleep(2 * time.Second)
 				wg.Done()
 			} else {
 				//txargs := `'{"Args":["query"\,"a"]}'`
