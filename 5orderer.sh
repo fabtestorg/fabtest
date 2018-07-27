@@ -15,7 +15,6 @@ echo orderer6
 ssh root@orderer16 -o ConnectTimeout=1 "docker logs orderer6.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer6.ord1.example.com --tail 1 2>&1"
 echo orderer7
 ssh root@orderer17 -o ConnectTimeout=1 "docker logs orderer7.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer7.ord1.example.com --tail 1 2>&1"
-exit
 echo orderer8
 ssh root@orderer18 -o ConnectTimeout=1 "docker logs orderer8.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer8.ord1.example.com --tail 1 2>&1"
 echo orderer9
@@ -32,6 +31,7 @@ echo orderer14
 ssh root@orderer114 -o ConnectTimeout=1 "docker logs orderer14.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer14.ord1.example.com --tail 1 2>&1"
 echo orderer15
 ssh root@orderer115 -o ConnectTimeout=1 "docker logs orderer15.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer15.ord1.example.com --tail 1 2>&1"
+exit
 echo orderer16
 ssh root@orderer116 -o ConnectTimeout=1 "docker logs orderer16.ord1.example.com  2>&1 | grep -e loopNum -e BroadcastClientSend;docker logs orderer16.ord1.example.com --tail 1 2>&1"
 echo orderer17
