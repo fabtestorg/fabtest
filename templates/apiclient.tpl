@@ -65,9 +65,9 @@ peer:
 ###############################################################################
 chaincode:
     id:
-        name: factor
+        name: factor{{.peer_id}}
         version: "1.0"
-        chainID: testchannel
+        chainID: mychannel{{.peer_id}}
 
 user:
     alias: zhengfu998
