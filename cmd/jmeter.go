@@ -28,6 +28,9 @@ func CreateHaproxyConfig() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypeHaproxy {
 			orgid := value[OrgId].(string)
+			if orgid != value[OrgId].(string){
+				continue
+			}
 			api0Ip := findMapValue(TypePeer, "0", orgid, APIIP)
 			api1Ip := findMapValue(TypePeer, "1", orgid, APIIP)
 			if api0Ip != NULLVALUE {
