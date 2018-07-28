@@ -1,0 +1,40 @@
+{
+  "peer_domain":"example.com",
+  "kfk_domain":"hoperun.com",
+  "kfk_version": "0.9.0.1",
+  "nmon_rate": "2",
+  "nmon_times": "600",
+  "zabbix_server_ip":"10.9.43.204",
+  "zabbix_server_port":"10056",
+  "jmeter":{"ip":"10.9.113.183", "haproxyip":"10.9.113.183","haproxyport":2222, "thread_count":300, "loop_count":100, "throughput":"60.0"},
+  "org_counts": 3,
+  "batchTime": "1s",
+  "batchSize": 100,
+  "batchPreferred": "512 KB",
+  "usecouchdb": "false",
+  "list":[
+
+    {"ip":"10.9.71.26","node_type":"zookeeper","zk_id":"0"},
+    {"ip":"10.9.185.183","node_type":"zookeeper","zk_id":"1"},
+    {"ip":"10.9.137.178","node_type":"zookeeper","zk_id":"2"},
+
+    {"ip":"106.75.117.90","node_type":"kafka","kfk_id":"0"},
+    {"ip":"117.50.6.99","node_type":"kafka","kfk_id":"1"},
+    {"ip":"106.75.104.129","node_type":"kafka","kfk_id":"2"},
+    {"ip":"106.75.31.226","node_type":"kafka","kfk_id":"3"},
+
+    {"ip":"10.9.190.51","node_type":"order","order_id":"0","org_id":"1"},
+    {"ip":"10.9.177.217","node_type":"order","order_id":"1","org_id":"1"},
+    {"ip":"10.23.73.111","node_type":"order","order_id":"0","org_id":"2"},
+    {"ip":"10.23.30.132","node_type":"order","order_id":"1","org_id":"2"},
+    {"ip":"10.13.174.17","node_type":"order","order_id":"0","org_id":"3"},
+    {"ip":"10.13.133.151","node_type":"order","order_id":"1","org_id":"3"},
+
+    {"ip":"10.9.58.227","apiip":"10.9.110.26","node_type":"peer","peer_id":"0","org_id":"1"},
+    {"ip":"10.9.163.17","apiip":"10.9.110.79","node_type":"peer","peer_id":"1","org_id":"1"},
+    {"ip":"10.23.39.72","apiip":"106.75.223.228","node_type":"peer","peer_id":"0","org_id":"2"},
+    {"ip":"10.23.10.52","apiip":"106.75.213.166","node_type":"peer","peer_id":"1","org_id":"2"},
+    {"ip":"10.13.10.63","apiip":"106.75.164.210","node_type":"peer","peer_id":"0","org_id":"3"},
+    {"ip":"10.13.107.215","apiip":"106.75.164.197","node_type":"peer","peer_id":"1","org_id":"3"}
+  ]
+}
