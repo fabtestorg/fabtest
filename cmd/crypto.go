@@ -59,8 +59,7 @@ func CreateYamlByJson(strType string) error {
 			if strType == "client" {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
-					peerid := value[PeerId].(string)
-					value[Order_Address] = findMapValue(TypeOrder, peerid, curorgid, IP)
+					value[Order_Address] = findMapValue(TypeOrder, "0", curorgid, IP)
 					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
 					//生成api docker-compose.yaml
 					err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
