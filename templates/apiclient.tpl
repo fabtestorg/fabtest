@@ -23,18 +23,18 @@ client:
           eventHost: "{{.ip}}"
           eventPort: 7053
           primary: true
-          localMspId: Org{{.org_id}}MSP
+          localMspId: Org1MSP
           tls:
               # Certificate location absolute path
-              certificate: "./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
-              serverHostOverride: "peer{{.peer_id}}"
+              certificate: "./crypto-config/peerOrganizations/org1.{{.peer_domain}}/peers/peer0.org1.{{.peer_domain}}/tls/ca.crt"
+              serverHostOverride: "peer0"
 
     orderer:
         - address: "{{.order_address}}:7050"
           tls:
             # Certificate location absolute path
-            certificate: "./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
-            serverHostOverride: "orderer{{.peer_id}}"
+            certificate: "./crypto-config/ordererOrganizations/ord1.{{.peer_domain}}/orderers/orderer0.ord1.{{.peer_domain}}/msp/tlscacerts/tlsca.ord1.{{.peer_domain}}-cert.pem"
+            serverHostOverride: "orderer0"
 ###############################################################################
 #
 #    Peer section
@@ -47,8 +47,8 @@ peer:
     tls:
         enabled: true
         rootcert:
-            file: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
-        serverhostoverride: peer{{.peer_id}}
+            file: ./crypto-config/peerOrganizations/org1.{{.peer_domain}}/peers/peer0.org1.{{.peer_domain}}/tls/ca.crt
+        serverhostoverride: peer0
     BCCSP:
         Default: SW
         SW:
@@ -56,8 +56,8 @@ peer:
             Security: 256
             FileKeyStore:
                 KeyStore:
-    mspConfigPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
-    localMspId: Org{{.org_id}}MSP
+    mspConfigPath: ./crypto-config/peerOrganizations/org1.{{.peer_domain}}/users/Admin@org1.{{.peer_domain}}/msp
+    localMspId: Org1MSP
 ###############################################################################
 #
 #    Chaincode section
