@@ -98,10 +98,9 @@ func GetJmeterLog(logdir string) error {
 	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
-			peerid := value[PeerId].(string)
+		if value[NodeType].(string) == TypeHaproxy {
 			orgid := value[OrgId].(string)
-			suffix := orgid + peerid
+			suffix := orgid
 			wg.Add(1)
 			go func(Ip, Sx string) {
 				defer wg.Done()
@@ -110,7 +109,7 @@ func GetJmeterLog(logdir string) error {
 				if err != nil {
 					fmt.Println("******get_jmeter_log error******")
 				}
-			}(value[APIIP].(string), suffix)
+			}(value[IP].(string), suffix)
 		}
 	}
 	wg.Wait()
