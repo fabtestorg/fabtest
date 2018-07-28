@@ -320,7 +320,7 @@ func DeleteObj(stringType string) error {
 					wg.Done()
 				}(value[APIIP].(string))
 			}
-		} else if stringType == "jmeter" && nodeType == TypePeer {
+		} else if stringType == "jmeter" && nodeType == TypeHaproxy {
 			wg.Add(1)
 			go func(Ip string) {
 				defer wg.Done()
@@ -328,7 +328,7 @@ func DeleteObj(stringType string) error {
 				if err := obj.RunShow("remove_jmeter"); err != nil {
 					fmt.Println(err)
 				}
-			}(value[APIIP].(string))
+			}(value[IP].(string))
 		}
 	}
 	wg.Wait()
