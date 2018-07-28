@@ -23,7 +23,6 @@ func CreateHaproxyConfig() error {
 	inputData := GetJsonMap("node.json.in")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
-	var apilist []string
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypeHaproxy {
@@ -31,6 +30,7 @@ func CreateHaproxyConfig() error {
 			if orgid != value[OrgId].(string){
 				continue
 			}
+			var apilist []string
 			api0Ip := findMapValue(TypePeer, "0", orgid, APIIP)
 			api1Ip := findMapValue(TypePeer, "1", orgid, APIIP)
 			if api0Ip != NULLVALUE {
