@@ -20,7 +20,7 @@ func CreateJmeterConfig() error {
 }
 
 func CreateHaproxyConfig() error {
-	inputData := GetJsonMap("node.json")
+	inputData := GetJsonMap("node.json.in")
 	list := inputData[List].([]interface{})
 	dir := ConfigDir()
 	var apilist []string
@@ -53,7 +53,7 @@ func StartJmeter() error {
 	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
-		if value[NodeType].(string) == TypePeer {
+		if value[NodeType].(string) == TypeHaproxy {
 			wg.Add(1)
 			go func(Ip string) {
 				defer wg.Done()
@@ -62,7 +62,7 @@ func StartJmeter() error {
 				if err != nil {
 					fmt.Println("******star_jmeter error******")
 				}
-			}(value[APIIP].(string))
+			}(value[IP].(string))
 		}
 	}
 	wg.Wait()
