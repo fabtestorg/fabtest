@@ -24,8 +24,8 @@ sleep 10
 #11. 获取eventlog  50线程 循环50次
 ./fabtest -g event -gn 50_1000
 
-#./fabtest -f haproxy
-#./fabtest -s haproxy
+./fabtest -f haproxy
+./fabtest -s haproxy
 #12. 运行jmeter
 #  ./fabtest -s jmeter
 
