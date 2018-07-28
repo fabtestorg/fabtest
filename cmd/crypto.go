@@ -18,8 +18,8 @@ func CreateCert() error {
 }
 
 func CreateYamlByJson(strType string) error {
+	inputData := GetJsonMap("node.json.in")
 	if strType == "configtx" {
-		inputData := GetJsonMap("node.json.in")
 		orgcounts := inputData[OrgCounts].(float64)
 		var orgslist, kafkalist []string
 		for i := 1; i <= int(orgcounts); i++ {
@@ -34,7 +34,6 @@ func CreateYamlByJson(strType string) error {
 		inputData[PeerDomain] = inputData[PeerDomain].(string)
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
-		inputData := GetJsonMap("node.json")
 		orgcounts := inputData[OrgCounts].(float64)
 		var orgslist []string
 		for i := 1; i <= int(orgcounts); i++ {
@@ -43,7 +42,6 @@ func CreateYamlByJson(strType string) error {
 		inputData["orgs"] = orgslist
 		return tpl.Handler(inputData, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
 	} else if strType == "node" || strType == "client" {
-		inputData := GetJsonMap("node.json")
 		peerdomain := inputData[PeerDomain].(string)
 		kfkdomain := inputData[KfkDomain].(string)
 		kfkversion := inputData[KfkVersion].(string)
