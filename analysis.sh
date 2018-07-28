@@ -15,7 +15,7 @@ tmp=$1
 #./fabtest -g nmon -gn $tmp
 
 cat config/event_logs/$tmp/analysis.txt
-cat config/event_logs/$tmp/jmeter_send.txt | grep Summariser
+cat config/event_logs/$tmp/jmeter_send1.txt | grep Summariser
 echo "######"
 ls config/event_logs/$tmp/
 
