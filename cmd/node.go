@@ -267,15 +267,7 @@ func DeleteObj(stringType string) error {
 	inputData := GetJsonMap("node.json")
 	peerdomain := inputData[PeerDomain].(string)
 	kfkdomain := inputData[KfkDomain].(string)
-	Jmeter := inputData[JMETER].(map[string]interface{})
 	list := inputData[List].([]interface{})
-	if stringType == "jmeter" {
-		obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
-		if err := obj.RunShow("remove_jmeter"); err != nil {
-			return err
-		}
-		return nil
-	}
 	var wg sync.WaitGroup
 	for _, param := range list {
 		value := param.(map[string]interface{})
@@ -328,6 +320,15 @@ func DeleteObj(stringType string) error {
 					wg.Done()
 				}(value[APIIP].(string))
 			}
+		} else if stringType == "jmeter" && nodeType == TypePeer {
+			wg.Add(1)
+			go func(Ip string) {
+				defer wg.Done()
+				obj := NewFabCmd("removenode.py", Ip)
+				if err := obj.RunShow("remove_jmeter"); err != nil {
+					fmt.Println(err)
+				}
+			}(value[APIIP].(string))
 		}
 	}
 	wg.Wait()

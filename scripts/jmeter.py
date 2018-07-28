@@ -16,7 +16,7 @@ def start_jmeter(config_dir):
         run("rm -rf ~/fabtest/%s"%dir_name)
         run("mkdir -p ~/fabtest/%s"%dir_name)
         put("jmeterjmx.tar.gz", "~/fabtest/%s"%dir_name)
-        local("rm jmeterjmx.tar.gz")
+
     with cd("~/fabtest/%s"%dir_name):
         run("tar zxvfm jmeterjmx.tar.gz")
         run("rm jmeterjmx.tar.gz")
