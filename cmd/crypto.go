@@ -312,7 +312,7 @@ func PutCryptoConfig() error {
 }
 
 func findMapValue(findType, findid, findorgid, key string) string {
-	inputData := GetJsonMap("node.json")
+	inputData := GetJsonMap("node.json.in")
 	list := inputData[List].([]interface{})
 	for _, param := range list {
 		value := param.(map[string]interface{})
