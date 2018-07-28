@@ -23,17 +23,17 @@ def start_jmeter(config_dir):
         run("screen -d -m ~/jmeter/apache-jmeter-3.2/bin/jmeter -n -t jmeter.jmx -l jmeter.jtl", pty=False)
 
 #get jmeter log from remote
-def get_jmeter_log(config_dir, log_dir):
+def get_jmeter_log(config_dir, log_dir, suffix):
     dir = "%sevent_logs/%s"%(config_dir,log_dir)
     local("mkdir -p %s"%dir)
-    file = '%s/jmeter.jtl'%dir
-    log =  '%s/jmeter_send.txt'%dir
+    file = '%s/jmeter%s.jtl'%(dir,suffix)
+    log =  '%s/jmeter_send%s%.txt'%(dir,suffix)
     if os.path.exists(file):
         local("rm -rf %s"%file)
     get('~/fabtest/jmeter_config/jmeter.jtl',file)
     get('~/fabtest/jmeter_config/jmeter.log',log)
     with lcd(dir):
-        local("~/jmeter/apache-jmeter-3.2/bin/jmeter -g %s -e -o ./jmeterReport"%file)
+        local("~/jmeter/apache-jmeter-3.2/bin/jmeter -g %s -e -o ./jmeterReport%s"%(file,suffix))
         local("rm -rf jmeter.log")
 
 #get eventserver log from remote

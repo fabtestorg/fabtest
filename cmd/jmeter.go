@@ -28,16 +28,16 @@ func CreateHaproxyConfig() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypeHaproxy {
 			orgid := value[OrgId].(string)
-			api0Ip := findMapValue(TypePeer,"0",orgid,APIIP)
-			api1Ip := findMapValue(TypePeer,"1",orgid,APIIP)
-			if api0Ip != NULLVALUE{
+			api0Ip := findMapValue(TypePeer, "0", orgid, APIIP)
+			api1Ip := findMapValue(TypePeer, "1", orgid, APIIP)
+			if api0Ip != NULLVALUE {
 				apilist = append(apilist, api0Ip)
 			}
-			if api1Ip != NULLVALUE{
+			if api1Ip != NULLVALUE {
 				apilist = append(apilist, api1Ip)
 			}
 			inputData["apilist"] = apilist
-			err := tpl.Handler(inputData, TplHaproxyConfig, dir+fmt.Sprintf("haproxy%s.cfg",orgid))
+			err := tpl.Handler(inputData, TplHaproxyConfig, dir+fmt.Sprintf("haproxy%s.cfg", orgid))
 			if err != nil {
 				return err
 			}
@@ -49,13 +49,24 @@ func CreateHaproxyConfig() error {
 
 func StartJmeter() error {
 	inputData := GetJsonMap("node.json")
-	value := inputData[JMETER].(map[string]interface{})
-	dir := ConfigDir()
-	obj := NewFabCmd("jmeter.py", value[IP].(string))
-	err := obj.RunShow("start_jmeter", dir)
-	if err != nil {
-		fmt.Println("******star_jmeter error******")
+	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		if value[NodeType].(string) == TypePeer {
+			wg.Add(1)
+			go func(Ip string) {
+				defer wg.Done()
+				obj := NewFabCmd("jmeter.py", Ip)
+				err := obj.RunShow("start_jmeter", ConfigDir())
+				if err != nil {
+					fmt.Println("******star_jmeter error******")
+				}
+			}(value[APIIP].(string))
+		}
 	}
+	wg.Wait()
+
 	return nil
 }
 
@@ -80,13 +91,27 @@ func StartHaproxy() error {
 
 func GetJmeterLog(logdir string) error {
 	inputData := GetJsonMap("node.json")
-	value := inputData[JMETER].(map[string]interface{})
-	dir := ConfigDir()
-	obj := NewFabCmd("jmeter.py", value[IP].(string))
-	err := obj.RunShow("get_jmeter_log", dir, logdir)
-	if err != nil {
-		fmt.Println("******get_jmeter_log error******")
+	list := inputData[List].([]interface{})
+	var wg sync.WaitGroup
+	for _, param := range list {
+		value := param.(map[string]interface{})
+		if value[NodeType].(string) == TypePeer {
+			peerid := value[PeerId].(string)
+			orgid := value[OrgId].(string)
+			suffix := orgid + peerid
+			wg.Add(1)
+			go func(Ip, Sx string) {
+				defer wg.Done()
+				obj := NewFabCmd("jmeter.py", Ip)
+				err := obj.RunShow("get_jmeter_log", ConfigDir(), logdir, Sx)
+				if err != nil {
+					fmt.Println("******get_jmeter_log error******")
+				}
+			}(value[APIIP].(string), suffix)
+		}
 	}
+	wg.Wait()
+
 	return nil
 }
 

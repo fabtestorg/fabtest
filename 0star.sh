@@ -23,5 +23,3 @@
 ./fabtest -p all
 
 ./1star.sh
-sleep 15
-./2start.sh

@@ -5,5 +5,4 @@
 ./fabtest -s kafka
 sleep 10
 ./fabtest -s order
-sleep 5
 ./fabtest -s peer

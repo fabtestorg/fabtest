@@ -2,10 +2,11 @@
 
 
 #5. 创建channel
+sleep 10
 ./fabtest -c channel -n testchannel
 
 #6. 更新锚节点
-./fabtest -r updateanchor -n testchannel
+#./fabtest -r updateanchor -n testchannel
 
 #7. peer 加入channel
 ./fabtest -r joinchannel -n testchannel
@@ -23,8 +24,8 @@
 #11. 获取eventlog  50线程 循环50次
 ./fabtest -g event -gn 50_1000
 
-./fabtest -f haproxy
-./fabtest -s haproxy
+#./fabtest -f haproxy
+#./fabtest -s haproxy
 #12. 运行jmeter
 #  ./fabtest -s jmeter
 

@@ -19,7 +19,7 @@ func CreateCert() error {
 
 func CreateYamlByJson(strType string) error {
 	if strType == "configtx" {
-		inputData := GetJsonMap("node.json")
+		inputData := GetJsonMap("node.json.in")
 		orgcounts := inputData[OrgCounts].(float64)
 		var orgslist, kafkalist []string
 		for i := 1; i <= int(orgcounts); i++ {
