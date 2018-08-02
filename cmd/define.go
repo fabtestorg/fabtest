@@ -57,6 +57,7 @@ const (
 	Zk_IP2 = "zk_ip2"
 	Zk_IP0 = "zk_ip0"
 	BrokerIp = "broker_ip"
+	ChanCounts = "chan_counts"
 	AdverAddress = "adver_address"
 	BlockChainAddress = "blockchain_address"
 

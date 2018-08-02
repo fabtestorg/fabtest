@@ -18,4 +18,4 @@ services:
         max-file: "10"
     command: ./apiserver
     ports:
-     - 5555:5555
+     - {{.api_id}}{{.api_id}}{{.api_id}}{{.api_id}}:5555

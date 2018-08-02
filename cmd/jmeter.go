@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fabtestorg/fabtest/tpl"
 	"sync"
+	"strconv"
 )
 
 const TplJmeterConfig = "./templates/jmeterconfig.tpl"
@@ -87,16 +88,20 @@ func GetEventServerLog(logdir string) error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
-			clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string)
-			wg.Add(1)
-			go func(Ip, CliName, Dir, LogDir string) {
-				obj := NewFabCmd("jmeter.py", Ip)
-				err := obj.RunShow("get_eventserver_log", CliName, Dir, LogDir)
-				if err != nil {
-					fmt.Println(err)
-				}
-				wg.Done()
-			}(value[APIIP].(string), clientname, dir, logdir)
+			chancounts := inputData[ChanCounts].(float64)
+			for i:= 1 ; i <= int(chancounts) ; i++ {
+				apiid := strconv.Itoa(i)
+				clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string) + "api" + apiid
+				wg.Add(1)
+				go func(Ip, CliName, Dir, LogDir string) {
+					obj := NewFabCmd("jmeter.py", Ip)
+					err := obj.RunShow("get_eventserver_log", CliName, Dir, LogDir)
+					if err != nil {
+						fmt.Println(err)
+					}
+					wg.Done()
+				}(value[APIIP].(string), clientname, dir, logdir)
+			}
 		}
 	}
 	wg.Wait()

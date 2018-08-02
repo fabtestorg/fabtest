@@ -43,9 +43,9 @@ def get_eventserver_log(yaml_name, config_dir, log_dir):
     file = '%s/%s_eventserver.log'%(dir,yaml_name)
     if os.path.exists(file):
         local("rm -rf %s"%file)
-    get('~/fabtest/event_server/eventserver.log','%s'%file)
+    get('~/fabtest/event_server/%s/eventserver.log'%yaml_name,'%s'%file)
     #echo  empty log
-    run("cat /dev/null > ~/fabtest/event_server/eventserver.log")
+    run("cat /dev/null > ~/fabtest/event_server/%s/eventserver.log"%yaml_name)
 
 # remote
 def start_haproxy(config_dir):
