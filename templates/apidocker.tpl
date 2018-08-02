@@ -2,7 +2,7 @@ version: '2'
 
 services:
   apiserver:
-    container_name: apiserver_fft
+    container_name: apiserver_fft{{.api_id}}
     image: factoring/apiserver
     restart: always
     volumes:
