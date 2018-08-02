@@ -4,4 +4,4 @@
 ./fabtest -s zookeeper
 ./fabtest -s kafka
 ./fabtest -s order
-#./fabtest -s peer
+./fabtest -s peer
