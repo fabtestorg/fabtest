@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -x
 #7. peer 加入channel
-for((i=0;i<$1;i++));  
+for((i=1;i<=$1;i++));
 do   
 	./fabtest -r joinchannel -n mychannel$i
 	./fabtest -r installchaincode -ccoutpath $PWD/config/ccout/factor$i.out
