@@ -28,7 +28,11 @@ func CreateHaproxyConfig() error {
 	for _, param := range list {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
-			apilist = append(apilist, value[APIIP].(string))
+			chancounts := inputData[ChanCounts].(float64)
+			for i:= 1 ; i <= int(chancounts) ; i++ {
+				apiid := strconv.Itoa(i)
+				apilist = append(apilist, value[APIIP].(string)+":"+apiid+apiid+apiid+apiid)
+			}
 		}
 	}
 	inputData["apilist"] = apilist

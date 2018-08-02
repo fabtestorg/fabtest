@@ -68,5 +68,5 @@ backend api_back
     balance roundrobin
     mode http
     cookie SERVERID{{range $index,$value:= .apilist}}
-    server api{{$index}} {{$value}}:5555 maxconn 1024 weight 3 check inter 1500 rise 2 fall 3{{end}}
+    server api{{$index}} {{$value}} maxconn 1024 weight 3 check inter 1500 rise 2 fall 3{{end}}
 
