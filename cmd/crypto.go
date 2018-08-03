@@ -58,7 +58,12 @@ func CreateYamlByJson(strType string) error {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
 					curpeerid := value[PeerId].(string)
-					value[Order_Address] = findMapValue(TypeOrder, curpeerid, curorgid, IP)
+					tempid,_ := strconv.Atoi(curpeerid)
+					if tempid % 2 == 0 {
+						value[Order_Address] = findMapValue(TypeOrder, "0", curorgid, IP)
+					}else {
+						value[Order_Address] = findMapValue(TypeOrder, "1", curorgid, IP)
+					}
 					chancounts := inputData[ChanCounts].(float64)
 					for i:= 1 ; i <= int(chancounts) ; i++ {
 						apiid := strconv.Itoa(i)
@@ -107,7 +112,12 @@ func CreateYamlByJson(strType string) error {
 				curid := value[PeerId].(string)
 				curorgid := value[OrgId].(string)
 				peerid := value[PeerId].(string)
-				value[Order_Address] = findMapValue(TypeOrder, peerid, curorgid, IP)
+				tempid,_ := strconv.Atoi(peerid)
+				if tempid % 2 == 0 {
+					value[Order_Address] = findMapValue(TypeOrder, "0", curorgid, IP)
+				}else {
+					value[Order_Address] = findMapValue(TypeOrder, "1", curorgid, IP)
+				}
 				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
 				if curid == "0" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid, IP)
