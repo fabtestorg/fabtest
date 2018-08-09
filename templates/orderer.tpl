@@ -41,7 +41,7 @@ services:
       - /etc/localtime:/etc/localtime
       - /data/orderer_data:/var/hyperledger/production
       - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem:/var/hyperledger/orderer/msp/tlscacerts/tlsca.example.com-cert.pem
-      - ~/fabTestData/nomalTxEnv.txt:/var/nomalTxEnv.txt
+      - ~/fabTestData/nomalTxEnv/:/var/nomalTxEnv
     logging:
       driver: "json-file"
       options:
