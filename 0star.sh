@@ -19,3 +19,5 @@
 
 #3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
 ./fabtest -p all
+./1star.sh
+watch -n 2 ./5orderer.sh
