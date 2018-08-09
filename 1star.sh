@@ -6,4 +6,7 @@
 sleep 20
 ./fabtest -s order
 sleep 15
-./fabtest -c channel -n mychannel
+./fabtest -c channel -n mychannel1
+./fabtest -c channel -n mychannel2
+./fabtest -c channel -n mychannel3
+./fabtest -c channel -n mychannel4
