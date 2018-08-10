@@ -57,8 +57,7 @@ func CreateYamlByJson(strType string) error {
 			if strType == "client" {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
-					curpeerid := value[PeerId].(string)
-					value[Order_Address] = findMapValue(TypeOrder, curpeerid, curorgid, IP)
+					value[Order_Address] = findMapValue(TypeOrder, "0", curorgid, IP)
 					chancounts := inputData[ChanCounts].(float64)
 					for i:= 1 ; i <= int(chancounts) ; i++ {
 						apiid := strconv.Itoa(i)
@@ -106,8 +105,7 @@ func CreateYamlByJson(strType string) error {
 			case TypePeer:
 				curid := value[PeerId].(string)
 				curorgid := value[OrgId].(string)
-				peerid := value[PeerId].(string)
-				value[Order_Address] = findMapValue(TypeOrder, peerid, curorgid, IP)
+				value[Order_Address] = findMapValue(TypeOrder, "0", curorgid, IP)
 				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
 				if curid == "0" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid, IP)
