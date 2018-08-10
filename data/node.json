@@ -6,26 +6,28 @@
   "nmon_times": "600",
   "zabbix_server_ip":"10.9.43.204",
   "zabbix_server_port":"10056",
-  "jmeter":{"ip":"10.9.62.25", "haproxyip":"10.9.62.25","haproxyport":2222, "thread_count":1650, "loop_count":50, "throughput":"60.0"},
+  "jmeter":{"ip":"10.9.178.151", "haproxyip":"10.9.178.151","haproxyport":2222, "thread_count":10, "loop_count":10, "throughput":"60.0"},
   "org_counts": 1,
-  "chan_counts": 5,
+  "chan_counts": 4,
   "batchTime": "1s",
   "batchSize": 100,
   "batchPreferred": "512 KB",
   "usecouchdb": "false",
   "list":[
 
-    {"ip":"10.9.58.230","node_type":"zookeeper","zk_id":"0"},
-    {"ip":"10.9.117.252","node_type":"zookeeper","zk_id":"1"},
-    {"ip":"10.9.55.61","node_type":"zookeeper","zk_id":"2"},
+    {"ip":"10.9.180.101","node_type":"zookeeper","zk_id":"0"},
+    {"ip":"10.9.101.81","node_type":"zookeeper","zk_id":"1"},
+    {"ip":"10.9.63.136","node_type":"zookeeper","zk_id":"2"},
 
-    {"ip":"10.9.7.40","node_type":"kafka","kfk_id":"0"},
-    {"ip":"10.9.71.40","node_type":"kafka","kfk_id":"1"},
-    {"ip":"10.9.69.127","node_type":"kafka","kfk_id":"2"},
-    {"ip":"10.9.4.23","node_type":"kafka","kfk_id":"3"},
-    {"ip":"10.9.71.124","node_type":"order","order_id":"0","org_id":"1"},
-    {"ip":"10.9.29.190","node_type":"order","order_id":"1","org_id":"1"},
-    {"ip":"10.9.80.25","apiip":"10.9.151.220","node_type":"peer","peer_id":"0","org_id":"1"},
-    {"ip":"10.9.177.144","apiip":"10.9.1.33","node_type":"peer","peer_id":"1","org_id":"1"}
+    {"ip":"10.9.78.228","node_type":"kafka","kfk_id":"0"},
+    {"ip":"10.9.148.106","node_type":"kafka","kfk_id":"1"},
+    {"ip":"10.9.165.43","node_type":"kafka","kfk_id":"2"},
+    {"ip":"10.9.37.49","node_type":"kafka","kfk_id":"3"},
+    {"ip":"10.9.101.194","node_type":"order","order_id":"0","org_id":"1"},
+    {"ip":"10.9.28.103","node_type":"order","order_id":"1","org_id":"1"},
+    {"ip":"10.9.111.40","apiip":"10.9.145.174","node_type":"peer","peer_id":"0","org_id":"1"},
+    {"ip":"10.9.123.69","apiip":"10.9.101.246","node_type":"peer","peer_id":"1","org_id":"1"},
+    {"ip":"10.9.77.155","apiip":"10.9.22.90","node_type":"peer","peer_id":"2","org_id":"1"},
+    {"ip":"10.9.14.74","apiip":"10.9.176.246","node_type":"peer","peer_id":"3","org_id":"1"}
   ]
 }
