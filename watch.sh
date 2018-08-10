@@ -7,7 +7,7 @@ do
     do
         echo $node
         ssh root@$node -o ConnectTimeout=1 "docker stats --no-stream"
-	for((i=0;i<8;i++));
+	for((i=0;i<16;i++));
 	do	
 	   for((j=1;j<=4;j++));
 	   do
