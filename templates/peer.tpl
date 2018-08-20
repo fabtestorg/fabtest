@@ -28,6 +28,8 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7052
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
       - CORE_PEER_LOCALMSPID=Org{{.org_id}}MSP
+      - CORE_CHAINCODE_BUILDER=peersafes/fabric-ccenv:latest
+      - CORE_CHAINCODE_GOLANG_RUNTIME=peersafes/fabric-baseos:latest
       {{if eq .usecouchdb "true"}}
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
