@@ -27,7 +27,7 @@ client:
           tls:
               # Certificate location absolute path
               certificate: "./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt"
-              serverHostOverride: "peer{{.peer_id}}"
+              serverHostOverride: "peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}"
 
     orderer:
         - address: "{{.order_address}}:7050"
@@ -48,7 +48,7 @@ peer:
         enabled: true
         rootcert:
             file: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/ca.crt
-        serverhostoverride: peer{{.peer_id}}
+        serverhostoverride: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
     BCCSP:
         Default: SW
         SW:

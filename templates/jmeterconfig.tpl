@@ -60,7 +60,7 @@
           <stringProp name="HTTPSampler.port">{{.jmeter.haproxyport}}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/factor/saveData</stringProp>
+          <stringProp name="HTTPSampler.path">/Forfeiting/saveData</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
