@@ -14,6 +14,8 @@ logging:
 #
 ###############################################################################
 client:
+    tls:
+      enabled: true
     peers:
         # peer0
         - address: "{{.ip}}:7051"
@@ -27,11 +29,11 @@ client:
               serverHostOverride: "peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}"
 
     orderer:
-        address: "{{.order_address}}:7050"
-        tls:
-             # Certificate location absolute path
-             certificate: "/root/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
-             serverHostOverride: "orderer{{.peer_id}}"
+        - address: "{{.order_address}}:7050"
+          tls:
+              # Certificate location absolute path
+              certificate: "/root/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
+              serverHostOverride: "orderer{{.peer_id}}"
 ###############################################################################
 #
 #    Peer section
