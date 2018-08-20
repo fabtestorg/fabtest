@@ -12,7 +12,11 @@ services:
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=false
+      {{if eq .peer_id "0"}}
       - CORE_PEER_GOSSIP_ORGLEADER=true
+      {{else if eq .peer_id "1"}}
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      {{end}}
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
@@ -21,7 +25,12 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIOD=5
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050
+      {{if eq .peer_id "0"}}
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer0.ord{{.org_id}}.{{.peer_domain}}:7050
+      {{else if eq .peer_id "1"}}
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer1.ord{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org{{.org_id}}.{{.peer_domain}}:7051
+      {{end}}
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
       - CORE_PEER_ADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
