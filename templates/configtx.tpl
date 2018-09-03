@@ -28,7 +28,7 @@ Organizations:{{range $index,$value:= .orgs}}
             - Host: peer0.org{{$value}}.example.com
               Port: 7051{{end}}
 Orderer: &OrdererDefaults
-    OrdererType: kafka
+    OrdererType: solo
     Addresses:{{range $index,$value:= .orgs}}
         - orderer0.ord{{$value}}.example.com:7050
         - orderer1.ord{{$value}}.example.com:7050{{end}}
@@ -37,9 +37,6 @@ Orderer: &OrdererDefaults
         MaxMessageCount: {{.batchSize}}
         AbsoluteMaxBytes: 98 MB
         PreferredMaxBytes: {{.batchPreferred}}
-    Kafka:
-        Brokers:{{range $index,$value:= .kafkas}}
-            - {{$value}}:9092{{end}}
     Organizations:
 Application: &ApplicationDefaults
     Organizations:

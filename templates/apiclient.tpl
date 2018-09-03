@@ -34,7 +34,7 @@ client:
           tls:
             # Certificate location absolute path
             certificate: "./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/msp/tlscacerts/tlsca.ord{{.org_id}}.{{.peer_domain}}-cert.pem"
-            serverHostOverride: "orderer{{.peer_id}}"
+            serverHostOverride: "orderer0"
 ###############################################################################
 #
 #    Peer section
