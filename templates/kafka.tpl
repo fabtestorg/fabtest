@@ -17,7 +17,7 @@ services:
 #      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://{{.ip}}:8092
      #enable TLS
       - KAFKA_LISTENERS=PLAINTEXT://:8092,SSL://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://{{.ip}}:8092,SSL://{{.ip}}:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://{{.ip}}:8092,SSL://kafka{{.kfk_id}}:9092
       - KAFKA_SSL_CLIENT_AUTH=required
       - KAFKA_SSL_KEYSTORE_LOCATION=/opt/kafka/ssl/server.keystore.jks
       - KAFKA_SSL_TRUSTSTORE_LOCATION=/opt/kafka/ssl/server.truststore.jks
