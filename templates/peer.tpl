@@ -14,7 +14,7 @@ services:
       - CORE_PEER_EVENTS_TIMEOUT=0ms
       - CORE_PEER_GOSSIP_USELEADERELECTION=false
       - CORE_PEER_GOSSIP_ORGLEADER=true
-      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_PROFILE_LISTENADDRESS=0.0.0.0:6060
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key

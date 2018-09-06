@@ -10,27 +10,36 @@ orderers:
 peers:
   peer:
     host: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
-    orgname: org{{.org_id}}
+    orgName: org{{.org_id}}
     useTLS: true
     tlsPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
 eventPeers:
   peer:
     host: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
-    orgname: org{{.org_id}}
+    orgName: org{{.org_id}}
     useTLS: true
     tlsPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls/server.crt
-other:
+channel:
     mspConfigPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
     channelId:           testchannel
     chaincodeName:       testfabric
     chaincodeVersion:    1.0
-    mq_address:
+    chaincodePolicy:
+      orgs:
+        - org{{.org_id}}
+      rule: or
+mq:
+    mqAddress:
       - "amqp://guest:guest@localhost:5672/"
-    queue_name: "assetQueue"
-policy:
-    orgs: org{{.org_id}}
-    rule: or
+    queueName: "assetQueue"
+    system_queue_name: "factoring_system"
+log:
+    logLevel: DEBUG
+    logModelName: eventserver
 user:
     alias: zhengfu1
+apiserver:
+    listenport: 5555
+    probe_order: "orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}} 7050"
 
