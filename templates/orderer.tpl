@@ -31,7 +31,7 @@ services:
       - ~/fabtest/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/msp:/var/hyperledger/orderer/msp
       - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/tls:/var/hyperledger/orderer/tls
-      - ~/fabTestData/kafkaTLSclient:/var/hyperledger/orderer/kafka/tls
+      - ~/fabTestData/kafkaTlsClient:/var/hyperledger/orderer/kafka/tls
       - /etc/localtime:/etc/localtime
       - /data/orderer_data:/var/hyperledger/production
     logging:
