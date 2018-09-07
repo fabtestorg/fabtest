@@ -36,7 +36,7 @@ mq:
     system_queue_name: "factoring_system"
 log:
     logLevel: ERROR
-    logModelName: eventserver
+    logModelName: event
 user:
     alias: zhengfu1
 
