@@ -262,9 +262,9 @@ func RunChaincode(ccname, channelName string) error {
 				time.Sleep(2 * time.Second)
 				wg.Done()
 			} else {
-				//txargs := `'{"Args":["query"\,"a"]}'`
 				go func(peerads, Pid, OrgId string) {
-					txargs := `'{"Args":["DslQuery"\,"trackid"\,"{\"dslSyntax\":\"{\\\"selector\\\":{\\\"sender\\\":\\\"zhengfu0\\\"}}\"}"]}'`
+					//txargs := `'{"Args":["DslQuery"\,"trackid"\,"{\"dslSyntax\":\"{\\\"selector\\\":{\\\"sender\\\":\\\"zhengfu0\\\"}}\"}"]}'`
+					txargs := `'{"Args":["SaveData"\,"a"]}'`
 					err := obj.RunShow("test_query_tx", BinPath(), ConfigDir(), peerads, Pid, OrgId, peerdomain, channelName, ccname, txargs)
 					if err != nil {
 						fmt.Println(err)
