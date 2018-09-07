@@ -23,7 +23,7 @@ channel:
     mspConfigPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
     channelId:           testchannel
-    chaincodeName:       testfabric
+    chaincodeName:       factor
     chaincodeVersion:    1.0
     chaincodePolicy:
       orgs:
@@ -35,7 +35,7 @@ mq:
     queueName: "assetQueue"
     system_queue_name: "factoring_system"
 log:
-    logLevel: DEBUG
+    logLevel: ERROR
     logModelName: eventserver
 user:
     alias: zhengfu1
