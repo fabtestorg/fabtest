@@ -2,7 +2,7 @@ version: '2'
 
 services:
   apiserver:
-    container_name: apiserver
+    container_name: apiserver{{.api_id}}
     image: test_fabric/apiserver
     restart: always
     volumes:
@@ -18,7 +18,7 @@ services:
         max-file: "10"
     command: ./apiserver
     ports:
-     - 5555:5555
+     - {{.api_id}}{{.api_id}}{{.api_id}}{{.api_id}}:5555
     extra_hosts:
        peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}: {{.ip}}
        orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}: {{.order_address}}

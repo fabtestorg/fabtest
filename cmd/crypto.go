@@ -18,8 +18,8 @@ func CreateCert() error {
 }
 
 func CreateYamlByJson(strType string) error {
+	inputData := GetJsonMap("node.json")
 	if strType == "configtx" {
-		inputData := GetJsonMap("node.json")
 		orgcounts := inputData[OrgCounts].(float64)
 		var orgslist, kafkalist []string
 		for i := 1; i <= int(orgcounts); i++ {
@@ -34,7 +34,6 @@ func CreateYamlByJson(strType string) error {
 		inputData[PeerDomain] = inputData[PeerDomain].(string)
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
-		inputData := GetJsonMap("node.json")
 		orgcounts := inputData[OrgCounts].(float64)
 		var orgslist []string
 		for i := 1; i <= int(orgcounts); i++ {
@@ -43,7 +42,6 @@ func CreateYamlByJson(strType string) error {
 		inputData["orgs"] = orgslist
 		return tpl.Handler(inputData, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
 	} else if strType == "node" || strType == "client" {
-		inputData := GetJsonMap("node.json")
 		peerdomain := inputData[PeerDomain].(string)
 		kfkdomain := inputData[KfkDomain].(string)
 		kfkversion := inputData[KfkVersion].(string)
@@ -59,22 +57,27 @@ func CreateYamlByJson(strType string) error {
 			if strType == "client" {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
-					peerid := value[PeerId].(string)
-					value[Order_Address] = findMapValue(TypeOrder, peerid, curorgid, IP)
-					clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
-					//生成api docker-compose.yaml
-					err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
-					if err != nil {
-						return err
-					}
-					//生成api 和  event client_sdk.yaml文件
-					err = tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
-					if err != nil {
-						return err
-					}
-					err = tpl.Handler(value, TplEventClient, ConfigDir()+clientname+"eventclient.yaml")
-					if err != nil {
-						return err
+					curpeerid := value[PeerId].(string)
+					value[Order_Address] = findMapValue(TypeOrder, curpeerid, curorgid, IP)
+					chancounts := inputData[ChanCounts].(float64)
+					for i:= 1 ; i <= int(chancounts) ; i++ {
+						apiid := strconv.Itoa(i)
+						value["api_id"] = apiid
+						clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string) + "api" + apiid
+						//生成api docker-compose.yaml
+						err := tpl.Handler(value, TplApiDocker, ConfigDir()+clientname+"apidocker.yaml")
+						if err != nil {
+							return err
+						}
+						//生成api 和  event client_sdk.yaml文件
+						err = tpl.Handler(value, TplApiClient, ConfigDir()+clientname+"apiclient.yaml")
+						if err != nil {
+							return err
+						}
+						err = tpl.Handler(value, TplEventClient, ConfigDir()+clientname+"eventclient.yaml")
+						if err != nil {
+							return err
+						}
 					}
 				}
 				continue

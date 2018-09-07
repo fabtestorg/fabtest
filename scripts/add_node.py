@@ -57,45 +57,45 @@ def start_docker():
     #start docker service
     sudo("systemctl restart docker")
 
-def start_api(peer_id, org_id, config_dir):
-    name = "peer" + peer_id + "org" + org_id
+def start_api(peer_id, org_id, config_dir, api_id):
+    name = "peer" + peer_id + "org" + org_id + "api" + api_id
     apiclientname = name + "apiclient"
     apidockername = name + "apidocker"
     parent_path  = os.path.dirname(config_dir)
     #apiserver
     with lcd(parent_path):
         #remote yaml
-        run("mkdir -p ~/fabtest/")
-        run("rm -rf ~/fabtest/api_server")
-        put("api_server.tar.gz","~/fabtest")
-    with cd("~/fabtest"):
-        run("tar zxvfm api_server.tar.gz")
+        run("mkdir -p ~/fabtest/api_server/%s"%name)
+        run("rm -rf ~/fabtest/api_server/%s/*"%name)
+        put("api_server.tar.gz","~/fabtest/api_server/%s"%name)
+    with cd("~/fabtest/api_server/%s"%name):
+        run("tar zxvfm api_server.tar.gz --strip-components=1")
         run("rm -rf api_server.tar.gz")
     with lcd(config_dir):
-        put("%s.yaml"%apiclientname, "~/fabtest/api_server/client_sdk.yaml")
-        put("%s.yaml"%apidockername, "~/fabtest/api_server/docker-compose.yaml")
-    with cd("~/fabtest/api_server"):
+        put("%s.yaml"%apiclientname, "~/fabtest/api_server/%s/client_sdk.yaml"%name)
+        put("%s.yaml"%apidockername, "~/fabtest/api_server/%s/docker-compose.yaml"%name)
+    with cd("~/fabtest/api_server/%s"%name):
         run("docker-compose -f docker-compose.yaml down")
         run("docker-compose -f docker-compose.yaml up -d")
 
-def start_event(peer_id, org_id, config_dir, clitype):
-    name = "peer" + peer_id + "org" + org_id
+def start_event(peer_id, org_id, config_dir, clitype, api_id):
+    name = "peer" + peer_id + "org" + org_id + "api" + api_id
     yamlname = name + "%sclient"%clitype
     parent_path  = os.path.dirname(config_dir)
     #apiserver or eventserver
     with lcd(parent_path):
         put("/etc/hosts","~")
         #remote yaml
-        run("mkdir -p ~/fabtest/")
-        run("rm -rf ~/fabtest/%s_server"%clitype)
-        put("%s_server.tar.gz"%clitype,"~/fabtest")
-        utils.kill_process("%sserver"%clitype)
-    with cd("~/fabtest"):
-        run("tar zxvfm %s_server.tar.gz"%clitype)
+        run("mkdir -p ~/fabtest/%s_server/%s"%(clitype,name))
+        run("rm -rf ~/fabtest/%s_server/%s/*"%(clitype,name))
+        put("%s_server.tar.gz"%clitype,"~/fabtest/%s_server/%s"%(clitype,name))
+       # utils.kill_process("%sserver"%clitype)
+    with cd("~/fabtest/%s_server/%s"%(clitype,name)):
+        run("tar zxvfm %s_server.tar.gz --strip-components=1"%clitype)
         run("rm %s_server.tar.gz"%clitype)
     with lcd(config_dir):
-        put("%s.yaml"%yamlname, "~/fabtest/%s_server/client_sdk.yaml"%clitype)
-    with cd("~/fabtest/%s_server"%clitype):
+        put("%s.yaml"%yamlname, "~/fabtest/%s_server/%s/client_sdk.yaml"%(clitype,name))
+    with cd("~/fabtest/%s_server/%s"%(clitype,name)):
         sudo("cp ~/hosts /etc/hosts")
         run("chmod +x %sserver"%clitype)
         run("rm -rf %sserver.log"%clitype)

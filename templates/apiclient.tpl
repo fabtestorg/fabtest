@@ -22,8 +22,8 @@ eventPeers:
 channel:
     mspConfigPath: ./crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
-    channelId:           testchannel
-    chaincodeName:       testfabric
+    channelId:           mychannel{{.api_id}}
+    chaincodeName:       factor{{.api_id}}
     chaincodeVersion:    1.0
     chaincodePolicy:
       orgs:

@@ -22,8 +22,8 @@ eventPeers:
 channel:
     mspConfigPath: ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/users/Admin@org{{.org_id}}.{{.peer_domain}}/msp
     localMspId:          Org{{.org_id}}MSP
-    channelId:           testchannel
-    chaincodeName:       factor
+    channelId:           mychannel{{.api_id}}
+    chaincodeName:       factor{{.api_id}}
     chaincodeVersion:    1.0
     chaincodePolicy:
       orgs:
@@ -31,7 +31,7 @@ channel:
       rule: or
 mq:
     mqAddress:
-      - "amqp://guest:guest@localhost:5672/"
+      - "amqp://guest:guest@{{.apiip}}:5672/"
     queueName: "assetQueue"
     system_queue_name: "factoring_system"
 log:
@@ -39,7 +39,4 @@ log:
     logModelName: eventserver
 user:
     alias: zhengfu1
-apiserver:
-    listenport: 5555
-    probe_order: "orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}} 7050"
 
