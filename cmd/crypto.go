@@ -264,7 +264,7 @@ func RunChaincode(ccname, channelName string) error {
 			} else {
 				go func(peerads, Pid, OrgId string) {
 					//txargs := `'{"Args":["DslQuery"\,"trackid"\,"{\"dslSyntax\":\"{\\\"selector\\\":{\\\"sender\\\":\\\"zhengfu0\\\"}}\"}"]}'`
-					txargs := `'{"Args":["SaveData"\,"a"]}'`
+					txargs := `'{"Args":["KeepaliveQuery"\,"a"]}'`
 					err := obj.RunShow("test_query_tx", BinPath(), ConfigDir(), peerads, Pid, OrgId, peerdomain, channelName, ccname, txargs)
 					if err != nil {
 						fmt.Println(err)
