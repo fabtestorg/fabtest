@@ -71,6 +71,9 @@ chaincode:
 
 user:
     alias: zhengfu998
+    users:
+       user: "123456"
+       root: "root"
 
 apiserver:
     listenport: 5555
