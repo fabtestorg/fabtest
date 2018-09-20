@@ -1,9 +1,10 @@
+---
 crypto:
-  family: ecdsa
-  algorithm: P256-SHA256
-  hash: SHA2-256
+  family: gm
+  algorithm: P256SM2
+  hash: SM3
 orderers:
-  orderer:
+  orderer0:
     host: orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050
     useTLS: true
     tlsPath: ./crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}/tls/server.crt
@@ -30,16 +31,20 @@ channel:
         - org{{.org_id}}
       rule: or
 mq:
+    mqEnable: false
     mqAddress:
       - "amqp://guest:guest@localhost:5672/"
-    queueName: "assetQueue"
-    system_queue_name: "factoring_system"
+    queueName: "TradeQueue"
 log:
     logLevel: DEBUG
     logModelName: apiserver
 user:
-    alias: zhengfu1
+    id: bankA
 apiserver:
+    authorization:
+      user: "123456"
+      root: "root"
     listenport: 5555
     probe_order: "orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}} 7050"
-
+other:
+    check_time: 2m

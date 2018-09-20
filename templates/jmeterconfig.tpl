@@ -24,6 +24,7 @@
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.delayedStart">true</boolProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP请求" enabled="true">
@@ -37,10 +38,13 @@
         &quot;createBy&quot;:&quot;wuxutest&quot;,&#xd;
         &quot;createTime&quot;:${__time(,)},&#xd;
         &quot;sender&quot;:&quot;wuxutest&quot;,&#xd;
+        &quot;attachmentList&quot;:[&#xd;
+        	{&quot;name&quot;: &quot;filename&quot;,&quot;hash&quot;: &quot;filehash&quot;, &quot;path&quot;: &quot;filepath&quot;}&#xd;
+        ],&#xd;
         &quot;receiver&quot;:[&#xd;
            &quot;zhengfu998&quot;&#xd;
         ],&#xd;
-        &quot;txData&quot;:&quot;3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghg3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuasdfadsfadsfasfasfasfdasfasfasfasfdadsfasdfadsfafdsadfsafdsadsfadsfasdfasdfadfadfasfdadfadfasfsafsafewaefawennwerwrewas&quot;,&#xd;
+        &quot;txData&quot;:&quot;3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghg3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhiojjkjlk;lk;lk;lk;lk;lk;lk;yuyuyuyuyuyuyuygghghghgh3312280980980980888908098huhio&quot;,&#xd;
         &quot;lastUpdateTime&quot;:0,&#xd;
         &quot;lastUpdateBy&quot;:&quot;&quot;,&#xd;
         &quot;cryptoFlag&quot;:0,&#xd;
@@ -60,7 +64,7 @@
           <stringProp name="HTTPSampler.port">{{.jmeter.haproxyport}}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/factor/saveData</stringProp>
+          <stringProp name="HTTPSampler.path">/trade/savedata</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -70,6 +74,23 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="Content-Type" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="TrackId" elementType="Header">
+              <stringProp name="Header.name">TrackId</stringProp>
+              <stringProp name="Header.value"></stringProp>
+            </elementProp>
+            <elementProp name="Authorization" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Basic dXNlcjoxMjM0NTY=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
         <hashTree/>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -262,9 +283,5 @@
         <hashTree/>
       </hashTree>
     </hashTree>
-    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="工作台" enabled="true">
-      <boolProp name="WorkBench.save">true</boolProp>
-    </WorkBench>
-    <hashTree/>
   </hashTree>
 </jmeterTestPlan>

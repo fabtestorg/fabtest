@@ -2,7 +2,7 @@ version: '2'
 
 services:
   kafka{{.kfk_id}}:
-    image: hyperledger/fabric-kafka
+    image: peersafes/fabric-kafka:1.1.1-gm
     restart: always
     environment:
       - KAFKA_BROKER_ID={{.kfk_id}}

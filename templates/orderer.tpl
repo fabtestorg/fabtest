@@ -3,7 +3,7 @@ version: '2'
 services:
   orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}:
     container_name: orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}
-    image: hyperledger/fabric-orderer
+    image: peersafes/fabric-orderer:1.1.1-gm
     restart: always
     environment:
       - ORDERER_GENERAL_LOGLEVEL=INFO

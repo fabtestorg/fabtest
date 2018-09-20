@@ -3,7 +3,7 @@ version: '2'
 services:
   apiserver:
     container_name: apiserver{{.api_id}}
-    image: factoring/apiserver
+    image: zyf7862634/apiserver
     restart: always
     volumes:
         - ./schema:/opt/apiserver/schema

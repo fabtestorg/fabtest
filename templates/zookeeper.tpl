@@ -1,7 +1,7 @@
 version: '2'
 services:
     zookeeper{{.zk_id}}:
-        image: hyperledger/fabric-zookeeper
+        image: peersafes/fabric-zookeeper:1.1.1-gm
         restart: always
         environment:
           ZOO_MY_ID: {{.zk_id}}

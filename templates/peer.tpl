@@ -1,7 +1,7 @@
 version: '2'
 services:
   peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:
-    image: hyperledger/fabric-peer
+    image: peersafes/fabric-peer:1.1.1-gm
     restart: always
     container_name: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
     environment:
@@ -35,6 +35,8 @@ services:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
       {{end}}
+      - CORE_CHAINCODE_BUILDER=peersafes/fabric-ccenv:1.1.1-gm
+      - CORE_CHAINCODE_GOLANG_RUNTIME=peersafes/fabric-baseos:1.1.1-gm
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     volumes:
