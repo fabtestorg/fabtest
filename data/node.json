@@ -4,7 +4,7 @@
   "kfk_version": "0.9.0.1",
   "nmon_rate": "2",
   "nmon_times": "600",
-  "crypto_type": "SW",
+  "crypto_type": "GM",
   "zabbix_server_ip":"10.9.43.204",
   "zabbix_server_port":"10056",
   "jmeter":{"ip":"10.9.62.25", "haproxyip":"10.9.62.25","haproxyport":2222, "thread_count":1650, "loop_count":50, "throughput":"60.0"},
