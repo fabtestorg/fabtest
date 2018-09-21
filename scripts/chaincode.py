@@ -40,9 +40,8 @@ def instantiate_chaincode(bin_path, yaml_path, peer_address, peer_id, org_id, do
     bin = bin_path + "peer"
 
     param = ' chaincode instantiate -o %s -C %s -n %s -v %s -c %s -P %s '%(order_address, channel_name, ccname, "1.0", init_param, policy)
-    tls = ' --tls --cafile %s'%order_tls_path
 
-    command = env + bin + param + tls
+    command = env + bin + param 
     local(command)
 
 def test_query_tx(bin_path, yaml_path, peer_address, peer_id, org_id, domain_name, channel_name, ccname, tx_args):
