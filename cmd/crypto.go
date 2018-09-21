@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"strings"
 )
 
 func CreateCert() error {
@@ -58,6 +59,15 @@ func CreateYamlByJson(strType string) error {
 				if nodeType == TypePeer {
 					curorgid := value[OrgId].(string)
 					curpeerid := value[PeerId].(string)
+					if strings.ToUpper(inputData[Crypto_Type].(string)) == "GM" {
+						value["crypto_family"] = "gm"
+						value["crypto_algorithm"] = "P256SM2"
+						value["crypto_hash"] = "SM3"
+					}else {
+						value["crypto_family"] = "ecdsa"
+						value["crypto_algorithm"] = "P256-SHA256"
+						value["crypto_hash"] = "SHA2-256"
+					}
 					value[Order_Address] = findMapValue(TypeOrder, curpeerid, curorgid, IP)
 					chancounts := inputData[ChanCounts].(float64)
 					for i:= 1 ; i <= int(chancounts) ; i++ {
@@ -97,6 +107,7 @@ func CreateYamlByJson(strType string) error {
 				yamlname = nodeType + value[KfkId].(string)
 				tplfile = TplKafka
 			case TypeOrder:
+				value[Crypto_Type] = inputData[Crypto_Type].(string)
 				value[KFK0_ADDRESS] = findMapValue(TypeKafka, "0", "", IP)
 				value[KFK1_ADDRESS] = findMapValue(TypeKafka, "1", "", IP)
 				value[KFK2_ADDRESS] = findMapValue(TypeKafka, "2", "", IP)
@@ -109,6 +120,7 @@ func CreateYamlByJson(strType string) error {
 				peerid := value[PeerId].(string)
 				value[Order_Address] = findMapValue(TypeOrder, peerid, curorgid, IP)
 				value[USECOUCHDB] = inputData[USECOUCHDB].(string)
+				value[Crypto_Type] = inputData[Crypto_Type].(string)
 				if curid == "0" {
 					value[Other_PeerAddress] = findMapValue(TypePeer, "1", curorgid, IP)
 				} else if curid == "1" {

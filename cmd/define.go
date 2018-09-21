@@ -28,6 +28,7 @@ const (
 	PeerDomain = "peer_domain"
 	OrgCounts = "org_counts"
 	Nmon_Rate = "nmon_rate"
+	Crypto_Type = "crypto_type"
 	Nmon_Times = "nmon_times"
 	KfkDomain = "kfk_domain"
 	KFK0_ADDRESS = "kfk0_address"

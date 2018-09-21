@@ -6,6 +6,7 @@ services:
     container_name: peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
     environment:
       # base env
+      - BCCSP_CRYPTO_TYPE={{.crypto_type}}
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=peer{{.peer_id}}_default
       - CORE_LOGGING_LEVEL=INFO

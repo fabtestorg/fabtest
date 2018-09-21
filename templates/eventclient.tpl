@@ -1,8 +1,8 @@
 ---
 crypto:
-  family: gm
-  algorithm: P256SM2
-  hash: SM3
+  family: {{.crypto_family}}
+  algorithm: {{.crypto_algorithm}}
+  hash: {{.crypto_hash}}
 orderers:
   orderer0:
     host: orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050

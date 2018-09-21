@@ -23,14 +23,21 @@ var (
 	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
 	analyse     = flag.String("a", "", "event analyse")
 	replace     = flag.String("t", "", "replace  images")
-	write     = flag.String("w", "", "write  hosts")
-	index     = flag.String("id", "", "replace  images id")
-	operation    = flag.String("op", "", "operation node  eg: start or stop")
+	write       = flag.String("w", "", "write  hosts")
+	index       = flag.String("id", "", "replace  images id")
+	operation   = flag.String("op", "", "operation node  eg: start or stop")
 )
 
 func main() {
-	flag.Parse()
 	var err error
+	flag.Parse()
+	inputData := cmd.GetJsonMap("node.json")
+	cryptoType := inputData[cmd.Crypto_Type].(string)
+	fmt.Printf("-----CRYPTO_TYPE----%s\n", cryptoType)
+	if err = os.Setenv("BCCSP_CRYPTO_TYPE", cryptoType); err != nil {
+		fmt.Println(err)
+		return
+	}
 	if *file != "" {
 		if *file == "jmeter" {
 			err = cmd.CreateJmeterConfig()
@@ -49,9 +56,9 @@ func main() {
 				os.Exit(1)
 			}
 			err = cmd.StartJmeter()
-		} else if *start == "haproxy"{
+		} else if *start == "haproxy" {
 			err = cmd.StartHaproxy()
-		} else if *start == "nmon"{
+		} else if *start == "nmon" {
 			err = cmd.StartNmon()
 		} else if *start == "zabbix" {
 			err = cmd.StartZabbix()

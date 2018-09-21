@@ -6,6 +6,7 @@ services:
     image: peersafes/fabric-orderer:1.1.1-gm
     restart: always
     environment:
+      - BCCSP_CRYPTO_TYPE={{.crypto_type}}
       - ORDERER_GENERAL_LOGLEVEL=INFO
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
