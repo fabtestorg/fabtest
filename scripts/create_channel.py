@@ -26,7 +26,7 @@ def create_channel(bin_path, yaml_path, out_path, channel_name, domain_name):
     order_address = "orderer0.ord1.%s:7050"%domain_name
     param = ' channel create -o %s -t 3000 -c %s -f %s/%s'%(order_address, channel_name, channel_dir, channeltx_name)
 
-    tls = ' --tls --cafile %s'%order_tls_path
+    tls = ' --tls false --cafile %s'%order_tls_path
 
     command = env + bin + param + tls
     local(command)
@@ -60,7 +60,7 @@ def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, domain_na
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s '%msp_path
     bin = bin_path + "peer"
     param = ' channel update -o %s -c %s -f %s/Org%sMSPanchors.tx'%(order_address, channel_name, channel_dir, org_id)
-    tls = ' --tls --cafile %s'%order_tls_path
+    tls = ' --tls false --cafile %s'%order_tls_path
 
     command = env + bin + param + tls
     return local(command)
