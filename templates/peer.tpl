@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:
     image: hyperledger/fabric-peer
@@ -24,7 +25,7 @@ services:
       - CORE_PEER_GOSSIP_RECONNECTMINPERIOD=5
       - CORE_PEER_GOSSIP_RECONNECTMINPERIODATTEMPTTIME=10
       - CORE_PEER_GOSSIP_DEFMAXBLOCKDISTANCE=100
-      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}:7050
+      - CORE_PEER_GOSSIP_DEFAULTORDERERADDRESS=orderer{{.peer_id}}.ord1.{{.peer_domain}}:7050
       # improve env
       - CORE_PEER_ID=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}
       - CORE_PEER_ADDRESS=peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}:7051
@@ -50,10 +51,8 @@ services:
         max-file: "10"
     ports:
       - 7051:7051
-      - 7052:7052
-      - 7053:7053
-    extra_hosts:
-       orderer{{.peer_id}}.ord{{.org_id}}.{{.peer_domain}}: {{.order_address}}
+    extra_hosts: 
+       orderer{{.peer_id}}.ord1.{{.peer_domain}}: {{.apiip}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb

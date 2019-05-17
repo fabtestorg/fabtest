@@ -7,7 +7,7 @@ OrdererOrgs:{{range $index,$value:= .orgs}}
         Province: California
         Locality: San Francisco
     Template:
-      Count: 2{{end}}
+      Count: 3{{end}}
 
 PeerOrgs:{{range $index,$value:= .orgs}}
   - Name: org{{$value}}

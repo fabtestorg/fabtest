@@ -38,8 +38,10 @@ def instantiate_chaincode(bin_path, yaml_path, peer_address, peer_id, org_id, do
     env = env + ' CORE_PEER_TLS_ENABLED=true'
     env = env + ' CORE_PEER_ADDRESS=%s '%peer_address
     bin = bin_path + "peer"
-
-    param = ' chaincode instantiate -o %s -C %s -n %s -v %s -c %s -P %s '%(order_address, channel_name, ccname, "1.0", init_param, policy)
+    init_param = '\'{"Args":["init","LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFTFVlRWJrYWtxOVVNc3JpeldJcTdDVGM0NGpYTAo1TFpYVVA1aFNxMWFnUENaNGw4a1pSekVoRjFPRE04aTdyU1MrMEFvMnBQc1hDKzh3MkR6bVBXYUpnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="]}\''
+    # --collections-config ${COLLECTION_DEFINE}
+    col_cfg = yaml_path + "ccout/collection_define.json"
+    param = ' chaincode instantiate -o %s -C %s -n %s -v %s -c %s -P %s --collections-config %s'%(order_address, channel_name, ccname, "1.0", init_param, policy,col_cfg)
     tls = ' --tls --cafile %s'%order_tls_path
 
     command = env + bin + param + tls

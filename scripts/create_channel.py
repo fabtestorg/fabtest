@@ -24,7 +24,7 @@ def create_channel(bin_path, yaml_path, out_path, channel_name, domain_name):
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s  '%msp_path
     bin = bin_path + "peer"
     order_address = "orderer0.ord1.%s:7050"%domain_name
-    param = ' channel create -o %s -t 3000 -c %s -f %s/%s'%(order_address, channel_name, channel_dir, channeltx_name)
+    param = ' channel create -o %s -t 3000s -c %s -f %s/%s'%(order_address, channel_name, channel_dir, channeltx_name)
 
     tls = ' --tls --cafile %s'%order_tls_path
 
@@ -95,17 +95,19 @@ def put_cryptoconfig(config_path, type):
     run("mkdir -p ~/fabTestData")
     run("mkdir -p ~/fabtest")
     if type == "order":
+        put("%scrypto-config.tar.gz"%config_path, "~/fabTestData/")
+        with cd("~/fabTestData"):
+            run("tar zxvfm crypto-config.tar.gz")
         put("%schannel-artifacts.tar.gz"%config_path, "~/fabtest/")
         with cd("~/fabtest"):
             run("tar zxvfm channel-artifacts.tar.gz")
-        copy_file(config_path,"crypto-config.tar.gz")
-        copy_file(config_path,"kafkaTLSclient.tar.gz")
-    elif type == "kafka":
-        copy_file(config_path,"kafkaTLSserver.tar.gz")
+        # copy_file(config_path,"kafkaTLSclient.tar.gz")
+    # elif type == "kafka":
+    #     copy_file(config_path,"kafkaTLSserver.tar.gz")
     elif type == "peer":
         copy_file(config_path,"crypto-config.tar.gz")
-    elif type == "api":
-        copy_file(config_path,"crypto-config.tar.gz")
+    # elif type == "api":
+    #     copy_file(config_path,"crypto-config.tar.gz")
 
 def copy_file(config_path, file_name):
     remote_file = "~/fabTestData/%s"%file_name

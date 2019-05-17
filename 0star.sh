@@ -13,13 +13,19 @@
 #peer,order,zk,kfk yaml
 ./fabtest -f node
 
+# sed -i "" 's//7050:7050/g' filename
+
+
+
+
+
 #api , event client_sdk.yaml
-./fabtest -f client
+# ./fabtest -f client
 
 #2. 生成 创世区块
 ./fabtest -c genesisblock
 
 #3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
-./fabtest -p all
+# ./fabtest -p all
 
-./1star.sh
+# ./1star.sh

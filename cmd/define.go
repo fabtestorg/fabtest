@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	SshUserName     = "root"
-	SshPwd          = "dev@peersafe"
-	SudoPwd          = "dev@peersafe"
+	SshUserName     = "ubuntu"
+	SshPwd          = "dev@Peersafe"
+	SudoPwd          = "dev@Peersafe"
 	TplZookeeper    = "./templates/zookeeper.tpl"
 	TplKafka        = "./templates/kafka.tpl"
 	TplOrderer      = "./templates/orderer.tpl"
@@ -27,6 +27,7 @@ const (
 	TypeApi = "api"
 	PeerDomain = "peer_domain"
 	OrgCounts = "org_counts"
+	OrdCounts = "orderer_counts"
 	Nmon_Rate = "nmon_rate"
 	Nmon_Times = "nmon_times"
 	KfkDomain = "kfk_domain"

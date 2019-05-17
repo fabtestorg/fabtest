@@ -2,29 +2,29 @@
 
 
 #5. 创建channel
-#./fabtest -c channel -n mychannel
+./fabtest -c channel -n mychannel
 
 #6. 更新锚节点
-#./fabtest -r updateanchor -n testchannel
+./fabtest -r updateanchor -n mychannel
 
 #7. peer 加入channel
-#./fabtest -r joinchannel -n mychannel
+./fabtest -r joinchannel -n mychannel
 
 #8. 安装chaincode
-#./fabtest -r installchaincode -ccoutpath $PWD/config/ccout/factor.out
+./fabtest -r installchaincode -ccoutpath $PWD/config/ccout/mycc.out
 
-#9. 实例化chaincode
-#./fabtest -r runchaincode -ccname factor -n mychannel
+# #9. 实例化chaincode
+./fabtest -r runchaincode -ccname mycc -n mychannel
 
 #10. 启动api, event
-./fabtest -s api
-./fabtest -s event
+# ./fabtest -s api
+# ./fabtest -s event
 
 #11. 获取eventlog  50线程 循环50次
-./fabtest -g event -gn 50_1000
+# ./fabtest -g event -gn 50_1000
 
-./fabtest -f haproxy
-./fabtest -s haproxy
+# ./fabtest -f haproxy
+# ./fabtest -s haproxy
 #12. 运行jmeter
 #  ./fabtest -s jmeter
 

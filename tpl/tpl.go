@@ -22,7 +22,9 @@ func Handler(data interface{}, tplFile, outFile string) error {
 	ret, _ := json.Marshal(data)
 	data = nil
 	json.Unmarshal(ret, &data)
-
+	fmt.Println("************************** data start **************************")
+	fmt.Println(string(ret))
+	fmt.Println("************************** data end **************************")
 	buf := bytes.NewBuffer(nil)
 	t := template.Must(template.New("data").Funcs(template.FuncMap{
 		"add": add,

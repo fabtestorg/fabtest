@@ -1,25 +1,4 @@
-Profiles:
-    OrgsOrdererGenesis:
-        Capabilities:
-            <<: *ChannelCapabilities
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:{{range $index,$value:= .orgs}}
-                - *OrdererOrg{{$value}}{{end}}
-            Capabilities:
-                <<: *OrdererCapabilities
-        Consortiums:
-            SampleConsortium:
-                Organizations:{{range $index,$value:= .orgs}}
-                    - *Org{{$value}}{{end}}
-    OrgsChannel:
-        Consortium: SampleConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:{{range $index,$value:= .orgs}}
-                - *Org{{$value}}{{end}}
-            Capabilities:
-                <<: *ApplicationCapabilities
+
 Organizations:{{range $index,$value:= .orgs}}
     - &OrdererOrg{{$value}}
         Name: OrdererOrg{{$value}}
@@ -33,11 +12,22 @@ Organizations:{{range $index,$value:= .orgs}}
         AnchorPeers:
             - Host: peer0.org{{$value}}.example.com
               Port: 7051{{end}}
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_3: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_3: true
+
+Application: &ApplicationDefaults
+    Organizations:
+    Capabilities:
+        <<: *ApplicationCapabilities
 Orderer: &OrdererDefaults
-    OrdererType: kafka
+    OrdererType: solo
     Addresses:{{range $index,$value:= .orgs}}
-        - orderer0.ord{{$value}}.example.com:7050
-        - orderer1.ord{{$value}}.example.com:7050{{end}}
+        - orderer0.ord{{$value}}.example.com:7050{{end}}
     BatchTimeout: {{.batchTime}}
     BatchSize:
         MaxMessageCount: {{.batchSize}}
@@ -47,14 +37,48 @@ Orderer: &OrdererDefaults
         Brokers:{{range $index,$value:= .kafkas}}
             - {{$value}}:9092{{end}}
     Organizations:
-Application: &ApplicationDefaults
-    Organizations:
 
-Capabilities:
-    Global: &ChannelCapabilities
-        V1_1: true
-    Orderer: &OrdererCapabilities
-        V1_1: true
-    Application: &ApplicationCapabilities
-        V1_1: true
 
+
+Channel: &ChannelDefaults
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    OrgsOrdererGenesis:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:{{range $index,$value:= .ords}}
+                - Host: orderer{{$value}}.ord1.example.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/ord1.example.com/orderers/orderer{{$value}}.ord1.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/ord1.example.com/orderers/orderer{{$value}}.ord1.example.com/tls/server.crt{{end}}
+            Addresses:
+            {{range $index,$value:= .ords}}
+                - orderer{{$value}}.ord1.example.com:7050
+            {{end}}
+            Organizations:
+                - *OrdererOrg1
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg1
+        Consortiums:
+            SampleConsortium:
+                Organizations:{{range $index,$value:= .orgs}}
+                    - *Org{{$value}}{{end}}
+    OrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:{{range $index,$value:= .orgs}}
+                - *Org{{$value}}{{end}}
+            Capabilities:
+                <<: *ApplicationCapabilities

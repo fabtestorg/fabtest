@@ -17,34 +17,27 @@ services:
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
       - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
-      - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
-      - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
+      #- ORDERER_KAFKA_TOPIC_REPLICATIONFACTOR=1 TODO what is it?
       - ORDERER_KAFKA_VERBOSE=true
-      # enabled kafka client TLS
-      - ORDERER_KAFKA_TLS_ENABLED=true
-      - ORDERER_KAFKA_TLS_PRIVATEKEY_FILE=/var/hyperledger/orderer/kafka/tls/client.key
-      - ORDERER_KAFKA_TLS_CERTIFICATE_FILE=/var/hyperledger/orderer/kafka/tls/client.crt
-      - ORDERER_KAFKA_TLS_ROOTCAS_FILE=/var/hyperledger/orderer/kafka/tls/ca.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
       - ~/fabtest/channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/msp:/var/hyperledger/orderer/msp
       - ~/fabTestData/crypto-config/ordererOrganizations/ord{{.org_id}}.{{.peer_domain}}/orderers/orderer{{.order_id}}.ord{{.org_id}}.{{.peer_domain}}/tls:/var/hyperledger/orderer/tls
-      - ~/fabTestData/kafkaTlsClient:/var/hyperledger/orderer/kafka/tls
       - /etc/localtime:/etc/localtime
-      - /data/orderer_data:/var/hyperledger/production
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
         max-file: "10"
     ports:
-      - 7001:7050
-      - 7002:7050
       - 7050:7050
-    extra_hosts:
-       kafka0: {{.kfk0_address}}
-       kafka1: {{.kfk1_address}}
-       kafka2: {{.kfk2_address}}
-       kafka3: {{.kfk3_address}}
+    extra_hosts: 
+       orderer0.ord1.example.com: {{.ip}}
+       orderer1.ord1.example.com: {{.ip}}
+       orderer2.ord1.example.com: {{.ip}}
+       
