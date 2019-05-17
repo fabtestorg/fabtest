@@ -13,9 +13,17 @@
 #peer,order,zk,kfk yaml
 ./fabtest -f node
 
-# sed -i "" 's//7050:7050/g' filename
+sed -i "" 's/ord_address0/0.0.0.0/g' config/order0ord1.yaml
+sed -i "" 's/ord_address0/0.0.0.0/g' config/order1ord1.yaml
+sed -i "" 's/ord_address0/0.0.0.0/g' config/order2ord1.yaml
 
+sed -i "" 's/ord_address1/1.1.1.1/g' config/order0ord1.yaml
+sed -i "" 's/ord_address1/1.1.1.1/g' config/order1ord1.yaml
+sed -i "" 's/ord_address1/1.1.1.1/g' config/order2ord1.yaml
 
+sed -i "" 's/ord_address2/2.2.2.2/g' config/order0ord1.yaml
+sed -i "" 's/ord_address2/2.2.2.2/g' config/order1ord1.yaml
+sed -i "" 's/ord_address2/2.2.2.2/g' config/order2ord1.yaml
 
 
 

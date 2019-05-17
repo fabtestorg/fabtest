@@ -37,7 +37,7 @@ services:
     ports:
       - 7050:7050
     extra_hosts: 
-       orderer0.ord1.example.com: {{.ip}}
-       orderer1.ord1.example.com: {{.ip}}
-       orderer2.ord1.example.com: {{.ip}}
+       orderer0.ord1.example.com: ord_address0
+       orderer1.ord1.example.com: ord_address1
+       orderer2.ord1.example.com: ord_address2
        
