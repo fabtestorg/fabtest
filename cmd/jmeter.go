@@ -29,7 +29,7 @@ func CreateHaproxyConfig() error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			chancounts := inputData[ChanCounts].(float64)
-			for i:= 1 ; i <= int(chancounts) ; i++ {
+			for i := 1; i <= int(chancounts); i++ {
 				apiid := strconv.Itoa(i)
 				apilist = append(apilist, value[APIIP].(string)+":"+apiid+apiid+apiid+apiid)
 			}
@@ -93,7 +93,7 @@ func GetEventServerLog(logdir string) error {
 		value := param.(map[string]interface{})
 		if value[NodeType].(string) == TypePeer {
 			chancounts := inputData[ChanCounts].(float64)
-			for i:= 1 ; i <= int(chancounts) ; i++ {
+			for i := 1; i <= int(chancounts); i++ {
 				apiid := strconv.Itoa(i)
 				clientname := TypePeer + value[PeerId].(string) + "org" + value[OrgId].(string) + "api" + apiid
 				wg.Add(1)

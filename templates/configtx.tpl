@@ -4,11 +4,31 @@ Organizations:{{range $index,$value:= .orgs}}
         Name: OrdererOrg{{$value}}
         ID: Orderer{{$value}}MSP
         MSPDir: crypto-config/ordererOrganizations/ord{{$value}}.example.com/msp{{end}}
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Orderer{{$value}}MSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Orderer{{$value}}MSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Orderer{{$value}}MSP.admin')"
     {{range $index,$value:= .orgs}}
     - &Org{{$value}}
         Name: Org{{$value}}MSP
         ID: Org{{$value}}MSP
         MSPDir: crypto-config/peerOrganizations/org{{$value}}.example.com/msp
+        Policies:
+             Readers:
+                 Type: Signature
+                 Rule: "OR('Org{{$value}}MSP.admin', 'Org{{$value}}MSP.peer', 'Org{{$value}}MSP.client')"
+             Writers:
+                 Type: Signature
+                 Rule: "OR('Org{{$value}}MSP.admin', 'Org{{$value}}MSP.client')"
+             Admins:
+                 Type: Signature
+                 Rule: "OR('Org{{$value}}MSP.admin')"
         AnchorPeers:
             - Host: peer0.org{{$value}}.example.com
               Port: 7051{{end}}
@@ -22,6 +42,16 @@ Capabilities:
 
 Application: &ApplicationDefaults
     Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
     Capabilities:
         <<: *ApplicationCapabilities
 Orderer: &OrdererDefaults
@@ -37,15 +67,37 @@ Orderer: &OrdererDefaults
         Brokers:{{range $index,$value:= .kafkas}}
             - {{$value}}:9092{{end}}
     Organizations:
-
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
 
 
 Channel: &ChannelDefaults
+    Policies:
+        # Who may invoke the 'Deliver' API
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        # Who may invoke the 'Broadcast' API
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        # By default, who may modify elements at this config level
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
     Capabilities:
         <<: *ChannelCapabilities
 
 Profiles:
-    OrgsOrdererGenesis:
+     TwoOrgsOrdererGenesis:
         <<: *ChannelDefaults
         Capabilities:
             <<: *ChannelCapabilities
@@ -74,7 +126,7 @@ Profiles:
             SampleConsortium:
                 Organizations:{{range $index,$value:= .orgs}}
                     - *Org{{$value}}{{end}}
-    OrgsChannel:
+    TwoOrgsChannel:
         Consortium: SampleConsortium
         Application:
             <<: *ApplicationDefaults

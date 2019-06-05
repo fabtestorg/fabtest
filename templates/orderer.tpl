@@ -6,7 +6,7 @@ services:
     image: hyperledger/fabric-orderer
     restart: always
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - FABRIC_LOGGING_SPEC=INFO
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -38,6 +38,5 @@ services:
       - 7050:7050
     extra_hosts: 
        orderer0.ord1.example.com: ord_address0
-       orderer1.ord1.example.com: ord_address1
-       orderer2.ord1.example.com: ord_address2
+       orderer0.ord2.example.com: ord_address1
        

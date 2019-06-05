@@ -20,8 +20,8 @@ func CreateCert() error {
 func CreateYamlByJson(strType string) error {
 	inputData := GetJsonMap("node.json")
 	if strType == "configtx" {
-		orgcounts := inputData[OrgCounts].(float64)
-		ordcounts := inputData[OrdCounts].(float64)
+			orgcounts := inputData[OrgCounts].(float64)
+			ordcounts := inputData[OrdCounts].(float64)
 		var orgslist, ordlist, kafkalist []string
 		for i := 1; i <= int(orgcounts); i++ {
 			orgslist = append(orgslist, strconv.Itoa(i))
@@ -37,7 +37,7 @@ func CreateYamlByJson(strType string) error {
 		inputData["orgs"] = orgslist
 		inputData["ords"] = ordlist
 		inputData["kafkas"] = kafkalist
-		
+
 		inputData[PeerDomain] = inputData[PeerDomain].(string)
 		return tpl.Handler(inputData, TplConfigtx, ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
@@ -67,7 +67,7 @@ func CreateYamlByJson(strType string) error {
 					curpeerid := value[PeerId].(string)
 					value[Order_Address] = findMapValue(TypeOrder, curpeerid, curorgid, IP)
 					chancounts := inputData[ChanCounts].(float64)
-					for i:= 1 ; i <= int(chancounts) ; i++ {
+					for i := 1; i <= int(chancounts); i++ {
 						apiid := strconv.Itoa(i)
 						value["api_id"] = apiid
 						clientname := nodeType + value[PeerId].(string) + "org" + value[OrgId].(string) + "api" + apiid

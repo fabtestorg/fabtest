@@ -13,19 +13,13 @@
 #peer,order,zk,kfk yaml
 ./fabtest -f node
 
-sed -i "" 's/ord_address0/0.0.0.0/g' config/order0ord1.yaml
-sed -i "" 's/ord_address0/0.0.0.0/g' config/order1ord1.yaml
-sed -i "" 's/ord_address0/0.0.0.0/g' config/order2ord1.yaml
+#sed -i  's/7050:7050/8050:7050/g' config/order1ord2.yaml
 
-sed -i "" 's/ord_address1/1.1.1.1/g' config/order0ord1.yaml
-sed -i "" 's/ord_address1/1.1.1.1/g' config/order1ord1.yaml
-sed -i "" 's/ord_address1/1.1.1.1/g' config/order2ord1.yaml
+#sed -i  's/ord_address0/192.168.0.21/g' config/order0ord1.yaml
+#sed -i  's/ord_address0/192.168.0.21/g' config/order1ord2.yaml
 
-sed -i "" 's/ord_address2/2.2.2.2/g' config/order0ord1.yaml
-sed -i "" 's/ord_address2/2.2.2.2/g' config/order1ord1.yaml
-sed -i "" 's/ord_address2/2.2.2.2/g' config/order2ord1.yaml
-
-
+sed -i  's/ord_address1/192.168.0.21/g' config/order0ord1.yaml
+#sed -i  's/ord_address1/192.168.0.21/g' config/order1ord2.yaml
 
 #api , event client_sdk.yaml
 # ./fabtest -f client
@@ -34,6 +28,6 @@ sed -i "" 's/ord_address2/2.2.2.2/g' config/order2ord1.yaml
 ./fabtest -c genesisblock
 
 #3. 向远程copy crypto channel-artifacts kafkaTLS配置文件
-# ./fabtest -p all
+./fabtest -p all
 
 # ./1star.sh
