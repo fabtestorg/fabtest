@@ -36,7 +36,9 @@ services:
         max-file: "10"
     ports:
       - {{.order_ports}}:7050
-    extra_hosts:{{range $index,$value:= .orgs}}
-      - "orderer{{$value}}.ord1.{{.peer_domain}}: {{.ip}}"{{end}}
+    extra_hosts:
+      - "orderer0.ord1.{{.peer_domain}}: {{.ip}}"
+      - "orderer1.ord1.{{.peer_domain}}: {{.ip}}"
+      - "orderer2.ord1.{{.peer_domain}}: {{.ip}}"
 
        
