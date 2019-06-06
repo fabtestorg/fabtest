@@ -1,9 +1,8 @@
-
 Organizations:{{range $index,$value:= .orgs}}
     - &OrdererOrg{{$value}}
         Name: OrdererOrg{{$value}}
         ID: Orderer{{$value}}MSP
-        MSPDir: crypto-config/ordererOrganizations/ord{{$value}}.example.com/msp{{end}}
+        MSPDir: crypto-config/ordererOrganizations/ord1.example.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -13,7 +12,7 @@ Organizations:{{range $index,$value:= .orgs}}
                 Rule: "OR('Orderer{{$value}}MSP.member')"
             Admins:
                 Type: Signature
-                Rule: "OR('Orderer{{$value}}MSP.admin')"
+                Rule: "OR('Orderer{{$value}}MSP.admin')"{{end}}
     {{range $index,$value:= .orgs}}
     - &Org{{$value}}
         Name: Org{{$value}}MSP
@@ -31,7 +30,7 @@ Organizations:{{range $index,$value:= .orgs}}
                  Rule: "OR('Org{{$value}}MSP.admin')"
         AnchorPeers:
             - Host: peer0.org{{$value}}.example.com
-              Port: 7051{{end}}
+              Port: 705{{$value}}{{end}}
 Capabilities:
     Channel: &ChannelCapabilities
         V1_3: true
@@ -97,7 +96,7 @@ Channel: &ChannelDefaults
         <<: *ChannelCapabilities
 
 Profiles:
-     TwoOrgsOrdererGenesis:
+    TwoOrgsOrdererGenesis:
         <<: *ChannelDefaults
         Capabilities:
             <<: *ChannelCapabilities
@@ -115,7 +114,7 @@ Profiles:
                 - orderer{{$value}}.ord1.example.com:7050
             {{end}}
             Organizations:
-                - *OrdererOrg1
+            - *OrdererOrg1
             Capabilities:
                 <<: *OrdererCapabilities
         Application:
@@ -125,7 +124,7 @@ Profiles:
         Consortiums:
             SampleConsortium:
                 Organizations:{{range $index,$value:= .orgs}}
-                    - *Org{{$value}}{{end}}
+                - *Org{{$value}}{{end}}
     TwoOrgsChannel:
         Consortium: SampleConsortium
         Application:

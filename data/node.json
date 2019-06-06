@@ -7,16 +7,19 @@
   "zabbix_server_ip":"10.9.43.204",
   "zabbix_server_port":"10056",
   "jmeter":{"ip":"10.9.62.25", "haproxyip":"10.9.62.25","haproxyport":2222, "thread_count":1650, "loop_count":50, "throughput":"60.0"},
-  "org_counts":1,
+  "org_counts":2,
   "chan_counts":5,
   "batchTime":"1s",
   "batchSize":100,
   "batchPreferred":"512 KB",
   "usecouchdb":"false",
-  "orderer_counts":1,
-  "ord_address":"192.168.0.21",
+  "orderer_counts":3,
+  "ord_address":"127.0.0.1",
   "list":[
-    {"ip":"192.168.0.21","node_type":"order","order_id":"0","org_id":"1"},
-    {"ip":"192.168.0.21","apiip":"192.168.0.21","node_type":"peer","peer_id":"0","org_id":"1"}
+    {"ip":"127.0.0.1","node_type":"order","order_id":"0","org_id":"1","order_ports":"7050"},
+    {"ip":"127.0.0.1","node_type":"order","order_id":"1","org_id":"1","order_ports":"8050"},
+    {"ip":"127.0.0.1","node_type":"order","order_id":"2","org_id":"1","order_ports":"9050"},
+    {"ip":"127.0.0.1","apiip":"127.0.0.1","node_type":"peer","peer_id":"0","org_id":"1","peer_ports":"7051"},
+    {"ip":"127.0.0.1","apiip":"127.0.0.1","node_type":"peer","peer_id":"0","org_id":"2","peer_ports":"7052"}
   ]
 }

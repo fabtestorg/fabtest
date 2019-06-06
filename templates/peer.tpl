@@ -40,8 +40,8 @@ services:
     command: peer node start
     volumes:
         - /var/run/:/host/var/run/
-        - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/msp:/etc/hyperledger/fabric/msp
-        - ~/fabTestData/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls:/etc/hyperledger/fabric/tls
+        - /opt/gopath/src/github.com/peersafe/fabtest/config/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/msp:/etc/hyperledger/fabric/msp
+        - /opt/gopath/src/github.com/peersafe/fabtest/config/crypto-config/peerOrganizations/org{{.org_id}}.{{.peer_domain}}/peers/peer{{.peer_id}}.org{{.org_id}}.{{.peer_domain}}/tls:/etc/hyperledger/fabric/tls
         - /etc/localtime:/etc/localtime
         - /data/peer_data:/var/hyperledger/production
     logging:
@@ -50,9 +50,9 @@ services:
         max-size: "50m"
         max-file: "10"
     ports:
-      - 7051:7051
-    extra_hosts: 
-       orderer{{.peer_id}}.ord1.{{.peer_domain}}: {{.apiip}}
+      - {{.peer_ports}}:{{.peer_ports}}
+    extra_hosts:{{range $index,$value:= .orgs}}
+      - "orderer{{$value}}.ord1.{{.peer_domain}}: {{.ip}}"{{end}}
   {{if eq .usecouchdb "true"}}
     depends_on:
       - couchdb
