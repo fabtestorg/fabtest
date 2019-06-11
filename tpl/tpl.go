@@ -2,13 +2,13 @@ package tpl
 
 import (
 	"bytes"
-	"encoding/json"
 	"io"
 	"io/ioutil"
 	"text/template"
 	"os"
 	"path/filepath"
 	"fmt"
+	"encoding/json"
 )
 
 func Handler(data interface{}, tplFile, outFile string) error {
@@ -18,13 +18,11 @@ func Handler(data interface{}, tplFile, outFile string) error {
 	if err != nil {
 		return err
 	}
-
+	//转换为map[string]interface{}
 	ret, _ := json.Marshal(data)
 	data = nil
 	json.Unmarshal(ret, &data)
-	fmt.Println("************************** data start **************************")
-	fmt.Println(string(ret))
-	fmt.Println("************************** data end **************************")
+
 	buf := bytes.NewBuffer(nil)
 	t := template.Must(template.New("data").Funcs(template.FuncMap{
 		"add": add,

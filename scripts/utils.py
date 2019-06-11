@@ -14,7 +14,7 @@ def kill_process(name):
 def check_remote_file_exist(file):
     with settings(warn_only=True):
         result = run("ls %s"%file)
-        if "cannot" in result:
+        if "ls:" in result:
             exist = "false"
         else:
             exist = "true"

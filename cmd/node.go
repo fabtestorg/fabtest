@@ -1,381 +1,115 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"sync"
-	"strconv"
 )
 
 func StartNode(stringType string) error {
-	inputData := GetJsonMap("node.json")
-	peerdomain := inputData[PeerDomain].(string)
-	kfkdomain := inputData[KfkDomain].(string)
-	list := inputData[List].([]interface{})
-	var wg sync.WaitGroup
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		value[PeerDomain] = peerdomain
-		value[KfkDomain] = kfkdomain
-		nodeType := value[NodeType].(string)
-		if nodeType != stringType {
-			if stringType == "api" && nodeType == TypePeer {
-				//启动api
-				peerid := value[PeerId].(string)
-				orgid := value[OrgId].(string)
-				chancounts := inputData[ChanCounts].(float64)
-				for i:= 1 ; i <= int(chancounts) ; i++ {
-					apiid := strconv.Itoa(i)
-					wg.Add(1)
-					go func(IP, PeerId, OrgId ,ApiId string) {
-						obj := NewFabCmd("add_node.py", IP)
-						err := obj.RunShow("start_api", PeerId, OrgId, ConfigDir(), ApiId)
-						if err != nil {
-							fmt.Printf(err.Error())
-						}
-						wg.Done()
-					}(value[APIIP].(string), peerid, orgid, apiid)
-				}
-				err := LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgid, peerid))
-				if err != nil {
-					return err
-				}
-				continue
-			} else if stringType == "event" && nodeType == TypePeer {
-				//启动api
-				peerid := value[PeerId].(string)
-				orgid := value[OrgId].(string)
-				chancounts := inputData[ChanCounts].(float64)
-				for i:= 1 ; i <= int(chancounts) ; i++ {
-					apiid := strconv.Itoa(i)
-					wg.Add(1)
-					go func(IP, PeerId, OrgId, ApiId string) {
-						obj := NewFabCmd("add_node.py", IP)
-						err := obj.RunShow("start_event", PeerId, OrgId, ConfigDir(), "event", ApiId)
-						if err != nil {
-							fmt.Println(err)
-						}
-						wg.Done()
-					}(value[APIIP].(string), peerid, orgid, apiid)
-				}
-				continue
-			} else if stringType != "all" {
-				continue
-			}
-		}
-		var nodeId, yamlname string
-		var ip = value[IP].(string)
-		switch nodeType {
-		case TypeZookeeper:
-			nodeId = value[ZkId].(string)
-			yamlname = nodeType + value[ZkId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("zk%s", nodeId))
-			if err != nil {
-				return err
-			}
-		case TypeKafka:
-			nodeId = value[KfkId].(string)
-			yamlname = nodeType + value[KfkId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("kafka%s", nodeId))
-			if err != nil {
-				return err
-			}
-		case TypeOrder:
-			nodeId = value[OrderId].(string)
-			ordId := value[OrgId].(string)
-			yamlname = nodeType + value[OrderId].(string) + "ord" + ordId
-			err := LocalHostsSet(ip, fmt.Sprintf("orderer%s.ord%s.%s", nodeId, ordId, peerdomain))
-			if err != nil {
-				return err
-			}
-			err = LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId, nodeId))
-			if err != nil {
-				return err
-			}
-		case TypePeer:
-			nodeId = value[PeerId].(string)
-			orgId := value[OrgId].(string)
-			yamlname = nodeType + nodeId + "org" + orgId
-			err := LocalHostsSet(ip, "peer"+nodeId+".org"+orgId+"."+peerdomain)
-			if err != nil {
-				return err
-			}
-			err = LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId, nodeId))
-			if err != nil {
-				return err
-			}
-		}
-		//启动节点
-		wg.Add(1)
-		go func(Ip, NodeType, NodeId, YamleName string) {
-			obj := NewFabCmd("add_node.py", Ip)
-			err := obj.RunShow("start_node", NodeType, NodeId, YamleName, ConfigDir())
-			if err != nil {
-				fmt.Errorf("start node err or")
-				return
-			}
-			wg.Done()
-		}(ip, nodeType, nodeId, yamlname)
-	}
-	wg.Wait()
-	return nil
-}
-
-func WriteHost(stringType string) error {
-	inputData := GetJsonMap("node.json")
-	peerdomain := inputData[PeerDomain].(string)
-	kfkdomain := inputData[KfkDomain].(string)
-	list := inputData[List].([]interface{})
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		value[PeerDomain] = peerdomain
-		value[KfkDomain] = kfkdomain
-		nodeType := value[NodeType].(string)
-		if stringType != "all" {
-			if nodeType != stringType {
-				continue
-			}
-		}
-		var nodeId string
-		var ip = value[IP].(string)
-		switch nodeType {
-		case TypeZookeeper:
-			nodeId = value[ZkId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("zk%s", nodeId))
-			if err != nil {
-				return err
-			}
-		case TypeKafka:
-			nodeId = value[KfkId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("kafka%s", nodeId))
-			if err != nil {
-				return err
-			}
-		case TypeOrder:
-			nodeId = value[OrderId].(string)
-			ordId := value[OrgId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("orderer%s%s", ordId, nodeId))
-			if err != nil {
-				return err
-			}
-		case TypePeer:
-			nodeId = value[PeerId].(string)
-			orgId := value[OrgId].(string)
-			err := LocalHostsSet(ip, fmt.Sprintf("peer%s%s", orgId, nodeId))
-			if err != nil {
-				return err
-			}
-			err = LocalHostsSet(value[APIIP].(string), fmt.Sprintf("api%s%s", orgId, nodeId))
-			if err != nil {
-				return err
-			}
-		}
-	}
-
-	return nil
-}
-
-func ReplaceImage(imagesType, id string) error {
-	var inputData map[string]interface{}
-	var jsonData []byte
-	var err error
-
-	inputfile := InputDir() + "node.json"
-	jsonData, err = ioutil.ReadFile(inputfile)
-	if err != nil {
+	if err := WriteHost(); err != nil {
 		return err
 	}
-
-	err = json.Unmarshal(jsonData, &inputData)
-	if err != nil {
-		return err
-	}
-	list := inputData[List].([]interface{})
-	var nodeId string
 	var wg sync.WaitGroup
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		nodeType := value[NodeType].(string)
-		if id != "" {
-			switch nodeType {
-			case TypeZookeeper:
-				nodeId = value[ZkId].(string)
-			case TypeKafka:
-				nodeId = value[KfkId].(string)
-			case TypeOrder:
-				nodeId = value[OrderId].(string)
-			case TypePeer:
-				nodeId = value[PeerId].(string)
-			}
-			if nodeId != id {
-				continue
-			}
+	StartN := func(Ip, Sshuser, Sshpwd, NodeName string, w1 *sync.WaitGroup) {
+		defer w1.Done()
+		obj := NewFabCmd("add_node.py", Ip, Sshuser, Sshpwd)
+		err := obj.RunShow("start_node", NodeName, ConfigDir())
+		if err != nil {
+			fmt.Println("start node err or")
 		}
-		if nodeType == imagesType {
-			//copy images
+	}
+	if stringType == "all" || stringType == TypeKafka {
+		for _, kafka := range GlobalConfig.Kafkas {
 			wg.Add(1)
-			go func(Ip, Ty string) {
-				obj := NewFabCmd("add_node.py", Ip)
-				err := obj.RunShow("replace_images", Ty, ConfigDir())
-				if err != nil {
-					fmt.Println(err)
-				}
-				wg.Done()
-			}(value[IP].(string), nodeType)
+			nodeName := fmt.Sprintf("kafka%s", kafka.Id)
+			go StartN(kafka.Ip, kafka.SshUserName, kafka.SshPwd, nodeName, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypeZookeeper {
+		for _, zk := range GlobalConfig.Zookeepers {
+			wg.Add(1)
+			nodeName := fmt.Sprintf("zk%s", zk.Id)
+			go StartN(zk.Ip, zk.SshUserName, zk.SshPwd, nodeName, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypeOrder {
+		for _, ord := range GlobalConfig.Orderers {
+			wg.Add(1)
+			nodeName := fmt.Sprintf("orderer%s.ord%s.%s", ord.Id, ord.OrgId, GlobalConfig.Domain)
+			go StartN(ord.Ip, ord.SshUserName, ord.SshPwd, nodeName, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypePeer {
+		for _, peer := range GlobalConfig.Peers {
+			wg.Add(1)
+			nodeName := fmt.Sprintf("peer%s.org%s.%s", peer.Id, peer.OrgId, GlobalConfig.Domain)
+			go StartN(peer.Ip, peer.SshUserName, peer.SshPwd, nodeName, &wg)
 		}
 	}
 	wg.Wait()
 	return nil
 }
-func LoadImage(stringType string) error {
-	var inputData map[string]interface{}
-	var jsonData []byte
-	var err error
 
-	inputfile := InputDir() + "node.json"
-	jsonData, err = ioutil.ReadFile(inputfile)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(jsonData, &inputData)
-	if err != nil {
-		return err
-	}
-
-	if stringType == "all" {
-		list := inputData[List].([]interface{})
-		for _, param := range list {
-			value := param.(map[string]interface{})
-			nodeType := value[NodeType].(string)
-			//copy images
-			obj := NewFabCmd("add_node.py", value[IP].(string))
-			err = obj.RunShow("load_images", nodeType, ImagePath())
-			if err != nil {
-				return err
-			}
-			if nodeType == TypePeer {
-				err = obj.RunShow("load_images", "baseos", ImagePath())
-				if err != nil {
-					return err
-				}
-				err = obj.RunShow("load_images", "ccenv", ImagePath())
-				if err != nil {
-					return err
-				}
-			}
+func WriteHost() error {
+	for _, ord := range GlobalConfig.Orderers {
+		if err := LocalHostsSet(ord.Ip, fmt.Sprintf("orderer%s.ord%s.%s", ord.Id, ord.OrgId, GlobalConfig.Domain)); err != nil {
+			return err
 		}
-	} else {
-		return fmt.Errorf("%s not exist", stringType)
 	}
+	for _, peer := range GlobalConfig.Peers {
+		if err := LocalHostsSet(peer.Ip, fmt.Sprintf("peer%s.org%s.%s", peer.Id, peer.OrgId, GlobalConfig.Domain)); err != nil {
+			return err
+		}
+	}
+	for _, kafka := range GlobalConfig.Kafkas {
+		if err := LocalHostsSet(kafka.Ip, fmt.Sprintf("kafka%s", kafka.Id)); err != nil {
+			return err
+		}
+	}
+	for _, zk := range GlobalConfig.Zookeepers {
+		if err := LocalHostsSet(zk.Ip, fmt.Sprintf("zk%s", zk.Id)); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
 func DeleteObj(stringType string) error {
-	inputData := GetJsonMap("node.json")
-	peerdomain := inputData[PeerDomain].(string)
-	kfkdomain := inputData[KfkDomain].(string)
-	Jmeter := inputData[JMETER].(map[string]interface{})
-	list := inputData[List].([]interface{})
-	if stringType == "jmeter" {
-		obj := NewFabCmd("removenode.py", Jmeter[IP].(string))
-		if err := obj.RunShow("remove_jmeter"); err != nil {
-			return err
-		}
-		return nil
-	}
 	var wg sync.WaitGroup
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		value[PeerDomain] = peerdomain
-		value[KfkDomain] = kfkdomain
-		nodeType := value[NodeType].(string)
-		if nodeType == stringType {
-			//删除节点
+	StopN := func(Ip, Sshuser, Sshpwd, Ty string, w1 *sync.WaitGroup) {
+		defer w1.Done()
+		obj := NewFabCmd("removenode.py", Ip, Sshuser, Sshpwd)
+		err := obj.RunShow("remove_node", Ty)
+		if err != nil {
+			fmt.Println("stopnode err or")
+		}
+	}
+	if stringType == "all" || stringType == TypeKafka {
+		for _, kafka := range GlobalConfig.Kafkas {
 			wg.Add(1)
-			go func(Ip, Str string) {
-				obj := NewFabCmd("removenode.py", Ip)
-				err := obj.RunShow("remove_node", Str)
-				if err != nil {
-					fmt.Println(err)
-				}
-				wg.Done()
-			}(value[IP].(string), stringType)
-		} else if stringType == TypeApi {
-			if nodeType == TypePeer {
-				wg.Add(1)
-				go func(Ip string) {
-					obj := NewFabCmd("removenode.py", Ip)
-					err := obj.RunShow("remove_client")
-					if err != nil {
-						fmt.Println(err)
-					}
-					wg.Done()
-				}(value[APIIP].(string))
-			}
-		} else if stringType == "all" && (nodeType == TypeKafka || nodeType == TypeZookeeper ||
-			nodeType == TypePeer || nodeType == TypeOrder) {
-			//删除节点
+			go StopN(kafka.Ip, kafka.SshUserName, kafka.SshPwd, TypeKafka, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypeZookeeper {
+		for _, zk := range GlobalConfig.Zookeepers {
 			wg.Add(1)
-			go func(Ip, str string) {
-				obj := NewFabCmd("removenode.py", Ip)
-				err := obj.RunShow("remove_node", str)
-				if err != nil {
-					fmt.Println(err.Error())
-				}
-				wg.Done()
-			}(value[IP].(string), stringType)
-			if nodeType == TypePeer {
-				wg.Add(1)
-				go func(Ip string) {
-					obj := NewFabCmd("removenode.py", Ip)
-					err := obj.RunShow("remove_client")
-					if err != nil {
-						fmt.Println(err)
-					}
-					wg.Done()
-				}(value[APIIP].(string))
-			}
+			go StopN(zk.Ip, zk.SshUserName, zk.SshPwd, TypeZookeeper, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypeOrder {
+		for _, ord := range GlobalConfig.Orderers {
+			wg.Add(1)
+			go StopN(ord.Ip, ord.SshUserName, ord.SshPwd, TypeOrder, &wg)
+		}
+	}
+	if stringType == "all" || stringType == TypePeer {
+		for _, peer := range GlobalConfig.Peers {
+			wg.Add(1)
+			go StopN(peer.Ip, peer.SshUserName, peer.SshPwd, TypePeer, &wg)
 		}
 	}
 	wg.Wait()
-	return nil
-}
-
-func OperationNode(cmdstr string) error {
-	inputData := GetJsonMap("node.json")
-	peerdomain := inputData[PeerDomain].(string)
-	kfkdomain := inputData[KfkDomain].(string)
-	list := inputData[List].([]interface{})
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		value[PeerDomain] = peerdomain
-		value[KfkDomain] = kfkdomain
-		nodeType := value[NodeType].(string)
-		if nodeType == TypePeer || nodeType == TypeOrder {
-			var nodeId, yamlname string
-			if nodeType == TypeOrder {
-				nodeId = value[OrderId].(string)
-				yamlname = nodeType + value[OrderId].(string) + "ord" + value[OrgId].(string)
-			} else if nodeType == TypePeer {
-				nodeId = value[PeerId].(string)
-				yamlname = nodeType + value[PeerId].(string) + "org" + value[OrgId].(string)
-			}
-			//删除节点
-			obj := NewFabCmd("add_node.py", value[IP].(string))
-			var err error
-			if cmdstr == "stop" {
-				err = obj.RunShow("stop_node", nodeType, nodeId, yamlname)
-			} else if cmdstr == "start" {
-				err = obj.RunShow("restart_node", nodeType, nodeId, yamlname)
-			}
-			if err != nil {
-				return err
-			}
-		}
-	}
-
 	return nil
 }
 
@@ -387,43 +121,5 @@ func LocalHostsSet(ip, domain string) error {
 		fmt.Errorf(err.Error())
 		return err
 	}
-	return nil
-}
-
-func StartDocker() error {
-	inputData := GetJsonMap("node.json")
-	list := inputData[List].([]interface{})
-	var wg sync.WaitGroup
-	for _, param := range list {
-		value := param.(map[string]interface{})
-		nodeType := value[NodeType].(string)
-		if nodeType != TypePeer && nodeType != TypeKafka && nodeType != TypeZookeeper && nodeType != TypeOrder {
-			continue
-		}
-		//启动docker server
-		wg.Add(1)
-		go func(Ip string) {
-			obj := NewFabCmd("add_node.py", Ip)
-			err := obj.RunShow("start_docker")
-			if err != nil {
-				fmt.Println(err)
-			}
-			wg.Done()
-		}(value[IP].(string))
-
-		if nodeType == TypePeer {
-			wg.Add(1)
-			go func(Ip string) {
-				defer wg.Done()
-				obj := NewFabCmd("add_node.py", Ip)
-				err := obj.RunShow("start_docker")
-				if err != nil {
-					fmt.Println(err)
-				}
-			}(value[APIIP].(string))
-		}
-
-	}
-	wg.Wait()
 	return nil
 }

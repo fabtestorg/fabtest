@@ -13,17 +13,22 @@ type FabCmd struct {
 	fileName string
 }
 
-func NewFabCmd(fileName, host string) *FabCmd {
+func NewFabCmd(fileName, host, sshuser, sshpwd string) *FabCmd {
 	var args []string
 	var checkAdd = func(f, val string) {
 		if val != "" {
 			args = append(args, f, val)
 		}
 	}
+	if sshuser == "" {
+		sshuser = GlobalConfig.SshUserName
+	}
+	if sshpwd == "" {
+		sshpwd = GlobalConfig.SshPwd
+	}
 	checkAdd("-H", host)
-	checkAdd("-u", SshUserName)
-	checkAdd("-p", SshPwd)
-	checkAdd("--sudo-password", SudoPwd)
+	checkAdd("-u", sshuser)
+	checkAdd("-p", sshpwd)
 	return &FabCmd{args: append(args, "-f"), dir: ScriptPath(), fileName: fileName}
 }
 

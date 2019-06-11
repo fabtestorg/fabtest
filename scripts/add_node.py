@@ -37,20 +37,19 @@ def replace_images(type, config_path):
     run("docker load -i ~/%s.tar"%type)
     sudo("systemctl restart docker")
 
-def start_node(type, node_id, yaml_name, config_dir):
-    dir_name = type + node_id
+def start_node(node_name, config_dir):
     with lcd(config_dir):
-        local("tar -zcvf %s.tar.gz %s.yaml"%(yaml_name,yaml_name))
+        local("tar -zcvf %s.tar.gz %s.yaml"%(node_name,node_name))
         #remote yaml
-        run("mkdir -p ~/fabtest/%s"%dir_name)
-        put("%s.tar.gz"%yaml_name,"~/fabtest/%s"%dir_name)
-        local("rm %s.tar.gz"%yaml_name)
+        run("mkdir -p ~/fabtest/%s"%node_name)
+        put("%s.tar.gz"%node_name,"~/fabtest/%s"%node_name)
+        local("rm %s.tar.gz"%node_name)
 
     #start container
-    with cd("~/fabtest/%s"%dir_name):
-        run("tar zxvfm %s.tar.gz"%yaml_name)
-        run("rm %s.tar.gz"%yaml_name)
-        run("docker-compose -f %s.yaml up -d"%yaml_name)
+    with cd("~/fabtest/%s"%node_name):
+        run("tar zxvfm %s.tar.gz"%node_name)
+        run("rm %s.tar.gz"%node_name)
+        run("docker-compose -f %s.yaml up -d"%node_name)
 
 
 def start_docker():
@@ -102,11 +101,10 @@ def start_event(peer_id, org_id, config_dir, clitype, api_id):
         run("$(nohup ./%sserver >> %sserver.log 2>&1 &) && sleep 1"%(clitype,clitype))
         run("cat /dev/null > %sserver.log"%clitype)
 
-def stop_node(type, node_id, yaml_name):
-    dir_name = type + node_id
+def stop_node(node_name):
     #start container
-    with cd("~/fabtest/%s"%dir_name):
-        run("docker-compose -f %s.yaml stop"%yaml_name)
+    with cd("~/fabtest/%s"%node_name):
+        run("docker-compose -f %s.yaml stop"%node_name)
 
 def restart_node(type, node_id, yaml_name):
     dir_name = type + node_id

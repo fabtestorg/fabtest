@@ -10,7 +10,7 @@ sys.setdefaultencoding('utf8')
 
 ## create channel
 
-def create_channel(bin_path, yaml_path, out_path, channel_name, domain_name):
+def create_channel(bin_path, yaml_path, out_path, channel_name, orderer_address, domain_name):
     if not os.path.exists(yaml_path + "core.yaml"):
         local("cp %s/core.yaml %s"%(bin_path, yaml_path))
     ret = create_channeltx(bin_path, yaml_path, out_path, channel_name)
@@ -23,8 +23,7 @@ def create_channel(bin_path, yaml_path, out_path, channel_name, domain_name):
     env = env + 'CORE_PEER_LOCALMSPID=Org1MSP '
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s  '%msp_path
     bin = bin_path + "peer"
-    order_address = "orderer0.ord1.%s:7050"%domain_name
-    param = ' channel create -o %s -t 3000s -c %s -f %s/%s'%(order_address, channel_name, channel_dir, channeltx_name)
+    param = ' channel create -o %s -t 3000s -c %s -f %s/%s'%(orderer_address, channel_name, channel_dir, channeltx_name)
 
     tls = ' --tls --cafile %s'%order_tls_path
 
@@ -45,21 +44,20 @@ def create_channeltx(bin_path, yaml_path, out_path, channel_name):
     command = env + bin + param
     return local(command)
 
-def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, domain_name):
+def update_anchor(bin_path, yaml_path, out_path, channel_name, org_id, orderer_address, domain_name):
 
     create_anchor_tx(bin_path, yaml_path, out_path, channel_name, org_id)
 
     channel_dir = out_path + channel_name
 
-    order_tls_path = yaml_path +  "crypto-config/ordererOrganizations/ord%s.%s/orderers/orderer0.ord%s.%s/msp/tlscacerts/tlsca.ord%s.%s-cert.pem"%(org_id, domain_name,org_id,domain_name,org_id,domain_name)
-    order_address = "orderer0.ord%s.%s:7050"%(org_id,domain_name)
+    order_tls_path = yaml_path +  "crypto-config/ordererOrganizations/ord1.%s/orderers/orderer0.ord1.%s/msp/tlscacerts/tlsca.ord1.%s-cert.pem"%(domain_name,domain_name,domain_name)
 
     msp_path = yaml_path + "crypto-config/peerOrganizations/org%s.%s/users/Admin@org%s.%s/msp"%(org_id,domain_name,org_id,domain_name)
     env = ' FABRIC_CFG_PATH=%s '%yaml_path
     env = env + ' CORE_PEER_LOCALMSPID=Org%sMSP'%org_id
     env = env + ' CORE_PEER_MSPCONFIGPATH=%s '%msp_path
     bin = bin_path + "peer"
-    param = ' channel update -o %s -c %s -f %s/Org%sMSPanchors.tx'%(order_address, channel_name, channel_dir, org_id)
+    param = ' channel update -o %s -c %s -f %s/Org%sMSPanchors.tx'%(orderer_address, channel_name, channel_dir, org_id)
     tls = ' --tls --cafile %s'%order_tls_path
 
     command = env + bin + param + tls
@@ -92,28 +90,24 @@ def join_channel(bin_path, yaml_path, out_path, channel_name, peer_address, peer
     local(command)
 
 def put_cryptoconfig(config_path, type):
-    run("mkdir -p ~/fabTestData")
     run("mkdir -p ~/fabtest")
-    if type == "order":
-        put("%scrypto-config.tar.gz"%config_path, "~/fabTestData/")
-        with cd("~/fabTestData"):
-            run("tar zxvfm crypto-config.tar.gz")
-        put("%schannel-artifacts.tar.gz"%config_path, "~/fabtest/")
-        with cd("~/fabtest"):
-            run("tar zxvfm channel-artifacts.tar.gz")
+    if type == "orderer":
+        copy_file(config_path,"crypto-config.tar.gz")
+        copy_file(config_path,"channel-artifacts.tar.gz")
         # copy_file(config_path,"kafkaTLSclient.tar.gz")
-    # elif type == "kafka":
-    #     copy_file(config_path,"kafkaTLSserver.tar.gz")
+    elif type == "kafka":
+         copy_file(config_path,"kafkaTLSserver.tar.gz")
     elif type == "peer":
         copy_file(config_path,"crypto-config.tar.gz")
     # elif type == "api":
     #     copy_file(config_path,"crypto-config.tar.gz")
 
 def copy_file(config_path, file_name):
-    remote_file = "~/fabTestData/%s"%file_name
+    remote_file = "~/fabtest/%s"%file_name
     if utils.check_remote_file_exist(remote_file) == "false":
-        put("%s%s"%(config_path,file_name), "~/fabTestData/")
-        with cd("~/fabTestData"):
-            run("tar zxvfm %s"%file_name)
+        put("%s%s"%(config_path,file_name), "~/fabtest/")
+        with cd("~/fabtest"):
+            run("tar zxfm %s"%file_name)
+            #run("rm %s"%file_name)
 
 

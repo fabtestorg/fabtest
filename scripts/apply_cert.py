@@ -8,7 +8,7 @@ from fabric.api import local, lcd
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-def generate_genesis_block(bin_path, cfg_path ,out_path):
+def generate_genesis_block(model, bin_path, cfg_path ,out_path):
     if not os.path.exists(out_path + "crypto-config"):
         with lcd(out_path):
             local("tar -zxvf crypto-config.tar.gz")
@@ -19,7 +19,7 @@ def generate_genesis_block(bin_path, cfg_path ,out_path):
     local("rm -rf %s"%channel_path)
     local("mkdir -p %s"%channel_path)
     env = "FABRIC_CFG_PATH=%s"%cfg_path
-    local("%s %s -profile OrgsOrdererGenesis -outputBlock %s/genesis.block"%(env,tool,channel_path))
+    local("%s %s -profile %s -outputBlock %s/genesis.block"%(env,tool,model,channel_path))
     with lcd(out_path):
         local("tar -zcvf channel-artifacts.tar.gz channel-artifacts")
 
@@ -33,5 +33,5 @@ def generate_certs(bin_path, cfg_path ,out_path):
         local("rm -rf crypto-config.tar.gz crypto-config")
     local("%s generate --config=%s --output='%s'"%(cryptotool,yamlfile,mm_path))
     with lcd(out_path):
-        local("tar -zcvf crypto-config.tar.gz crypto-config")
+        local("tar -zcf crypto-config.tar.gz crypto-config")
 

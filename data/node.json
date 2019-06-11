@@ -1,25 +1,27 @@
 {
-  "peer_domain":"example.com",
-  "kfk_domain":"hoperun.com",
-  "kfk_version": "0.9.0.1",
-  "nmon_rate": "2",
-  "nmon_times": "600",
-  "zabbix_server_ip":"10.9.43.204",
-  "zabbix_server_port":"10056",
+  "domain":"example.com",
+  "sshUserName":"test","sshPwd":"test","sudoPwd":"test",
+  "ccInit":"'{\"Args\":[\"init\"\\,\"a\"\\,\"100\"\\,\"b\"\\,\"200\"]}'",
+  "ccPolicy":"\"OR  ('Org1MSP.member'\\,'Org2MSP.member')\"",
+  "ccName":"aiwan","ccVersion":"1.0",
+  "ccPath":"github.com/hyperledger/fabric/examples/chaincode/go/example02/cmd",
   "jmeter":{"ip":"10.9.62.25", "haproxyip":"10.9.62.25","haproxyport":2222, "thread_count":1650, "loop_count":50, "throughput":"60.0"},
-  "org_counts":2,
-  "chan_counts":5,
-  "batchTime":"1s",
-  "batchSize":100,
-  "batchPreferred":"512 KB",
-  "usecouchdb":"false",
-  "orderer_counts":3,
-  "ord_address":"127.0.0.1",
-  "list":[
-    {"ip":"127.0.0.1","node_type":"order","order_id":"0","org_id":"1","order_ports":"7050"},
-    {"ip":"127.0.0.1","node_type":"order","order_id":"1","org_id":"1","order_ports":"8050"},
-    {"ip":"127.0.0.1","node_type":"order","order_id":"2","org_id":"1","order_ports":"9050"},
-    {"ip":"127.0.0.1","apiip":"127.0.0.1","node_type":"peer","peer_id":"0","org_id":"1","peer_ports":"7051"},
-    {"ip":"127.0.0.1","apiip":"127.0.0.1","node_type":"peer","peer_id":"0","org_id":"2","peer_ports":"7052"}
+  "chan_counts":1,
+  "consensusType":"raft", "imageTag":"1.4.1","log":"INFO",
+  "batchTime":"2s", "batchSize":100, "batchPreferred":"512 KB", "useCouchdb":"false",
+  "orderers":[
+    {"ip":"192.168.0.21","id":"0","orgId":"1","ports":["7050:7050"]},
+    {"ip":"192.168.0.21","id":"1","orgId":"1","ports":["8050:7050"]},
+    {"ip":"192.168.0.21","id":"2","orgId":"1","ports":["9050:7050"]}
+  ],
+  "peers": [
+    {"ip":"192.168.0.21","apiIp":"127.0.0.1","id":"0","orgId":"1","ports":["7051:7051"]},
+    {"ip":"192.168.0.21","apiIp":"127.0.0.1","id":"1","orgId":"1","ports":["8051:7051"]},
+    {"ip":"192.168.0.21","apiIp":"127.0.0.1","id":"0","orgId":"2","ports":["9051:7051"]},
+    {"ip":"192.168.0.21","apiIp":"127.0.0.1","id":"1","orgId":"2","ports":["10051:7051"]}
+  ],
+  "zookeepers": [
+  ],
+  "kafkas": [
   ]
 }

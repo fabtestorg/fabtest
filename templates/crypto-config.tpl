@@ -1,20 +1,14 @@
-OrdererOrgs:{{range $index,$value:= .orgs}}
-  - Name: ord{{$value}}
-    Domain: ord{{$value}}.{{$.peer_domain}}
+OrdererOrgs:{{range $key,$value:= .ordList}}
+  - Name: ord{{$key}}
+    Domain: ord{{$key}}.{{$.domain}}
     Template:
-      Count: 3{{end}}
+      Count: {{$value}}{{end}}
 
-PeerOrgs:{{range $index,$value:= .orgs}}
-  - Name: org{{$value}}
-    Domain: org{{$value}}.{{$.peer_domain}}
+PeerOrgs:{{range $key,$value:= .orgList}}
+  - Name: org{{$key}}
+    Domain: org{{$key}}.{{$.domain}}
     EnableNodeOUs: true
-    CA:
-        Country: US
-        Province: California
-        Locality: San Francisco
     Template:
-      Count: 2
+      Count: {{$value}}
     Users:
       Count: 1{{end}}
-
-      

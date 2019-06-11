@@ -14,8 +14,7 @@ def remove_node(type):
             if type == "peer":
                 run("unset GREP_OPTIONS && docker images |grep 'dev\-peer'|awk '{print $3}'|xargs docker rmi -f")
         run("docker network prune -f")
-        sudo("rm -rf ~/fabtest")
-        sudo("rm -rf ~/fabTestData")
+        run("rm -rf ~/fabtest")
         sudo("rm -rf /data/*")
 
 def remove_client():
