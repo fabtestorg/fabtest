@@ -128,25 +128,33 @@ func CheckNode(stringType string) error {
 	if stringType == "all" || stringType == TypeKafka {
 		for _, kafka := range GlobalConfig.Kafkas {
 			obj := NewFabCmd("add_node.py", kafka.Ip, kafka.SshUserName, kafka.SshPwd)
-			return obj.RunShow("check_node")
+			if err := obj.RunShow("check_node"); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 	if stringType == "all" || stringType == TypeZookeeper {
 		for _, zk := range GlobalConfig.Zookeepers {
 			obj := NewFabCmd("add_node.py", zk.Ip, zk.SshUserName, zk.SshPwd)
-			return obj.RunShow("check_node")
+			if err := obj.RunShow("check_node"); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 	if stringType == "all" || stringType == TypeOrder {
 		for _, ord := range GlobalConfig.Orderers {
 			obj := NewFabCmd("add_node.py", ord.Ip, ord.SshUserName, ord.SshPwd)
-			return obj.RunShow("check_node")
+			if err := obj.RunShow("check_node"); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 	if stringType == "all" || stringType == TypePeer {
 		for _, peer := range GlobalConfig.Peers {
 			obj := NewFabCmd("add_node.py", peer.Ip, peer.SshUserName, peer.SshPwd)
-			return obj.RunShow("check_node")
+			if err := obj.RunShow("check_node"); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 	return nil
