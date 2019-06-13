@@ -18,7 +18,8 @@ var (
 	ccname      = flag.String("ccname", "", "chaincode name")
 	ccversion   = flag.String("version", "", "chaincode version")
 	ccpath      = flag.String("ccpath", "", "chaincode go path")
-	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode")
+	testArgs    = flag.String("args", "", "test chaincode args")
+	run         = flag.String("r", "", "joinchannel,  updateanchor, installchaincode, runchaincode, checknode, upgradecc,testcc")
 	put         = flag.String("p", "", "put all (include crypto-config and channel-artifacts to remote)")
 	deleteobj   = flag.String("d", "", "delete peer or kafka or zookeeper or all or api")
 	analyse     = flag.String("a", "", "event analyse")
@@ -63,7 +64,13 @@ func main() {
 	} else if *run == "installchaincode" {
 		err = cmd.InstallChaincode(*ccname, *ccversion, *ccpath)
 	} else if *run == "runchaincode" {
-		err = cmd.RunChaincode(*ccname, *ccversion, *channelname)
+		err = cmd.RunChaincode(*ccname, *ccversion, *channelname, "instantiate")
+	} else if *run == "upgradecc" {
+		err = cmd.RunChaincode(*ccname, *ccversion, *channelname, "upgrade")
+	} else if *run == "testcc" {
+		err = cmd.TestChaincode(*ccname, *channelname, *testArgs)
+	} else if *run == "checknode" {
+		err = cmd.CheckNode("all")
 	} else if *getlog == "jmeter" {
 		err = cmd.GetJmeterLog(*logdir)
 	} else if *getlog == "event" {

@@ -18,14 +18,14 @@ func CreateCert() error {
 
 func CreateYamlByJson(strType string) error {
 	if strType == "configtx" {
-		return tpl.Handler(GlobalConfig, TplConfigtx, ConfigDir()+"configtx.yaml")
+		return tpl.Handler(GlobalConfig, TplPath(TplConfigtx), ConfigDir()+"configtx.yaml")
 	} else if strType == "crypto-config" {
-		return tpl.Handler(GlobalConfig, TplCryptoConfig, ConfigDir()+"crypto-config.yaml")
+		return tpl.Handler(GlobalConfig, TplPath(TplCryptoConfig), ConfigDir()+"crypto-config.yaml")
 	} else if strType == "node" || strType == "client" {
 		for _, ord := range GlobalConfig.Orderers {
 			CopyConfig(&ord)
 			outfile := ConfigDir() + fmt.Sprintf("orderer%s.ord%s.%s", ord.Id, ord.OrgId, GlobalConfig.Domain)
-			if err := tpl.Handler(ord, TplOrderer, outfile+".yaml"); err != nil {
+			if err := tpl.Handler(ord, TplPath(TplOrderer), outfile+".yaml"); err != nil {
 				return err
 			}
 		}
@@ -33,19 +33,19 @@ func CreateYamlByJson(strType string) error {
 			CopyConfig(&peer)
 			outfile := ConfigDir() + fmt.Sprintf("peer%s.org%s.%s", peer.Id, peer.OrgId, GlobalConfig.Domain)
 			peer.DefaultNetwork = strings.Replace(fmt.Sprintf("peer%s.org%s.%s", peer.Id, peer.OrgId, GlobalConfig.Domain), ".", "", -1)
-			if err := tpl.Handler(peer, TplPeer, outfile+".yaml"); err != nil {
+			if err := tpl.Handler(peer, TplPath(TplPeer), outfile+".yaml"); err != nil {
 				return err
 			}
 		}
 		for _, kafka := range GlobalConfig.Kafkas {
 			outfile := ConfigDir() + fmt.Sprintf("kafka%s", kafka.Id)
-			if err := tpl.Handler(kafka, TplPeer, outfile+".yaml"); err != nil {
+			if err := tpl.Handler(kafka, TplPath(TplPeer), outfile+".yaml"); err != nil {
 				return err
 			}
 		}
 		for _, zk := range GlobalConfig.Zookeepers {
 			outfile := ConfigDir() + fmt.Sprintf("zk%s", zk.Id)
-			if err := tpl.Handler(zk, TplZookeeper, outfile+".yaml"); err != nil {
+			if err := tpl.Handler(zk, TplPath(TplZookeeper), outfile+".yaml"); err != nil {
 				return err
 			}
 		}

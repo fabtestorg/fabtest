@@ -6,6 +6,7 @@ services:
     image: peersafes/fabric-orderer:{{.imageTag}}
     restart: always
     environment:
+      - GODEBUG=netdns=go
       - FABRIC_LOGGING_SPEC={{.log}}
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file

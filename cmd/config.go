@@ -9,15 +9,15 @@ import (
 )
 
 const (
-	TplZookeeper    = "./templates/zookeeper.tpl"
-	TplKafka        = "./templates/kafka.tpl"
-	TplOrderer      = "./templates/orderer.tpl"
-	TplPeer         = "./templates/peer.tpl"
-	TplCryptoConfig = "./templates/crypto-config.tpl"
-	TplConfigtx     = "./templates/configtx.tpl"
-	TplApiClient    = "./templates/apiclient.tpl"
-	TplApiDocker    = "./templates/apidocker.tpl"
-	TplEventClient  = "./templates/eventclient.tpl"
+	TplZookeeper    = "zookeeper.tpl"
+	TplKafka        = "kafka.tpl"
+	TplOrderer      = "orderer.tpl"
+	TplPeer         = "peer.tpl"
+	TplCryptoConfig = "crypto-config.tpl"
+	TplConfigtx     = "configtx.tpl"
+	TplApiClient    = "apiclient.tpl"
+	TplApiDocker    = "apidocker.tpl"
+	TplEventClient  = "eventclient.tpl"
 
 	TypePeer         = "peer"
 	TypeOrder        = "orderer"
@@ -43,6 +43,8 @@ const (
 var GlobalConfig *ConfigObj
 
 type ConfigObj struct {
+	FabricVersion  string         `json:"fabricVersion"`
+	TestArgs       string         `json:"testArgs"`
 	CCInit         string         `json:"ccInit"`
 	CCPolicy       string         `json:"ccPolicy"`
 	CCPath         string         `json:"ccPath"`
@@ -89,8 +91,12 @@ func InputDir() string {
 	return os.Getenv("PWD") + "/data/"
 }
 
+func TplPath(name string) string {
+	return fmt.Sprintf("%s/templates/%s/%s", os.Getenv("PWD"), GlobalConfig.FabricVersion, name)
+}
+
 func BinPath() string {
-	return os.Getenv("PWD") + "/bin/"
+	return fmt.Sprintf("%s/bin/%s/", os.Getenv("PWD"), GlobalConfig.FabricVersion)
 }
 
 func ChannelPath() string {

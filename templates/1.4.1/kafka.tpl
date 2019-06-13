@@ -5,6 +5,7 @@ services:
     image: hyperledger/fabric-kafka
     restart: always
     environment:
+      - GODEBUG=netdns=go
       - KAFKA_BROKER_ID={{.kfk_id}}
       - KAFKA_ZOOKEEPER_CONNECT=zk0.{{.kfk_domain}}:2181,zk1.{{.kfk_domain}}:2181,zk2.{{.kfk_domain}}:2181
       - KAFKA_MIN_INSYNC_REPLICAS=2

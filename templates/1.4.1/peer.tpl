@@ -7,10 +7,11 @@ services:
     container_name: peer{{.id}}.org{{.orgId}}.{{.domain}}
     environment:
       # base env
+      - GODEBUG=netdns=go
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE={{.defaultNetwork}}_default
       - FABRIC_LOGGING_SPEC={{.log}}
-      - CORE_CHAINCODE_LOGGING_LEVEL={{.log}}
+      - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false

@@ -106,6 +106,11 @@ def stop_node(node_name):
     with cd("~/fabtest/%s"%node_name):
         run("docker-compose -f %s.yaml stop"%node_name)
 
+def check_node():
+    #check container
+    run("docker ps")
+
+
 def restart_node(type, node_id, yaml_name):
     dir_name = type + node_id
     #start container

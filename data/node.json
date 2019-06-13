@@ -1,5 +1,5 @@
 {
-  "domain":"example.com",
+  "fabricVersion":"1.4.1","domain":"example.com",
   "sshUserName":"test","sshPwd":"test","sudoPwd":"test",
   "ccInit":"'{\"Args\":[\"init\"\\,\"a\"\\,\"100\"\\,\"b\"\\,\"200\"]}'",
   "ccPolicy":"\"OR  ('Org1MSP.member'\\,'Org2MSP.member')\"",

@@ -4,6 +4,7 @@ services:
         image: hyperledger/fabric-zookeeper
         restart: always
         environment:
+         - GODEBUG=netdns=go
           ZOO_MY_ID: {{.zk_id}}
           {{if eq .zk_id "0"}}
           ZOO_SERVERS: server.0=zookeeper0:2888:3888 server.1=zk1.{{.kfk_domain}}:2888:3888 server.2=zk2.{{.kfk_domain}}:2888:3888
