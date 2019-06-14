@@ -8,12 +8,17 @@ verifyResult() {
     exit 1
   fi
 }
-echo "生成证书配置文件"
-./fabtest -f crypto-config
-verifyResult $?
-echo "生成证书目录"
-./fabtest -c crypto-config
-verifyResult $?
+if [ "$1" = "" ]; then
+    echo "生成证书配置文件"
+    ./fabtest -f crypto-config
+    verifyResult $?
+    echo "生成证书目录"
+    ./fabtest -c crypto-config
+    verifyResult $?
+else
+    echo "$1"
+    echo "使用config目录里的证书"
+fi
 
 echo "生成configtx配置文件"
 ./fabtest -f configtx

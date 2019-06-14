@@ -7,9 +7,6 @@ verifyResult() {
   fi
 }
 echo "测试chaincode"
-./fabtest -r testcc -n mychannel
+./fabtest -r testcc -n mychannel -func invoke
 verifyResult $?
 
-#echo "升级chaincode"
-#./fabtest -r upgradecc -n mychannel
-#verifyResult $?

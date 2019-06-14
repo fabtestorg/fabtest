@@ -25,7 +25,3 @@ verifyResult $?
 echo "实例化智能合约"
 ./fabtest -r runchaincode -n mychannel
 verifyResult $?
-
-echo "验证所有节点"
-./fabtest -r checknode
-verifyResult $?

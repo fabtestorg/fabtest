@@ -129,7 +129,7 @@ func CheckNode(stringType string) error {
 		for _, kafka := range GlobalConfig.Kafkas {
 			obj := NewFabCmd("add_node.py", kafka.Ip, kafka.SshUserName, kafka.SshPwd)
 			if err := obj.RunShow("check_node"); err != nil {
-				fmt.Println(err)
+				return err
 			}
 		}
 	}
@@ -137,7 +137,7 @@ func CheckNode(stringType string) error {
 		for _, zk := range GlobalConfig.Zookeepers {
 			obj := NewFabCmd("add_node.py", zk.Ip, zk.SshUserName, zk.SshPwd)
 			if err := obj.RunShow("check_node"); err != nil {
-				fmt.Println(err)
+				return err
 			}
 		}
 	}
@@ -145,7 +145,7 @@ func CheckNode(stringType string) error {
 		for _, ord := range GlobalConfig.Orderers {
 			obj := NewFabCmd("add_node.py", ord.Ip, ord.SshUserName, ord.SshPwd)
 			if err := obj.RunShow("check_node"); err != nil {
-				fmt.Println(err)
+				return err
 			}
 		}
 	}
@@ -153,7 +153,7 @@ func CheckNode(stringType string) error {
 		for _, peer := range GlobalConfig.Peers {
 			obj := NewFabCmd("add_node.py", peer.Ip, peer.SshUserName, peer.SshPwd)
 			if err := obj.RunShow("check_node"); err != nil {
-				fmt.Println(err)
+				return err
 			}
 		}
 	}

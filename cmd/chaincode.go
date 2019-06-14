@@ -66,7 +66,7 @@ func RunChaincode(ccname, ccversion, channelName, opration string) error {
 	return nil
 }
 
-func TestChaincode(ccname, channelName, testArgs string) error {
+func TestChaincode(ccname, channelName, function, testArgs string) error {
 	if channelName == "" {
 		return fmt.Errorf("channel is nil")
 	}
@@ -88,7 +88,7 @@ func TestChaincode(ccname, channelName, testArgs string) error {
 		go func(binPath, configDir, peerAds, PeerId, OrgId, Pdn string) {
 			defer wg.Done()
 			obj := NewFabCmd("chaincode.py", peer.Ip, peer.SshUserName, peer.SshPwd)
-			err := obj.RunShow("test_chaincode", BinPath(), ConfigDir(), peerAds, ordererAddress, PeerId, OrgId, GlobalConfig.Domain, channelName, ccname, testArgs)
+			err := obj.RunShow("test_chaincode", function, BinPath(), ConfigDir(), peerAds, ordererAddress, PeerId, OrgId, GlobalConfig.Domain, channelName, ccname, testArgs)
 			if err != nil {
 				fmt.Println(err)
 			}
