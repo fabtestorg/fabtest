@@ -4,6 +4,7 @@
 while [ true ]
     do
         echo "==========健康检查所有区块链节点==========="
+        echo "=====根据node.json节点IP配置修改下面的节点连接方式======="
         echo "-----------orderer0 节点-----------"
         curl -X GET http://192.168.0.21:5443/healthz -w "\n"
         echo "-----------orderer1 节点-----------"
