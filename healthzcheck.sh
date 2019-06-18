@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-#set -x
+echo "=====根据node.json配置修改节点连接方式======="
+DELAY="$1"
+: ${DELAY:="10"}
 while [ true ]
     do
-        echo "==========健康检查所有区块链节点==========="
-        echo "=====根据node.json节点IP配置修改下面的节点连接方式======="
+        echo "==========健康检查所有区块链节点间隔${DELAY}S==========="
         echo "-----------orderer0 节点-----------"
         curl -X GET http://192.168.0.21:5443/healthz -w "\n"
         echo "-----------orderer1 节点-----------"
@@ -15,6 +16,6 @@ while [ true ]
         curl -X GET http://192.168.0.21:8443/healthz -w "\n"
         echo "------------peer1 节点-------------"
         curl -X GET http://192.168.0.21:9443/healthz -w "\n"
-        sleep 2
+        sleep $DELAY
     done
 
