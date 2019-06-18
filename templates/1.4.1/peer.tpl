@@ -26,6 +26,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=peer{{.id}}.org{{.orgId}}.{{.domain}}:7052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer{{.id}}.org{{.orgId}}.{{.domain}}:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer{{.id}}.org{{.orgId}}.{{.domain}}:7051
+      - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9443
       - CORE_PEER_LOCALMSPID=Org{{.orgId}}MSP
       {{if eq .useCouchdb "true"}}
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
