@@ -49,7 +49,7 @@ services:
     extra_hosts:{{range $index,$orderer:= .orderers}}
       - "orderer{{$orderer.id}}.ord{{$orderer.orgId}}.{{$.domain}}:{{$orderer.ip}}"{{end}}
       {{range $index,$peer:= .peers}}
-      - "peer{{$peer.id}}.ord{{$peer.orgId}}.{{$.domain}}:{{$peer.ip}}"{{end}}
+      - "peer{{$peer.id}}.org{{$peer.orgId}}.{{$.domain}}:{{$peer.ip}}"{{end}}
   {{if eq .useCouchdb "true"}}
     depends_on:
       - couchdb
