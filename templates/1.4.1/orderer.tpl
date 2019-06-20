@@ -36,8 +36,8 @@ services:
         max-file: "10"
     ports:{{range $index,$value:= .ports}}
       - {{$value}}{{end}}
-    extra_hosts:{{range $index,$orderer := .orderers}}
-       - "orderer{{$orderer.id}}.ord{{$orderer.orgId}}.{{$.domain}}:{{$orderer.ip}}"{{end}}
+    extra_hosts:{{range $index,$orderer := .orderers}}{{if or (ne $orderer.id $.id) (ne $orderer.orgId $.orgId)}}
+       - "orderer{{$orderer.id}}.ord{{$orderer.orgId}}.{{$.domain}}:{{$orderer.ip}}"{{end}}{{end}}
 
 
        

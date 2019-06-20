@@ -48,8 +48,8 @@ services:
       - {{$value}}{{end}}
     extra_hosts:{{range $index,$orderer:= .orderers}}
       - "orderer{{$orderer.id}}.ord{{$orderer.orgId}}.{{$.domain}}:{{$orderer.ip}}"{{end}}
-      {{range $index,$peer:= .peers}}
-      - "peer{{$peer.id}}.org{{$peer.orgId}}.{{$.domain}}:{{$peer.ip}}"{{end}}
+      {{range $index,$peer:= .peers}}{{if or (ne $peer.id $.id) (ne $peer.orgId $.orgId)}}
+      - "peer{{$peer.id}}.org{{$peer.orgId}}.{{$.domain}}:{{$peer.ip}}"{{end}}{{end}}
   {{if eq .useCouchdb "true"}}
     depends_on:
       - couchdb
@@ -61,7 +61,4 @@ services:
     volumes:
        - ./couchdb:/opt/couchdb/data
    {{end}}
-
-
-
 
