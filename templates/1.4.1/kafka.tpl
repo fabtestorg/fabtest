@@ -2,7 +2,7 @@ version: '2'
 
 services:
   kafka{{.kfk_id}}:
-    image: hyperledger/fabric-kafka
+    image: {{.imagePre}}/fabric-kafka:{{.imageTag}}
     restart: always
     environment:
       - GODEBUG=netdns=go

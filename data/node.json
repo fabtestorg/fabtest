@@ -9,7 +9,7 @@
   "ccPath":"github.com/hyperledger/fabric/examples/chaincode/go/example02/cmd",
   "jmeter":{"ip":"10.9.62.25", "haproxyip":"10.9.62.25","haproxyport":2222, "thread_count":1650, "loop_count":50, "throughput":"60.0"},
   "chan_counts":1,
-  "consensusType":"raft", "imageTag":"1.4.1","log":"INFO",
+  "consensusType":"raft", "imagePre":"peersafes","imageTag":"1.4.1","log":"INFO",
   "batchTime":"2s", "batchSize":100, "batchPreferred":"512 KB", "useCouchdb":"false",
   "orderers":[
     {"ip":"192.168.0.21","id":"0","orgId":"1","ports":["7050:7050","5443:9443"]},

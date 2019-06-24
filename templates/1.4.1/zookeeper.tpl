@@ -1,7 +1,7 @@
 version: '2'
 services:
     zookeeper{{.zk_id}}:
-        image: hyperledger/fabric-zookeeper
+        image: {{.imagePre}}/fabric-zookeeper:{{.imageTag}}
         restart: always
         environment:
          - GODEBUG=netdns=go

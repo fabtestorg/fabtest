@@ -70,6 +70,7 @@ type Expand struct {
 	Orderers       []NodeObj `json:"orderers"`
 	Peers          []NodeObj `json:"peers"`
 	ImageTag       string    `json:"imageTag"`
+	ImagePre       string    `json:"imagePre"`
 	DefaultNetwork string    `json:"defaultNetwork"`
 }
 
@@ -147,6 +148,9 @@ func ParseJson(jsonfile string) (*ConfigObj, error) {
 			return &obj, err
 		}
 		obj.Kafkas[i].ConfigTxPort = configTxPort
+	}
+	if obj.ImagePre == "" {
+		obj.ImagePre = "peersafes"
 	}
 
 	//fmt.Printf("config obj is %#v\n", obj)

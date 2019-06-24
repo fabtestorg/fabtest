@@ -3,7 +3,7 @@ version: '2'
 services:
   orderer{{.id}}.ord{{.orgId}}.{{.domain}}:
     container_name: orderer{{.id}}.ord{{.orgId}}.{{.domain}}
-    image: peersafes/fabric-orderer:{{.imageTag}}
+    image: {{.imagePre}}/fabric-orderer:{{.imageTag}}
     restart: always
     environment:
       - GODEBUG=netdns=go

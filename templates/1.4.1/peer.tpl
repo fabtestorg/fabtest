@@ -2,7 +2,7 @@ version: '2'
 
 services:
   peer{{.id}}.org{{.orgId}}.{{.domain}}:
-    image: peersafes/fabric-peer:{{.imageTag}}
+    image: {{.imagePre}}/fabric-peer:{{.imageTag}}
     restart: always
     container_name: peer{{.id}}.org{{.orgId}}.{{.domain}}
     environment:
@@ -18,8 +18,9 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      {{if eq .imagePre "peersafes"}}
       - CORE_CHAINCODE_BUILDER=peersafes/fabric-ccenv:{{.imageTag}}
-      - CORE_CHAINCODE_GOLANG_RUNTIME=peersafes/fabric-baseos:{{.imageTag}}
+      - CORE_CHAINCODE_GOLANG_RUNTIME=peersafes/fabric-baseos:{{.imageTag}}{{end}}
       # improve env
       - CORE_PEER_ID=peer{{.id}}.org{{.orgId}}.{{.domain}}
       - CORE_PEER_ADDRESS=peer{{.id}}.org{{.orgId}}.{{.domain}}:7051

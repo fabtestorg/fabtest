@@ -120,6 +120,7 @@ func CopyConfig(obj *NodeObj) {
 	obj.Peers = GlobalConfig.Peers
 	obj.UseCouchdb = GlobalConfig.UseCouchdb
 	obj.ImageTag = GlobalConfig.ImageTag
+	obj.ImagePre = GlobalConfig.ImagePre
 }
 
 func JoinChannel(channelName string) error {
