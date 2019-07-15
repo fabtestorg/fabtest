@@ -7,7 +7,7 @@ sys.setdefaultencoding('utf8')
 def remove_node(type):
     with settings(warn_only=True):
         if type == "all":
-            run("docker ps -a | awk '{print $1}' | xargs docker rm -f")
+            run("docker ps -a | grep -v manager | awk '{print $1}' | xargs docker rm -f")
             run("unset GREP_OPTIONS && docker images |grep 'dev\-peer'|awk '{print $3}'|xargs docker rmi -f")
         else:
             run("unset GREP_OPTIONS && docker ps -a | grep %s | awk '{print $1}' | xargs docker rm -f"%type)
